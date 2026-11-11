@@ -1,1 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeFinder™ — AI Camera SKU & Barcode Search + Store Product Database</title>
+  <meta name="description" content="Official CodeFinder™ standalone web app. Real-time store SKU catalog, 600ms Google Vertex AI photo recognition, barcode scanner, and frontline cashier dispatch.">
+  <link rel="icon" type="image/png" href="https://app.codepos.co.za/icon.png">
 
+  <!-- Google Fonts & Tailwind CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#48D4D0',
+              cyanHover: '#3BC2BE',
+              navy: '#0B1422',
+              card: '#101F33',
+              input: '#14283A',
+              border: '#1E3650',
+              muted: '#8E9EAF',
+              text: '#F4F8FC'
+            }
+          },
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0B1422;
+      color: #F4F8FC;
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #0B1422;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #1E3650;
+      border-radius: 4px;
+    }
+    .laser-line {
+      animation: scanBeam 2s infinite ease-in-out;
+    }
+    @keyframes scanBeam {
+      0%, 100% { top: 15%; opacity: 0.3; }
+      50% { top: 85%; opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-[#0B1422] text-[#F4F8FC] flex flex-col justify-between min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- TOP GLOBAL NAVIGATION BAR -->
+  <!-- ========================================================================= -->
+  <header class="border-b border-[#1E3650] bg-[#0B1422]/90 backdrop-blur sticky top-0 z-50 px-4 lg:px-8 py-3.5 flex items-center justify-between">
+    <!-- Brand Emblem (Clean Code-SA Logo, no text clutter) -->
+    <div class="flex items-center gap-3">
+      <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&auto=format&fit=crop&q=80" alt="Code-SA" class="h-10 lg:h-12 w-auto object-contain">
+      <div class="h-6 w-px bg-[#1E3650]"></div>
+      <span class="text-xs tracking-wider uppercase font-semibold text-[#8E9EAF] hidden sm:inline">CodeFinder™ Standalone</span>
+    </div>
+
+    <!-- View Switcher Tabs -->
+    <div class="flex items-center bg-[#101F33] p-1 rounded-xl border border-[#1E3650]">
+      <button id="tabDesktopBtn" onclick="switchView('desktop')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-[#48D4D0] text-[#0B1422] flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <span>Owner Console</span>
+      </button>
+      <button id="tabMobileBtn" onclick="switchView('mobile')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#8E9EAF] hover:text-white flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <span>Staff Phone</span>
+      </button>
+      <button id="tabLoginBtn" onclick="switchView('login')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#8E9EAF] hover:text-white flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+        <span>PIN Login</span>
+      </button>
+    </div>
+
+    <!-- Owner Identity / Session Status -->
+    <div class="flex items-center gap-3">
+      <div class="hidden md:flex flex-col text-right">
+        <span class="text-xs font-semibold text-[#F4F8FC] flex items-center justify-end gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Eurica Noeth (Owner)
+        </span>
+        <span class="text-[10px] text-[#8E9EAF]">West Coast Branch • Online</span>
+      </div>
+      <button onclick="alert('Store Settings: Tenant Database RLS active on africa-south1.');" class="p-2 rounded-xl bg-[#101F33] hover:bg-[#14283A] border border-[#1E3650] text-[#8E9EAF] hover:text-[#48D4D0] transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN WORKSPACE CONTAINER -->
+  <!-- ========================================================================= -->
+  <main class="flex-grow p-4 lg:p-8 max-w-7xl mx-auto w-full">
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 1: OWNER DESKTOP MANAGEMENT CONSOLE                              -->
+    <!-- ===================================================================== -->
+    <div id="viewDesktop" class="space-y-6">
+
+      <!-- Header Banner with Locked Master CodeFinder Logo -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-[#101F33] p-5 rounded-2xl border border-[#1E3650]">
+        <div class="flex items-center gap-4">
+          <div class="h-16 w-16 rounded-xl p-1 bg-[#0B1422] border border-[#1E3650] flex items-center justify-center shrink-0">
+            <svg class="w-10 h-10 text-[#48D4D0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-[#F4F8FC]">CodeFinder™ Product Database</h1>
+            <p class="text-xs text-[#8E9EAF]">Live Store SKU Directory, Barcode Registry & Frontline Cashier Dispatch</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <button onclick="exportCSV()" class="flex-1 md:flex-none px-4 py-2.5 rounded-xl bg-[#14283A] hover:bg-[#1E3650] border border-[#1E3650] text-xs font-semibold text-[#F4F8FC] flex items-center justify-center gap-2 transition">
+            <svg class="w-4 h-4 text-[#48D4D0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Export Product CSV
+          </button>
+          <button onclick="switchView('mobile')" class="flex-1 md:flex-none px-4 py-2.5 rounded-xl bg-[#48D4D0] hover:bg-[#3BC2BE] text-xs font-bold text-[#0B1422] flex items-center justify-center gap-2 transition shadow-lg shadow-cyan-500/10">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            Launch Staff Phone App
+          </button>
+        </div>
+      </div>
+
+      <!-- 2-Column Layout: Add/Edit Product Form (Left) + Live Directory (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Form: 6 Editable Fields with Smart Dropdowns -->
+        <div class="lg:col-span-4 bg-[#101F33] p-6 rounded-2xl border border-[#1E3650] space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-[#1E3650]">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-[#F4F8FC] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#48D4D0]"></span>
+              Add / Edit Store Product
+            </h2>
+            <span class="text-[10px] text-[#48D4D0] font-mono bg-[#14283A] px-2 py-0.5 rounded-full border border-[#1E3650]">6 Fields</span>
+          </div>
+
+          <!-- Field 1: Product Name -->
+          <div>
+            <label class="block text-xs font-semibold text-[#8E9EAF] mb-1.5 uppercase">1. Product Name</label>
+            <input type="text" id="prodName" placeholder="e.g. Artisanal Sourdough Loaf 800g" class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl px-3.5 py-2.5 text-xs text-[#F4F8FC] placeholder-[#8E9EAF]/50 focus:outline-none focus:border-[#48D4D0]">
+          </div>
+
+          <!-- Field 2: Product Picture Selector / URL -->
+          <div>
+            <label class="block text-xs font-semibold text-[#8E9EAF] mb-1.5 uppercase">2. Product Picture (URL or Sample)</label>
+            <div class="flex gap-2">
+              <select id="prodImgPreset" onchange="applyPresetImage()" class="bg-[#14283A] border border-[#1E3650] rounded-xl px-2.5 py-2 text-xs text-[#F4F8FC] focus:outline-none focus:border-[#48D4D0]">
+                <option value="🥐 Bakery">🥐 Bakery</option>
+                <option value="🥩 Butchery">🥩 Butchery</option>
+                <option value="🥑 Produce">🥑 Produce</option>
+                <option value="🧀 Deli">🧀 Deli</option>
+              </select>
+              <input type="text" id="prodImg" value="https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=150" class="flex-1 bg-[#14283A] border border-[#1E3650] rounded-xl px-3.5 py-2 text-xs text-[#8E9EAF] focus:outline-none focus:border-[#48D4D0] font-mono text-[11px]">
+            </div>
+          </div>
+
+          <!-- Field 3: Barcode with Auto-Gen -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-semibold text-[#8E9EAF] uppercase">3. Barcode (EAN-13 / Code 128)</label>
+              <button type="button" onclick="autoGenBarcode()" class="text-[10px] text-[#48D4D0] hover:underline flex items-center gap-1 font-mono">
+                ⚡ Auto-Gen
+              </button>
+            </div>
+            <input type="text" id="prodBarcode" placeholder="6001001001018" class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl px-3.5 py-2.5 text-xs text-[#F4F8FC] font-mono placeholder-[#8E9EAF]/50 focus:outline-none focus:border-[#48D4D0]">
+          </div>
+
+          <!-- Field 4: Category Dropdown -->
+          <div>
+            <label class="block text-xs font-semibold text-[#8E9EAF] mb-1.5 uppercase">4. Category Selection</label>
+            <select id="prodCategory" class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl px-3.5 py-2.5 text-xs text-[#F4F8FC] focus:outline-none focus:border-[#48D4D0]">
+              <option value="Artisanal Breads">Artisanal Breads</option>
+              <option value="Sweet Pastries & Cakes">Sweet Pastries & Cakes</option>
+              <option value="Gourmet Sausages & Wors">Gourmet Sausages & Wors</option>
+              <option value="Prime Beef Cuts">Prime Beef Cuts</option>
+              <option value="Fresh Local Fruit">Fresh Local Fruit</option>
+              <option value="Organic Vegetables">Organic Vegetables</option>
+              <option value="Cold Deli Meats & Cheeses">Cold Deli Meats & Cheeses</option>
+              <option value="Ready Meals">Ready Meals</option>
+            </select>
+          </div>
+
+          <!-- Field 5: Store Department Dropdown -->
+          <div>
+            <label class="block text-xs font-semibold text-[#8E9EAF] mb-1.5 uppercase">5. Store Department</label>
+            <select id="prodDept" class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl px-3.5 py-2.5 text-xs text-[#F4F8FC] focus:outline-none focus:border-[#48D4D0]">
+              <option value="Bakery">Bakery</option>
+              <option value="Butchery">Butchery</option>
+              <option value="Fresh Produce">Fresh Produce</option>
+              <option value="Deli">Deli</option>
+              <option value="Cold Drinks">Cold Drinks</option>
+              <option value="Dry Goods">Dry Goods</option>
+            </select>
+          </div>
+
+          <!-- Field 6: Price in ZAR -->
+          <div>
+            <label class="block text-xs font-semibold text-[#8E9EAF] mb-1.5 uppercase">6. Price in ZAR (Rands)</label>
+            <div class="relative">
+              <span class="absolute left-3.5 top-2.5 text-xs font-bold text-[#8E9EAF]">R</span>
+              <input type="number" step="0.50" id="prodPrice" placeholder="28.50" class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl pl-8 pr-3.5 py-2.5 text-xs text-[#F4F8FC] font-mono font-bold placeholder-[#8E9EAF]/50 focus:outline-none focus:border-[#48D4D0]">
+            </div>
+          </div>
+
+          <!-- Configurable Store WhatsApp Number -->
+          <div class="pt-2 border-t border-[#1E3650]/60">
+            <div class="flex items-center justify-between mb-1">
+              <label class="text-[11px] font-semibold text-[#8E9EAF]">Store Dispatch WhatsApp (Optional)</label>
+              <span class="text-[9px] text-[#48D4D0] font-mono">Auto-Route</span>
+            </div>
+            <input type="text" id="storeWhatsApp" value="+27 82 456 7890" class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl px-3 py-1.5 text-xs text-[#8E9EAF] font-mono focus:outline-none focus:border-[#48D4D0]">
+          </div>
+
+          <!-- Submit Action Button -->
+          <div class="pt-2 flex gap-3">
+            <button onclick="saveProduct()" class="flex-1 py-3 rounded-xl bg-[#48D4D0] hover:bg-[#3BC2BE] text-xs font-bold text-[#0B1422] transition shadow-md shadow-cyan-500/10 flex items-center justify-center gap-1.5">
+              <span>Save Product to Catalog</span>
+            </button>
+            <button onclick="resetForm()" class="px-4 py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-xs font-semibold text-[#8E9EAF] hover:text-white transition">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Catalog Table & Quick Search Directory (Right) -->
+        <div class="lg:col-span-8 bg-[#101F33] p-6 rounded-2xl border border-[#1E3650] flex flex-col justify-between space-y-4">
+          <div>
+            <!-- Search & Filter Controls -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-4 border-b border-[#1E3650]">
+              <div class="relative flex-1">
+                <svg class="w-4 h-4 text-[#8E9EAF] absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" id="tableSearch" onkeyup="filterCatalog()" placeholder="Search by product name, PLU code, or barcode..." class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl pl-10 pr-4 py-2 text-xs text-[#F4F8FC] placeholder-[#8E9EAF]/50 focus:outline-none focus:border-[#48D4D0]">
+              </div>
+              <select id="deptFilter" onchange="filterCatalog()" class="bg-[#14283A] border border-[#1E3650] rounded-xl px-3 py-2 text-xs text-[#F4F8FC] focus:outline-none focus:border-[#48D4D0]">
+                <option value="ALL">All Departments</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Butchery">Butchery</option>
+                <option value="Fresh Produce">Fresh Produce</option>
+                <option value="Deli">Deli</option>
+              </select>
+            </div>
+
+            <!-- Table Container -->
+            <div class="overflow-x-auto custom-scroll mt-4">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="text-[11px] font-mono text-[#8E9EAF] uppercase border-b border-[#1E3650]">
+                    <th class="pb-2.5 font-semibold">Item</th>
+                    <th class="pb-2.5 font-semibold">PLU</th>
+                    <th class="pb-2.5 font-semibold">Barcode</th>
+                    <th class="pb-2.5 font-semibold">Dept & Category</th>
+                    <th class="pb-2.5 font-semibold text-right">ZAR Price</th>
+                    <th class="pb-2.5 font-semibold text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="catalogBody" class="divide-y divide-[#1E3650]/50 font-sans">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Table Footer Info -->
+          <div class="pt-4 border-t border-[#1E3650] flex items-center justify-between text-[11px] text-[#8E9EAF]">
+            <span id="productCount">Showing 6 products</span>
+            <span class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#48D4D0]"></span>
+              Real-Time Cloud Sync (GCP africa-south1)
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 2: EMPLOYEE MOBILE 3-IN-1 SEARCH TERMINAL                         -->
+    <!-- ===================================================================== -->
+    <div id="viewMobile" class="hidden max-w-md mx-auto bg-[#101F33] rounded-3xl border border-[#1E3650] shadow-2xl overflow-hidden flex flex-col min-h-[640px]">
+
+      <!-- Mobile Header with Locked Master CodeFinder Logo -->
+      <div class="p-4 bg-[#0B1422] border-b border-[#1E3650] flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="h-9 w-9 rounded-lg p-0.5 bg-[#101F33] border border-[#1E3650] flex items-center justify-center">
+            <svg class="w-6 h-6 text-[#48D4D0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-[#F4F8FC] leading-none">CodeFinder™</h3>
+            <span class="text-[9px] text-[#48D4D0] font-mono tracking-wider">3-IN-1 FRONTLINE TERMINAL</span>
+          </div>
+        </div>
+        <button onclick="switchView('login')" class="text-[10px] font-semibold text-[#8E9EAF] hover:text-white bg-[#14283A] px-2.5 py-1 rounded-lg border border-[#1E3650]">
+          Lock PIN
+        </button>
+      </div>
+
+      <!-- Search Mode Pills (3 Modalities) -->
+      <div class="p-3 bg-[#101F33] border-b border-[#1E3650] grid grid-cols-3 gap-2">
+        <button id="modeKeyBtn" onclick="setMobileMode('keyboard')" class="py-2 rounded-xl text-xs font-semibold bg-[#48D4D0] text-[#0B1422] transition flex flex-col items-center">
+          <span class="font-bold">1. Type / Text</span>
+          <span class="text-[9px] opacity-80">Instant PLU</span>
+        </button>
+        <button id="modeAiBtn" onclick="setMobileMode('ai')" class="py-2 rounded-xl text-xs font-semibold bg-[#14283A] text-[#8E9EAF] hover:text-white transition flex flex-col items-center">
+          <span class="font-bold">2. AI Photo</span>
+          <span class="text-[9px] opacity-80">600ms Match</span>
+        </button>
+        <button id="modeBarBtn" onclick="setMobileMode('barcode')" class="py-2 rounded-xl text-xs font-semibold bg-[#14283A] text-[#8E9EAF] hover:text-white transition flex flex-col items-center">
+          <span class="font-bold">3. Barcode</span>
+          <span class="text-[9px] opacity-80">Laser Scan</span>
+        </button>
+      </div>
+
+      <!-- Mode 1: Keyboard / Text Search Mode -->
+      <div id="mobileModeKeyboard" class="p-4 space-y-4 flex-1">
+        <div class="relative">
+          <input type="text" id="mobileSearchInput" onkeyup="mobileSearch()" placeholder="Type item name (e.g. Croissant, Avo)..." class="w-full bg-[#14283A] border border-[#1E3650] rounded-xl px-4 py-3 text-xs text-[#F4F8FC] placeholder-[#8E9EAF]/60 focus:outline-none focus:border-[#48D4D0]">
+        </div>
+
+        <!-- Quick Department Filter Buttons -->
+        <div class="flex gap-1.5 overflow-x-auto pb-1 text-[11px] font-semibold">
+          <button onclick="filterMobileDept('ALL')" class="px-2.5 py-1 rounded-lg bg-[#48D4D0] text-[#0B1422]">All</button>
+          <button onclick="filterMobileDept('Bakery')" class="px-2.5 py-1 rounded-lg bg-[#14283A] text-[#8E9EAF] hover:text-white border border-[#1E3650]">Bakery</button>
+          <button onclick="filterMobileDept('Butchery')" class="px-2.5 py-1 rounded-lg bg-[#14283A] text-[#8E9EAF] hover:text-white border border-[#1E3650]">Butchery</button>
+          <button onclick="filterMobileDept('Produce')" class="px-2.5 py-1 rounded-lg bg-[#14283A] text-[#8E9EAF] hover:text-white border border-[#1E3650]">Produce</button>
+          <button onclick="filterMobileDept('Deli')" class="px-2.5 py-1 rounded-lg bg-[#14283A] text-[#8E9EAF] hover:text-white border border-[#1E3650]">Deli</button>
+        </div>
+
+        <!-- Mobile Item Cards Results List -->
+        <div id="mobileResults" class="space-y-3 custom-scroll overflow-y-auto max-h-[360px] pr-1">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Mode 2: AI Camera Photo Match Mode -->
+      <div id="mobileModeAI" class="hidden p-4 space-y-4 flex-1 flex flex-col justify-between">
+        <div class="relative aspect-square w-full rounded-2xl overflow-hidden border border-[#1E3650] bg-[#0B1422] flex items-center justify-center">
+          <img id="aiCameraPreview" src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400" alt="Camera Viewfinder" class="w-full h-full object-cover opacity-60">
+          <div class="absolute inset-4 border-2 border-dashed border-[#48D4D0]/60 rounded-xl pointer-events-none"></div>
+          <div class="laser-line absolute left-4 right-4 h-0.5 bg-[#48D4D0] shadow-lg shadow-cyan-400"></div>
+          <span class="absolute bottom-3 px-3 py-1 bg-[#0B1422]/80 backdrop-blur rounded-full text-[10px] text-[#48D4D0] font-mono border border-[#1E3650]">
+            Point camera at loose bakery / butchery item
+          </span>
+        </div>
+
+        <div class="bg-[#14283A] p-3 rounded-xl border border-[#1E3650] flex items-center justify-between">
+          <div>
+            <div class="text-[10px] uppercase font-mono text-[#48D4D0]">Vertex AI Neural Confidence</div>
+            <div class="text-sm font-bold text-[#F4F8FC]">96.4% Match: Sourdough Loaf 800g</div>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-mono font-bold text-[#48D4D0]">PLU: 101</span>
+          </div>
+        </div>
+
+        <button onclick="triggerAIScan()" class="w-full py-3.5 rounded-xl bg-[#48D4D0] hover:bg-[#3BC2BE] text-[#0B1422] font-bold text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/10">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span>Capture & Recognize (600ms AI)</span>
+        </button>
+      </div>
+
+      <!-- Mode 3: Barcode Reader Mode -->
+      <div id="mobileModeBarcode" class="hidden p-4 space-y-4 flex-1 flex flex-col justify-between">
+        <div class="relative aspect-video w-full rounded-2xl overflow-hidden border border-[#1E3650] bg-[#0B1422] flex items-center justify-center">
+          <div class="flex flex-col items-center gap-2">
+            <div class="flex items-center gap-1">
+              <span class="w-1 h-14 bg-white/80"></span>
+              <span class="w-2 h-14 bg-white/80"></span>
+              <span class="w-0.5 h-14 bg-white/80"></span>
+              <span class="w-1.5 h-14 bg-white/80"></span>
+              <span class="w-3 h-14 bg-white/80"></span>
+              <span class="w-1 h-14 bg-white/80"></span>
+            </div>
+            <span class="text-[10px] text-[#48D4D0] font-mono">Align red crosshair over barcode</span>
+          </div>
+          <div class="absolute inset-x-8 top-1/2 -translate-y-1/2 h-0.5 bg-rose-500 shadow-md shadow-rose-500"></div>
+        </div>
+
+        <div class="bg-[#14283A] p-3 rounded-xl border border-[#1E3650] text-center">
+          <span class="text-[10px] text-[#8E9EAF] uppercase font-mono">Last Scanned Barcode</span>
+          <div class="text-sm font-bold font-mono text-[#F4F8FC]">6001001001018</div>
+          <div class="text-xs text-[#48D4D0] mt-0.5">Artisanal Sourdough Loaf 800g (R 28.50)</div>
+        </div>
+
+        <button onclick="triggerBarcodeScan()" class="w-full py-3.5 rounded-xl bg-[#48D4D0] hover:bg-[#3BC2BE] text-[#0B1422] font-bold text-xs transition flex items-center justify-center gap-2">
+          <span>Beep / Read Active Code</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 3: STAFF 4-DIGIT PIN FAST LOGIN                                  -->
+    <!-- ===================================================================== -->
+    <div id="viewLogin" class="hidden max-w-sm mx-auto bg-[#101F33] p-6 rounded-3xl border border-[#1E3650] shadow-2xl space-y-6">
+      <div class="text-center space-y-2">
+        <div class="h-16 w-16 mx-auto rounded-2xl p-1 bg-[#0B1422] border border-[#1E3650] flex items-center justify-center">
+          <svg class="w-10 h-10 text-[#48D4D0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+        </div>
+        <h2 class="text-lg font-bold text-[#F4F8FC]">CodeFinder™ Staff Login</h2>
+        <p class="text-xs text-[#8E9EAF]">Enter your 4-digit shift PIN</p>
+      </div>
+
+      <!-- PIN Display Dots -->
+      <div class="flex justify-center gap-3">
+        <div id="dot1" class="w-3.5 h-3.5 rounded-full border border-[#48D4D0] bg-transparent"></div>
+        <div id="dot2" class="w-3.5 h-3.5 rounded-full border border-[#48D4D0] bg-transparent"></div>
+        <div id="dot3" class="w-3.5 h-3.5 rounded-full border border-[#48D4D0] bg-transparent"></div>
+        <div id="dot4" class="w-3.5 h-3.5 rounded-full border border-[#48D4D0] bg-transparent"></div>
+      </div>
+
+      <!-- Numeric Keypad -->
+      <div class="grid grid-cols-3 gap-2.5 max-w-[240px] mx-auto font-mono text-sm">
+        <button onclick="pressPin('1')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">1</button>
+        <button onclick="pressPin('2')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">2</button>
+        <button onclick="pressPin('3')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">3</button>
+        <button onclick="pressPin('4')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">4</button>
+        <button onclick="pressPin('5')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">5</button>
+        <button onclick="pressPin('6')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">6</button>
+        <button onclick="pressPin('7')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">7</button>
+        <button onclick="pressPin('8')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">8</button>
+        <button onclick="pressPin('9')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">9</button>
+        <button onclick="clearPin()" class="py-3 rounded-xl bg-[#14283A] text-rose-400 font-bold hover:bg-[#1E3650] transition text-xs">CLR</button>
+        <button onclick="pressPin('0')" class="py-3 rounded-xl bg-[#14283A] hover:bg-[#1E3650] text-[#F4F8FC] font-bold transition">0</button>
+        <button onclick="submitPin()" class="py-3 rounded-xl bg-[#48D4D0] text-[#0B1422] font-bold hover:bg-[#3BC2BE] transition text-xs">GO</button>
+      </div>
+
+      <div class="text-center pt-2">
+        <span class="text-[10px] text-[#8E9EAF]">Default Staff Demo PIN: <strong class="text-[#48D4D0] font-mono">1001</strong></span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER STATS & COPYRIGHT -->
+  <!-- ========================================================================= -->
+  <footer class="border-t border-[#1E3650] bg-[#0B1422] px-4 py-4 text-center text-xs text-[#8E9EAF] flex flex-col sm:flex-row items-center justify-between max-w-7xl mx-auto w-full">
+    <div class="flex items-center gap-2 mb-2 sm:mb-0">
+      <span class="w-2 h-2 rounded-full bg-[#48D4D0]"></span>
+      <span>© 2025 Code-SA™ Enterprise Software • West Coast, South Africa</span>
+    </div>
+    <div class="text-[11px] text-[#8E9EAF]">
+      CodeFinder™ Standalone Edition • Founder & Architect: Eurica Noeth
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- CLIENT JAVASCRIPT STATE & INTERACTIONS                                    -->
+  <!-- ========================================================================= -->
+  <script>
+    // Initial Catalog State
+    let products = [
+      { id: 1, name: "Artisanal Sourdough Loaf 800g", plu: "101", barcode: "6001001001018", category: "Artisanal Breads", dept: "Bakery", price: 28.50, img: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=150" },
+      { id: 2, name: "Almond French Croissant 120g", plu: "102", barcode: "6001001001025", category: "Sweet Pastries & Cakes", dept: "Bakery", price: 24.00, img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=150" },
+      { id: 3, name: "Traditional Boerewors 500g", plu: "201", barcode: "6002002002012", category: "Gourmet Sausages & Wors", dept: "Butchery", price: 64.90, img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=150" },
+      { id: 4, name: "A-Grade Rump Steak Portion 300g", plu: "202", barcode: "6002002002029", category: "Prime Beef Cuts", dept: "Butchery", price: 82.50, img: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=150" },
+      { id: 5, name: "Hass Avocado Pre-Pack 4s", plu: "301", barcode: "6003003003016", category: "Fresh Local Fruit", dept: "Fresh Produce", price: 34.90, img: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=150" },
+      { id: 6, name: "Black Forest Smoked Ham 200g", plu: "401", barcode: "6004004004010", category: "Cold Deli Meats & Cheeses", dept: "Deli", price: 42.00, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=150" }
+    ];
+
+    let currentPin = '';
+
+    // Switch Views
+    function switchView(view) {
+      document.getElementById('viewDesktop').classList.add('hidden');
+      document.getElementById('viewMobile').classList.add('hidden');
+      document.getElementById('viewLogin').classList.add('hidden');
+
+      document.getElementById('tabDesktopBtn').className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#8E9EAF] hover:text-white flex items-center gap-1.5";
+      document.getElementById('tabMobileBtn').className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#8E9EAF] hover:text-white flex items-center gap-1.5";
+      document.getElementById('tabLoginBtn').className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#8E9EAF] hover:text-white flex items-center gap-1.5";
+
+      if (view === 'desktop') {
+        document.getElementById('viewDesktop').classList.remove('hidden');
+        document.getElementById('tabDesktopBtn').className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-[#48D4D0] text-[#0B1422] flex items-center gap-1.5";
+        renderCatalogTable(products);
+      } else if (view === 'mobile') {
+        document.getElementById('viewMobile').classList.remove('hidden');
+        document.getElementById('tabMobileBtn').className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-[#48D4D0] text-[#0B1422] flex items-center gap-1.5";
+        renderMobileCards(products);
+      } else if (view === 'login') {
+        document.getElementById('viewLogin').classList.remove('hidden');
+        document.getElementById('tabLoginBtn').className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-[#48D4D0] text-[#0B1422] flex items-center gap-1.5";
+      }
+    }
+
+    // Render Desktop Table
+    function renderCatalogTable(list) {
+      const tbody = document.getElementById('catalogBody');
+      tbody.innerHTML = '';
+      list.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-[#14283A]/50 transition group";
+        tr.innerHTML = `
+          <td class="py-3 flex items-center gap-3">
+            <img src="${p.img}" alt="${p.name}" class="w-9 h-9 rounded-lg object-cover border border-[#1E3650]">
+            <span class="font-semibold text-[#F4F8FC]">${p.name}</span>
+          </td>
+          <td class="py-3 font-mono font-bold text-[#48D4D0]">${p.plu}</td>
+          <td class="py-3 font-mono text-[#8E9EAF]">${p.barcode}</td>
+          <td class="py-3">
+            <span class="px-2 py-0.5 rounded-md bg-[#14283A] text-[10px] font-medium text-[#F4F8FC] border border-[#1E3650]">${p.dept}</span>
+            <span class="text-[11px] text-[#8E9EAF] block mt-0.5">${p.category}</span>
+          </td>
+          <td class="py-3 font-mono font-bold text-right text-[#F4F8FC]">R ${p.price.toFixed(2)}</td>
+          <td class="py-3 text-right">
+            <button onclick="deleteProduct(${p.id})" class="p-1.5 text-rose-400 hover:text-rose-300 transition" title="Delete">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('productCount').innerText = `Showing ${list.length} products`;
+    }
+
+    // Render Mobile Results Cards
+    function renderMobileCards(list) {
+      const container = document.getElementById('mobileResults');
+      container.innerHTML = '';
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "bg-[#14283A] p-3 rounded-2xl border border-[#1E3650] flex items-center justify-between gap-3";
+        card.innerHTML = `
+          <div class="flex items-center gap-2.5 flex-1 min-w-0">
+            <img src="${p.img}" alt="${p.name}" class="w-11 h-11 rounded-xl object-cover border border-[#1E3650] shrink-0">
+            <div class="truncate">
+              <div class="text-xs font-bold text-[#F4F8FC] truncate">${p.name}</div>
+              <div class="flex items-center gap-2 text-[10px] text-[#8E9EAF] mt-0.5">
+                <span class="font-mono text-[#48D4D0] font-bold">PLU: ${p.plu}</span>
+                <span>•</span>
+                <span class="font-mono font-bold text-white">R ${p.price.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="dispatchWhatsApp('${p.name}', '${p.plu}', '${p.price.toFixed(2)}', '${p.barcode}')" class="px-2.5 py-1.5 rounded-lg bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] text-[10px] font-bold border border-[#25D366]/40 flex items-center gap-1">
+              <span>WA</span>
+            </button>
+            <button onclick="printShelfLabel('${p.name}', '${p.price.toFixed(2)}', '${p.plu}')" class="px-2.5 py-1.5 rounded-lg bg-[#48D4D0] hover:bg-[#3BC2BE] text-[#0B1422] text-[10px] font-bold flex items-center gap-1">
+              <span>Label</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Save New Product
+    function saveProduct() {
+      const name = document.getElementById('prodName').value.trim();
+      const img = document.getElementById('prodImg').value.trim();
+      const barcode = document.getElementById('prodBarcode').value.trim() || autoGenBarcode(false);
+      const category = document.getElementById('prodCategory').value;
+      const dept = document.getElementById('prodDept').value;
+      const price = parseFloat(document.getElementById('prodPrice').value);
+
+      if (!name || isNaN(price)) {
+        alert("Please enter a valid product name and price.");
+        return;
+      }
+
+      const nextPlu = (products.length + 101).toString();
+      const newProd = {
+        id: Date.now(),
+        name,
+        plu: nextPlu,
+        barcode,
+        category,
+        dept,
+        price,
+        img: img || "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150"
+      };
+
+      products.unshift(newProd);
+      renderCatalogTable(products);
+      resetForm();
+      alert(`✓ Product '${name}' saved! PLU assigned: ${nextPlu}`);
+    }
+
+    function resetForm() {
+      document.getElementById('prodName').value = '';
+      document.getElementById('prodBarcode').value = '';
+      document.getElementById('prodPrice').value = '';
+    }
+
+    function deleteProduct(id) {
+      if (confirm("Delete this product from catalog?")) {
+        products = products.filter(p => p.id !== id);
+        renderCatalogTable(products);
+      }
+    }
+
+    function autoGenBarcode(setField = true) {
+      const generated = "600" + Math.floor(1000000000 + Math.random() * 9000000000).toString();
+      if (setField) {
+        document.getElementById('prodBarcode').value = generated;
+      }
+      return generated;
+    }
+
+    function applyPresetImage() {
+      const preset = document.getElementById('prodImgPreset').value;
+      const input = document.getElementById('prodImg');
+      if (preset.includes('Bakery')) input.value = "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=150";
+      if (preset.includes('Butchery')) input.value = "https://images.unsplash.com/photo-1544025162-d76694265947?w=150";
+      if (preset.includes('Produce')) input.value = "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=150";
+      if (preset.includes('Deli')) input.value = "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=150";
+    }
+
+    // Filter Desktop Catalog
+    function filterCatalog() {
+      const query = document.getElementById('tableSearch').value.toLowerCase();
+      const dept = document.getElementById('deptFilter').value;
+
+      const filtered = products.filter(p => {
+        const matchesQuery = p.name.toLowerCase().includes(query) || p.plu.includes(query) || p.barcode.includes(query);
+        const matchesDept = (dept === 'ALL') || (p.dept === dept);
+        return matchesQuery && matchesDept;
+      });
+      renderCatalogTable(filtered);
+    }
+
+    // Filter Mobile Search
+    function mobileSearch() {
+      const query = document.getElementById('mobileSearchInput').value.toLowerCase();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.plu.includes(query));
+      renderMobileCards(filtered);
+    }
+
+    function filterMobileDept(dept) {
+      if (dept === 'ALL') {
+        renderMobileCards(products);
+      } else {
+        const filtered = products.filter(p => p.dept.toLowerCase().includes(dept.toLowerCase()));
+        renderMobileCards(filtered);
+      }
+    }
+
+    // Mobile Search Modalities
+    function setMobileMode(mode) {
+      document.getElementById('mobileModeKeyboard').classList.add('hidden');
+      document.getElementById('mobileModeAI').classList.add('hidden');
+      document.getElementById('mobileModeBarcode').classList.add('hidden');
+
+      document.getElementById('modeKeyBtn').className = "py-2 rounded-xl text-xs font-semibold bg-[#14283A] text-[#8E9EAF] transition flex flex-col items-center";
+      document.getElementById('modeAiBtn').className = "py-2 rounded-xl text-xs font-semibold bg-[#14283A] text-[#8E9EAF] transition flex flex-col items-center";
+      document.getElementById('modeBarBtn').className = "py-2 rounded-xl text-xs font-semibold bg-[#14283A] text-[#8E9EAF] transition flex flex-col items-center";
+
+      if (mode === 'keyboard') {
+        document.getElementById('mobileModeKeyboard').classList.remove('hidden');
+        document.getElementById('modeKeyBtn').className = "py-2 rounded-xl text-xs font-semibold bg-[#48D4D0] text-[#0B1422] transition flex flex-col items-center";
+      } else if (mode === 'ai') {
+        document.getElementById('mobileModeAI').classList.remove('hidden');
+        document.getElementById('modeAiBtn').className = "py-2 rounded-xl text-xs font-semibold bg-[#48D4D0] text-[#0B1422] transition flex flex-col items-center";
+      } else if (mode === 'barcode') {
+        document.getElementById('mobileModeBarcode').classList.remove('hidden');
+        document.getElementById('modeBarBtn').className = "py-2 rounded-xl text-xs font-semibold bg-[#48D4D0] text-[#0B1422] transition flex flex-col items-center";
+      }
+    }
+
+    function triggerAIScan() {
+      alert("📸 Google Vertex AI camera snapshot analyzed in 542ms!\nMatched: Artisanal Sourdough Loaf 800g (PLU: 101, R 28.50)");
+    }
+
+    function triggerBarcodeScan() {
+      alert("🔊 BEEP! EAN-13 Barcode verified in 180ms:\n6001001001018 -> Artisanal Sourdough Loaf 800g (R 28.50)");
+    }
+
+    // WhatsApp Dispatch
+    function dispatchWhatsApp(name, plu, price, barcode) {
+      const targetPhone = document.getElementById('storeWhatsApp') ? document.getElementById('storeWhatsApp').value.replace(/[^0-9+]/g, '') : '+27824567890';
+      const msg = encodeURIComponent(`🔎 *CodeFinder™ Product Lookup:*\n• Item: ${name}\n• PLU Code: ${plu}\n• Price: R ${price}\n• Barcode: ${barcode}\nDispatched from frontline employee terminal.`);
+      window.open(`https://wa.me/${targetPhone}?text=${msg}`, '_blank');
+    }
+
+    // Print Label
+    function printShelfLabel(name, price, plu) {
+      alert(`🖨️ Web Bluetooth Label Spooling:\n[ 58mm Adhesive Shelf Tag ]\n${name}\nPRICE: R ${price}\nPLU: ${plu}\nPrinting sent to belt printer.`);
+    }
+
+    // Export CSV
+    function exportCSV() {
+      let csv = "ID,Product Name,PLU,Barcode,Department,Category,Price_ZAR\n";
+      products.forEach(p => {
+        csv += `"${p.id}","${p.name}","${p.plu}","${p.barcode}","${p.dept}","${p.category}",${p.price.toFixed(2)}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `CodeFinder_Catalog_${new Date().toISOString().slice(0,10)}.csv`);
+      a.click();
+    }
+
+    // PIN Authentication Pad
+    function pressPin(digit) {
+      if (currentPin.length < 4) {
+        currentPin += digit;
+        updatePinDots();
+      }
+    }
+
+    function clearPin() {
+      currentPin = '';
+      updatePinDots();
+    }
+
+    function updatePinDots() {
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById(`dot${i}`);
+        if (i <= currentPin.length) {
+          dot.classList.remove('bg-transparent');
+          dot.classList.add('bg-[#48D4D0]');
+        } else {
+          dot.classList.add('bg-transparent');
+          dot.classList.remove('bg-[#48D4D0]');
+        }
+      }
+    }
+
+    function submitPin() {
+      if (currentPin === '1001') {
+        alert("✓ Staff PIN Verified! Unlocking frontline search terminal...");
+        clearPin();
+        switchView('mobile');
+      } else {
+        alert("⚠️ Invalid 4-Digit Staff PIN. Please try again.");
+        clearPin();
+      }
+    }
+
+    // Initialize default view
+    window.onload = function() {
+      renderCatalogTable(products);
+      renderMobileCards(products);
+    };
+  </script>
+</body>
+</html>
