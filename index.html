@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CodeFinder™ — AI Camera SKU & Barcode Search (Code-SA™ South Africa)</title>
+  <title>CodeFinder™ — AI Camera SKU &amp; Barcode Search (Code-SA™ South Africa)</title>
   <meta name="description" content="CodeFinder™ by Code-SA™: Zero-hardware AI product search, bulk CSV catalog upload, and sandboxed department terminals." />
   
   <!-- =====================================================================
        OFFICIAL HOME SCREEN APP ICON FOR CODEFINDER™
-       Uses the exact centerpiece master logo (Smartphone + HUD reticle + magnifier + barcode)
-       Both file pointer & guaranteed inline high-res vector fallback included
+       Matches the CodePOS standard: Uses the exact centerpiece master logo.
+       Includes primary file path + fail-safe inline high-res vector Data URI
+       so your phone's home screen launcher will NEVER show a black "C".
        ===================================================================== -->
   <link rel="apple-touch-icon" sizes="180x180" href="odeFinder Logo.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="odeFinder Logo.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="odeFinder Logo.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="odeFinder Logo.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Crect x='160' y='90' width='192' height='332' rx='36' fill='%23101F33' stroke='%2348D4D0' stroke-width='16'/%3E%3Ccircle cx='256' cy='224' r='48' fill='none' stroke='%2348D4D0' stroke-width='14'/%3E%3Cline x1='290' y1='258' x2='336' y2='304' stroke='%2348D4D0' stroke-width='18' stroke-linecap='round'/%3E%3Cline x1='120' y1='224' x2='392' y2='224' stroke='%2348D4D0' stroke-width='8' stroke-dasharray='14 8'/%3E%3Ctext x='256' y='465' font-family='sans-serif' font-size='38' font-weight='800' fill='%23F4F8FC' text-anchor='middle' letter-spacing='2'%3ECODEFINDER%E2%84%A2%3C/text%3E%3C/svg%3E" />
+  <link rel="shortcut icon" href="odeFinder Logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Crect x='160' y='75' width='192' height='325' rx='36' fill='%23101F33' stroke='%2348D4D0' stroke-width='14'/%3E%3Cline x1='80' y1='215' x2='432' y2='215' stroke='%2348D4D0' stroke-width='8' stroke-dasharray='18 10'/%3E%3Ccircle cx='256' cy='215' r='58' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Cline x1='298' y1='257' x2='348' y2='307' stroke='%2348D4D0' stroke-width='22' stroke-linecap='round'/%3E%3Cline x1='232' y1='215' x2='280' y2='215' stroke='%23FFFFFF' stroke-width='4'/%3E%3Cline x1='256' y1='191' x2='256' y2='239' stroke='%23FFFFFF' stroke-width='4'/%3E%3Ctext x='256' y='455' font-family='sans-serif' font-size='42' font-weight='800' fill='%23F4F8FC' text-anchor='middle' letter-spacing='3'%3ECODEFINDER%E2%84%A2%3C/text%3E%3C/svg%3E" />
   
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CodeFinder™" />
   <meta name="theme-color" content="#0B1422" />
 
   <!-- Typography -->
@@ -83,7 +86,7 @@
     }
 
     .brand-logo-img {
-      height: 48px;
+      height: 44px;
       width: auto;
       max-width: 180px;
       object-fit: contain;
@@ -153,7 +156,7 @@
     .master-hero-logo {
       width: 100%;
       height: auto;
-      max-height: 200px;
+      max-height: 220px;
       object-fit: contain;
       filter: drop-shadow(0 0 24px rgba(72, 212, 208, 0.25));
     }
@@ -378,7 +381,7 @@
   <header>
     <div class="container header-inner">
       <!-- Permanent Top-Left Code-SA Shield Emblem -->
-      <a href="#" onclick="switchView('hub'); return false;" style="text-decoration: none;">
+      <a href="#" onclick="switchView('hub'); return false;" style="text-decoration: none; display: flex; align-items: center;" title="Code-SA™ Enterprise Software">
         <img src="Code-SA Logo .png" alt="Code-SA™ Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/160x48/0B1422/48D4D0?text=Code-SA%E2%84%A2';" />
       </a>
       
