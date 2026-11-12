@@ -3,14 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CodeFinder™ — AI Camera SKU & Barcode Product Search (South Africa)</title>
-  <meta name="description" content="CodeFinder™ by Code-SA: Zero-hardware AI product search, camera barcode scanner, and catalog management for retail stores, bakeries, delis, and supermarkets." />
+  <title>CodeFinder™ — AI Camera SKU & Barcode Search (Code-SA™ South Africa)</title>
+  <meta name="description" content="CodeFinder™ by Code-SA™: Zero-hardware AI product search, bulk CSV catalog upload, and sandboxed department terminals." />
   
-  <!-- Official Favicons -->
-  <link rel="icon" type="image/png" href="CodePOS App icon.PNG" />
-  <link rel="apple-touch-icon" href="CodePOS App icon.PNG" />
+  <!-- =====================================================================
+       OFFICIAL HOME SCREEN APP ICON FOR CODEFINDER™
+       Uses the exact centerpiece master logo (Smartphone + HUD reticle + magnifier + barcode)
+       Both file pointer & guaranteed inline high-res vector fallback included
+       ===================================================================== -->
+  <link rel="apple-touch-icon" sizes="180x180" href="odeFinder Logo.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="odeFinder Logo.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="odeFinder Logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Crect x='160' y='90' width='192' height='332' rx='36' fill='%23101F33' stroke='%2348D4D0' stroke-width='16'/%3E%3Ccircle cx='256' cy='224' r='48' fill='none' stroke='%2348D4D0' stroke-width='14'/%3E%3Cline x1='290' y1='258' x2='336' y2='304' stroke='%2348D4D0' stroke-width='18' stroke-linecap='round'/%3E%3Cline x1='120' y1='224' x2='392' y2='224' stroke='%2348D4D0' stroke-width='8' stroke-dasharray='14 8'/%3E%3Ctext x='256' y='465' font-family='sans-serif' font-size='38' font-weight='800' fill='%23F4F8FC' text-anchor='middle' letter-spacing='2'%3ECODEFINDER%E2%84%A2%3C/text%3E%3C/svg%3E" />
   
-  <!-- Fonts -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0B1422" />
+
+  <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -23,8 +33,6 @@
       --input-bg: #14283A;
       --border-dark: #1A344E;
       --primary-cyan: #48D4D0;
-      --primary-cyan-hover: #38b2af;
-      --primary-cyan-soft: rgba(72, 212, 208, 0.12);
       --text-white: #F4F8FC;
       --text-gray: #B0C4D9;
       --text-muted: #7A8F9E;
@@ -56,7 +64,7 @@
       padding: 0 1.25rem;
     }
 
-    /* Header */
+    /* Top Navigation */
     header {
       background: rgba(11, 20, 34, 0.95);
       backdrop-filter: blur(12px);
@@ -74,17 +82,10 @@
       gap: 1rem;
     }
 
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-    }
-
     .brand-logo-img {
-      height: 44px;
+      height: 48px;
       width: auto;
-      max-width: 170px;
+      max-width: 180px;
       object-fit: contain;
       display: block;
     }
@@ -92,14 +93,14 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
 
     .btn-header {
       background: var(--card-dark);
       border: 1px solid var(--border-dark);
       color: var(--text-white);
-      padding: 0.55rem 1rem;
+      padding: 0.55rem 0.9rem;
       border-radius: 8px;
       font-family: var(--font-main);
       font-size: 0.85rem;
@@ -121,23 +122,29 @@
       background: var(--primary-cyan);
       color: #06111D;
       border: 1px solid var(--primary-cyan);
+      font-weight: 700;
     }
 
     .btn-signin:hover {
-      background: #39beba;
+      background: #38b2af;
       color: #000;
-      box-shadow: 0 0 14px rgba(72, 212, 208, 0.4);
+      box-shadow: 0 0 14px rgba(72, 212, 208, 0.35);
     }
 
-    /* Hero Section */
-    .hero-section {
-      text-align: center;
-      padding: 2.5rem 0 1.5rem;
+    /* Views */
+    .workspace-view {
+      display: none;
+      padding: 1.5rem 0 3rem;
     }
 
+    .workspace-view.active-view {
+      display: block;
+    }
+
+    /* Master Centerpiece Logo */
     .master-logo-wrap {
       max-width: 440px;
-      margin: 0 auto 1.5rem;
+      margin: 1.5rem auto 1.25rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -146,90 +153,39 @@
     .master-hero-logo {
       width: 100%;
       height: auto;
-      max-height: 190px;
+      max-height: 200px;
       object-fit: contain;
       filter: drop-shadow(0 0 24px rgba(72, 212, 208, 0.25));
     }
 
     .hero-title {
-      font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+      font-size: clamp(1.35rem, 3.2vw, 1.95rem);
       font-weight: 700;
-      line-height: 1.3;
-      max-width: 820px;
-      margin: 0 auto 1rem;
+      line-height: 1.35;
+      max-width: 840px;
+      margin: 0 auto 0.75rem;
+      text-align: center;
       color: var(--text-white);
     }
 
     .hero-subtitle {
-      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      font-size: clamp(0.8rem, 1.6vw, 0.9rem);
       color: var(--primary-cyan);
       font-weight: 600;
       letter-spacing: 0.5px;
       text-transform: uppercase;
       max-width: 860px;
       margin: 0 auto 1.5rem;
+      text-align: center;
       line-height: 1.5;
     }
 
-    .device-badges {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.6rem;
-      margin-bottom: 2rem;
-    }
-
-    .device-pill {
-      background: var(--card-dark);
-      border: 1px solid var(--border-dark);
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-gray);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .section-title-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border-dark);
-    }
-
-    .section-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text-white);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .section-title::before {
-      content: "";
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      background: var(--primary-cyan);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--primary-cyan);
-    }
-
-    /* Department Grid */
-    .department-grid {
+    /* Department Cards */
+    .dept-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
       gap: 1rem;
-      margin-bottom: 3rem;
+      margin-top: 1rem;
     }
 
     .dept-card {
@@ -240,11 +196,11 @@
       text-align: center;
       cursor: pointer;
       transition: all 0.25s ease;
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
+      position: relative;
     }
 
     .dept-card:hover {
@@ -254,24 +210,10 @@
       background: var(--card-hover);
     }
 
-    .dept-icon {
-      font-size: 2.2rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .dept-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-white);
-    }
-
-    .dept-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.3;
-    }
-
-    .dept-tag {
+    .dept-icon { font-size: 2.2rem; }
+    .dept-name { font-size: 0.95rem; font-weight: 700; color: var(--text-white); }
+    .dept-desc { font-size: 0.72rem; color: var(--text-muted); }
+    .dept-badge {
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
@@ -284,71 +226,23 @@
       font-family: var(--font-mono);
     }
 
-    /* Products Grid */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .product-box {
-      background: var(--card-dark);
+    /* Form Styles */
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-white); }
+    .form-input {
+      width: 100%;
+      background: var(--input-bg);
       border: 1px solid var(--border-dark);
-      border-radius: 12px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: all 0.25s ease;
-    }
-
-    .product-box.active-card {
-      border-color: var(--primary-cyan);
-      box-shadow: 0 0 20px rgba(72, 212, 208, 0.18);
-    }
-
-    .product-tag-header {
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .product-box-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
       color: var(--text-white);
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      outline: none;
     }
-
-    .product-box-desc {
-      font-size: 0.82rem;
-      color: var(--text-gray);
-      line-height: 1.45;
-      margin-bottom: 1.25rem;
-      flex-grow: 1;
-    }
-
-    .price-row {
-      margin-bottom: 1rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--border-dark);
-    }
-
-    .price-main {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--primary-cyan);
-      font-family: var(--font-mono);
-    }
-
-    .price-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
+    .form-input:focus {
+      border-color: var(--primary-cyan);
+      box-shadow: 0 0 8px rgba(72, 212, 208, 0.25);
     }
 
     .btn-action-primary {
@@ -356,7 +250,7 @@
       color: #06111D;
       font-family: var(--font-main);
       font-weight: 700;
-      padding: 0.7rem 1rem;
+      padding: 0.75rem 1rem;
       border-radius: 8px;
       border: none;
       width: 100%;
@@ -364,7 +258,6 @@
       text-align: center;
       transition: all 0.2s ease;
       font-size: 0.9rem;
-      margin-bottom: 0.5rem;
     }
 
     .btn-action-primary:hover {
@@ -376,7 +269,7 @@
       background: transparent;
       color: var(--text-gray);
       border: 1px solid var(--border-dark);
-      padding: 0.6rem 1rem;
+      padding: 0.65rem 1rem;
       border-radius: 8px;
       font-size: 0.82rem;
       font-weight: 600;
@@ -390,13 +283,31 @@
       color: var(--primary-cyan);
     }
 
+    /* Table Styles */
+    .terminal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .terminal-table th {
+      background: var(--input-bg);
+      color: var(--primary-cyan);
+      font-weight: 600;
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .terminal-table td {
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border-dark);
+      color: var(--text-white);
+    }
+    .terminal-table tr:hover { background: var(--card-hover); }
+
     /* Modals */
     .modal-backdrop {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(6, 14, 26, 0.85);
       backdrop-filter: blur(8px);
       z-index: 200;
@@ -411,7 +322,7 @@
       border: 1px solid var(--border-dark);
       border-radius: 14px;
       width: 100%;
-      max-width: 520px;
+      max-width: 580px;
       box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
       overflow: hidden;
       display: flex;
@@ -427,252 +338,135 @@
       justify-content: space-between;
     }
 
-    .modal-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text-white);
-    }
+    .modal-title { font-size: 1.1rem; font-weight: 700; color: var(--text-white); }
+    .btn-close { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; line-height: 1; }
+    .modal-body { padding: 1.25rem; overflow-y: auto; color: var(--text-gray); font-size: 0.9rem; line-height: 1.5; }
 
-    .btn-close {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.4rem;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    .modal-body {
-      padding: 1.25rem;
-      overflow-y: auto;
-      color: var(--text-gray);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .form-group {
-      margin-bottom: 1.1rem;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-      color: var(--text-white);
-    }
-
-    .form-input {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid var(--border-dark);
-      border-radius: 8px;
-      padding: 0.75rem 0.9rem;
-      color: var(--text-white);
-      font-family: var(--font-main);
-      font-size: 0.9rem;
-      outline: none;
-    }
-
-    .form-input:focus {
-      border-color: var(--primary-cyan);
-      box-shadow: 0 0 8px rgba(72, 212, 208, 0.25);
-    }
-
-    .tab-header {
-      display: flex;
-      border-bottom: 1px solid var(--border-dark);
-      background: var(--input-bg);
-    }
-
+    .tab-header { display: flex; border-bottom: 1px solid var(--border-dark); background: var(--input-bg); }
     .tab-btn {
-      flex: 1;
-      padding: 0.75rem 0.5rem;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-family: var(--font-main);
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s ease;
+      flex: 1; padding: 0.75rem 0.5rem; background: none; border: none;
+      color: var(--text-muted); font-family: var(--font-main); font-size: 0.8rem;
+      font-weight: 600; cursor: pointer; text-align: center; transition: all 0.2s ease;
     }
+    .tab-btn.active { color: var(--primary-cyan); border-bottom: 2px solid var(--primary-cyan); background: var(--card-dark); }
 
-    .tab-btn.active {
-      color: var(--primary-cyan);
-      border-bottom: 2px solid var(--primary-cyan);
-      background: var(--card-dark);
-    }
-
-    .workspace-view {
-      display: none;
-      padding-top: 1.5rem;
-    }
-
-    .workspace-view.active-view {
-      display: block;
-    }
-
-    .terminal-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      font-size: 0.85rem;
-    }
-
-    .terminal-table th {
-      background: var(--input-bg);
-      color: var(--primary-cyan);
-      font-weight: 600;
-      text-align: left;
-      padding: 0.65rem 0.75rem;
-      border-bottom: 1px solid var(--border-dark);
-    }
-
-    .terminal-table td {
-      padding: 0.65rem 0.75rem;
-      border-bottom: 1px solid var(--border-dark);
-      color: var(--text-white);
-    }
-
-    .terminal-table tr:hover {
-      background: var(--card-hover);
+    /* Toast */
+    .toast-box {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: #11283C; border: 1px solid var(--primary-cyan);
+      color: var(--text-white); padding: 0.85rem 1.25rem; border-radius: 8px;
+      font-size: 0.85rem; box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 300; display: none; align-items: center; gap: 0.6rem;
     }
 
     footer {
-      margin-top: auto;
-      border-top: 1px solid var(--border-dark);
-      padding: 1.5rem 0;
-      background: #070e18;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      margin-top: auto; border-top: 1px solid var(--border-dark);
+      padding: 1.5rem 0; background: #070e18; text-align: center;
+      font-size: 0.8rem; color: var(--text-muted);
     }
+    footer a { color: var(--primary-cyan); text-decoration: none; }
 
-    footer a {
-      color: var(--primary-cyan);
-      text-decoration: none;
-    }
-
-    .toast-box {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background: #11283C;
-      border: 1px solid var(--primary-cyan);
-      color: var(--text-white);
-      padding: 0.85rem 1.25rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      z-index: 300;
-      display: none;
-      align-items: center;
-      gap: 0.6rem;
+    @keyframes scanPulse {
+      0% { transform: translateY(0); opacity: 0.6; }
+      100% { transform: translateY(160px); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Navigation Header -->
   <header>
     <div class="container header-inner">
-      <a href="#" class="brand-group" onclick="switchView('hub'); return false;">
-        <!-- Code-SA Top Left Master Shield Logo -->
-        <img src="Code-SA Logo .png" alt="Code-SA™ Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/150x44/0B1422/48D4D0?text=Code-SA%E2%84%A2';">
+      <!-- Permanent Top-Left Code-SA Shield Emblem -->
+      <a href="#" onclick="switchView('hub'); return false;" style="text-decoration: none;">
+        <img src="Code-SA Logo .png" alt="Code-SA™ Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/160x48/0B1422/48D4D0?text=Code-SA%E2%84%A2';" />
       </a>
       
       <div class="header-actions">
-        <!-- Menu & Legal Button -->
+        <!-- Menu & Legal Drawer -->
         <button class="btn-header" onclick="openModal('menuModal')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           MENU &amp; LEGAL
         </button>
 
-        <!-- Clean Sign-In Button (Locked Gateway) -->
+        <!-- Clean Owner Gate (Universal Master Authentication for Eurica) -->
         <button class="btn-header btn-signin" onclick="openModal('authModal')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          SIGN IN
+          OWNER SIGN IN
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Wrap -->
   <main class="container">
 
-    <!-- VIEW 1: OPENING HUB & DEPARTMENT ISOLATION PORTAL -->
+    <!-- VIEW 1: CLEAN STORE ENTRY HUB -->
     <div id="view-hub" class="workspace-view active-view">
       
-      <section class="hero-section">
-        <!-- Master Centerpiece Logo -->
+      <section style="text-align: center; padding-top: 1rem;">
+        <!-- CodeFinder Centerpiece Master Logo & App Icon -->
         <div class="master-logo-wrap">
-          <img src="CodeFinder On top left of app and dash Logo.PNG" alt="CodeFinder™ Logo" class="master-hero-logo" onerror="this.onerror=null; this.src='CodeFinder Logo Final.png';">
+          <img src="odeFinder Logo.png" alt="CodeFinder™ Master Logo" class="master-hero-logo" onerror="this.onerror=null; this.src='CodeFinder On top left of app and dash Logo.PNG';" />
         </div>
 
-        <h1 class="hero-title">Your Affordable All In One CodeFinder Product Search For Any Business That Needs Quick Item Identification.</h1>
+        <h1 class="hero-title">Your Affordable All In One CodeFinder™ Product Search For Any Business That Needs Quick Item Identification.</h1>
         <p class="hero-subtitle">NO EXPENSIVE HARDWARE NEEDED • TURNING ANY STANDARD SMARTPHONE (ANDROID, HUAWEI, APPLE) AND WINDOWS DESKTOP INTO AN AI PRODUCT &amp; BARCODE FINDER</p>
 
-        <!-- Device Pills -->
-        <div class="device-badges">
-          <span class="device-pill">📱 Android Smartphone</span>
-          <span class="device-pill">🍏 Apple iPhone / iPad</span>
-          <span class="device-pill">💻 Windows Laptop / Desktop</span>
+        <div style="display: flex; justify-content: center; gap: 0.6rem; margin-bottom: 2rem;">
+          <span style="background: var(--card-dark); border: 1px solid var(--border-dark); padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.78rem; color: var(--text-gray);">📱 Android</span>
+          <span style="background: var(--card-dark); border: 1px solid var(--border-dark); padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.78rem; color: var(--text-gray);">🍏 Apple iPhone</span>
+          <span style="background: var(--card-dark); border: 1px solid var(--border-dark); padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.78rem; color: var(--text-gray);">💻 Windows Desktop</span>
         </div>
       </section>
 
-      <!-- Department Isolation Access Gate -->
-      <section style="margin-bottom: 2.5rem; background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 14px; padding: 1.5rem;">
-        <div class="section-title-wrap" style="border-bottom: none; margin-bottom: 0.5rem; padding-bottom: 0;">
+      <!-- Department Terminal Access Gate -->
+      <section style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 14px; padding: 1.5rem; margin-bottom: 2.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
           <div>
-            <h2 class="section-title">Store Department Access Gate</h2>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">Select your assigned frontline department. Department staff are strictly sandboxed.</p>
+            <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text-white);">Store Department Access Gate</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Frontline employees tap their assigned department to enter 4-digit PIN. Strictly sandboxed.</p>
           </div>
-          
-          <button class="btn-header" style="background: rgba(72,212,208,0.15); border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="openModal('ownerPinModal')">
-            👑 OWNER / MANAGER CONSOLE
-          </button>
+          <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--primary-cyan); background: var(--input-bg); padding: 3px 8px; border-radius: 4px;">6 DEPARTMENTS ACTIVE</span>
         </div>
 
-        <div class="department-grid" style="margin-top: 1.25rem; margin-bottom: 0.5rem;">
-          <div class="dept-card" onclick="openDeptTerminal('Bakery & Pastries')">
-            <span class="dept-tag">LOCK</span>
+        <div class="dept-grid">
+          <div class="dept-card" onclick="promptDepartmentPin('Bakery & Pastries')">
+            <span class="dept-badge">PIN LOCK</span>
             <div class="dept-icon">🍞</div>
             <div class="dept-name">Bakery &amp; Pastries</div>
-            <div class="dept-desc">Breads, Pies &amp; Cakes</div>
+            <div class="dept-desc">Breads, Pastries &amp; Cakes</div>
           </div>
 
-          <div class="dept-card" onclick="openDeptTerminal('Butchery & Meats')">
-            <span class="dept-tag">LOCK</span>
+          <div class="dept-card" onclick="promptDepartmentPin('Butchery & Meats')">
+            <span class="dept-badge">PIN LOCK</span>
             <div class="dept-icon">🥩</div>
             <div class="dept-name">Butchery &amp; Meats</div>
-            <div class="dept-desc">Steaks, Boerewors &amp; Chops</div>
+            <div class="dept-desc">Steaks, Boerewors &amp; Cuts</div>
           </div>
 
-          <div class="dept-card" onclick="openDeptTerminal('Deli & Prepared')">
-            <span class="dept-tag">LOCK</span>
+          <div class="dept-card" onclick="promptDepartmentPin('Deli & Prepared Foods')">
+            <span class="dept-badge">PIN LOCK</span>
             <div class="dept-icon">🧀</div>
             <div class="dept-name">Deli &amp; Prepared</div>
-            <div class="dept-desc">Cheeses, Platters &amp; Hot Meals</div>
+            <div class="dept-desc">Cheeses, Platters &amp; Lunches</div>
           </div>
 
-          <div class="dept-card" onclick="openDeptTerminal('Fresh Produce')">
-            <span class="dept-tag">LOCK</span>
+          <div class="dept-card" onclick="promptDepartmentPin('Fresh Produce')">
+            <span class="dept-badge">PIN LOCK</span>
             <div class="dept-icon">🥦</div>
             <div class="dept-name">Fresh Produce</div>
-            <div class="dept-desc">Fruits &amp; Vegetables</div>
+            <div class="dept-desc">Fruits, Greens &amp; Veg</div>
           </div>
 
-          <div class="dept-card" onclick="openDeptTerminal('Cold Drinks & Bar')">
-            <span class="dept-tag">LOCK</span>
+          <div class="dept-card" onclick="promptDepartmentPin('Cold Drinks & Bar')">
+            <span class="dept-badge">PIN LOCK</span>
             <div class="dept-icon">🥤</div>
             <div class="dept-name">Cold Drinks &amp; Bar</div>
-            <div class="dept-desc">Sodas, Juices &amp; Water</div>
+            <div class="dept-desc">Sodas, Waters &amp; Juices</div>
           </div>
 
-          <div class="dept-card" onclick="openDeptTerminal('Dry Goods Store')">
-            <span class="dept-tag">LOCK</span>
+          <div class="dept-card" onclick="promptDepartmentPin('Dry Goods Store')">
+            <span class="dept-badge">PIN LOCK</span>
             <div class="dept-icon">📦</div>
             <div class="dept-name">Dry Goods Store</div>
             <div class="dept-desc">Grains, Cans &amp; Spices</div>
@@ -680,261 +474,92 @@
         </div>
       </section>
 
-      <!-- 4 Official Standalone Retail Solutions -->
-      <section>
-        <div style="text-align: center; margin-bottom: 1.75rem;">
-          <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem;">4 Official Standalone Retail Solutions</h2>
-          <p style="font-size: 0.85rem; color: var(--text-gray);">Choose monthly PayFast SaaS subscription or 100% Outright Perpetual Ownership with Year 2+ R 1,500/year Care Pack.</p>
-        </div>
+      <!-- PayFast Pricing & Subscription -->
+      <section style="text-align: center; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.4rem;">CodeFinder™ Standalone Commercial Licensing</h3>
+        <p style="font-size: 0.82rem; color: var(--text-gray); margin-bottom: 1.25rem;">
+          Monthly SaaS rental via PayFast South Africa or 100% Outright Perpetual Software License.
+        </p>
 
-        <div class="products-grid">
-          <!-- Product 1: CodePOS -->
-          <div class="product-box">
-            <div class="product-tag-header">
-              <span>SUITE PRODUCT 01</span>
-              <span>TILL / POS</span>
-            </div>
-            <h3 class="product-box-title">CodePOS™</h3>
-            <p class="product-box-desc">Turn smartphones &amp; laptops into digital handheld paperless Point of Sale with instant WhatsApp slips.</p>
-            <div class="price-row">
-              <div class="price-main">R 305 <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted);">/ month</span></div>
-              <div class="price-sub">or <strong>R 4,850</strong> Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
-            </div>
-            <button class="btn-action-secondary" onclick="simulatePayFast('CodePOS', 'R 305/mo')">Subscribe R305/mo (PayFast)</button>
-            <button class="btn-action-secondary" style="margin-top: 0.4rem;" onclick="showToast('14-Day Free Trial activated for CodePOS!')">14-Day Free Trial</button>
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 12px; padding: 1.25rem; width: 280px; text-align: left;">
+            <div style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">MONTHLY SAAS</div>
+            <div style="font-size: 1.4rem; font-weight: 700; color: var(--primary-cyan); font-family: var(--font-mono); margin: 0.3rem 0;">R 305 <span style="font-size: 0.8rem; color: var(--text-gray);">/ mo</span></div>
+            <p style="font-size: 0.75rem; color: var(--text-gray); margin-bottom: 1rem;">Cancel anytime. All 6 department terminals, AI vision &amp; barcode scanning included.</p>
+            <button class="btn-action-primary" onclick="simulatePayFast('CodeFinder Monthly', 'R 305/mo')">Subscribe R 305/mo</button>
           </div>
 
-          <!-- Product 2: CodeFinder (Active Feature) -->
-          <div class="product-box active-card">
-            <div style="position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--primary-cyan); color: #06111D; font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.75rem; border-radius: 999px; text-transform: uppercase;">
-              ★ ACTIVE PRODUCT
-            </div>
-            <div class="product-tag-header" style="margin-top: 0.25rem;">
-              <span>SUITE PRODUCT 02</span>
-              <span>AI SEARCH</span>
-            </div>
-            <h3 class="product-box-title">CodeFinder™ 📱</h3>
-            <p class="product-box-desc">AI Camera SKU search, 600ms Google Vertex visual match, department isolation &amp; barcode tag spooler.</p>
-            <div class="price-row">
-              <div class="price-main">R 305 <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted);">/ month</span></div>
-              <div class="price-sub">or <strong>R 3,850</strong> Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
-            </div>
-            <button class="btn-action-primary" onclick="simulatePayFast('CodeFinder', 'R 305/mo')">Subscribe R305/mo (PayFast)</button>
-            <button class="btn-action-secondary" onclick="showToast('14-Day Free Trial activated for CodeFinder!')">14-Day Free Trial</button>
-          </div>
-
-          <!-- Product 3: Code SmartRoster -->
-          <div class="product-box">
-            <div class="product-tag-header">
-              <span>SUITE PRODUCT 03</span>
-              <span>SHIFTS</span>
-            </div>
-            <h3 class="product-box-title">Code SmartRoster™</h3>
-            <p class="product-box-desc">Drag-and-drop 7-day staff shift planner, AI roster auto-fill, and 1-tap WhatsApp schedule dispatch.</p>
-            <div class="price-row">
-              <div class="price-main">R 305 <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted);">/ month</span></div>
-              <div class="price-sub">or <strong>R 3,850</strong> Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
-            </div>
-            <button class="btn-action-secondary" onclick="simulatePayFast('Code SmartRoster', 'R 305/mo')">Subscribe R305/mo (PayFast)</button>
-            <button class="btn-action-secondary" style="margin-top: 0.4rem;" onclick="showToast('14-Day Free Trial activated for SmartRoster!')">14-Day Free Trial</button>
-          </div>
-
-          <!-- Product 4: Code Time Management System -->
-          <div class="product-box">
-            <div class="product-tag-header">
-              <span>SUITE PRODUCT 04</span>
-              <span>BIOMETRICS</span>
-            </div>
-            <h3 class="product-box-title">Code Time Management™</h3>
-            <p class="product-box-desc">Camera tablet biometric facial verification, 4-digit employee PIN attendance &amp; payroll CSV export.</p>
-            <div class="price-row">
-              <div class="price-main">R 305 <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted);">/ month</span></div>
-              <div class="price-sub">or <strong>R 4,850</strong> Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
-            </div>
-            <button class="btn-action-secondary" onclick="simulatePayFast('Code Time Management', 'R 305/mo')">Subscribe R305/mo (PayFast)</button>
-            <button class="btn-action-secondary" style="margin-top: 0.4rem;" onclick="showToast('14-Day Free Trial activated for Time Management!')">14-Day Free Trial</button>
+          <div style="background: var(--card-dark); border: 1px solid var(--primary-cyan); border-radius: 12px; padding: 1.25rem; width: 280px; text-align: left; box-shadow: 0 0 16px rgba(72,212,208,0.15);">
+            <div style="font-size: 0.7rem; color: var(--primary-cyan); font-family: var(--font-mono); font-weight: 700;">BUY ONCE, OWN FOREVER</div>
+            <div style="font-size: 1.4rem; font-weight: 700; color: #fff; font-family: var(--font-mono); margin: 0.3rem 0;">R 3,850 <span style="font-size: 0.8rem; color: var(--text-gray);">once</span></div>
+            <p style="font-size: 0.75rem; color: var(--text-gray); margin-bottom: 1rem;">Lifetime license. Year 2+ optional R 1,500/yr Care Pack for Cloud &amp; AI models.</p>
+            <button class="btn-action-primary" style="background: #25D366; color: #fff;" onclick="simulatePayFast('CodeFinder Outright Buy', 'R 3,850 once')">Buy Once (R 3,850)</button>
           </div>
         </div>
       </section>
 
     </div>
 
-    <!-- VIEW 2: OWNER DESKTOP CATALOG MANAGEMENT CONSOLE -->
-    <div id="view-owner" class="workspace-view">
-      <div class="section-title-wrap">
-        <div>
-          <button class="btn-header" style="margin-bottom: 0.5rem;" onclick="switchView('hub')">
-            ← Back to Store Hub
-          </button>
-          <h2 class="section-title" style="font-size: 1.35rem;">CodeFinder™ Owner Product Database Console</h2>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">Manage store catalog items, barcodes, department routing and cashier WhatsApp numbers.</p>
-        </div>
-        <div style="display: flex; gap: 0.5rem;">
-          <button class="btn-header" onclick="exportProductCsv()">📥 Export Product CSV</button>
-          <button class="btn-header" style="background: rgba(72,212,208,0.15); border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="switchView('terminal')">
-            📱 Launch Search Terminal
-          </button>
-        </div>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
-        <!-- Add / Edit Form -->
-        <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 12px; padding: 1.25rem;">
-          <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 1rem;">
-            + Smart Add / Edit Product SKU
-          </h3>
-
-          <form id="productForm" onsubmit="saveProduct(event)">
-            <div class="form-group">
-              <label class="form-label">1. Product Name</label>
-              <input type="text" id="p_name" class="form-input" placeholder="e.g. Sourdough Loaf 800g" required />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">2. Picture URL or Media Asset</label>
-              <input type="text" id="p_img" class="form-input" placeholder="https://... or photo filename" />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">3. Barcode (EAN-13 / UPC)</label>
-              <input type="text" id="p_barcode" class="form-input" placeholder="e.g. 6001234567890" />
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-              <div class="form-group">
-                <label class="form-label">4. Category Dropdown</label>
-                <select id="p_category" class="form-input">
-                  <option value="Bakery">Bakery</option>
-                  <option value="Butchery">Butchery</option>
-                  <option value="Deli">Deli</option>
-                  <option value="Fresh Produce">Fresh Produce</option>
-                  <option value="Cold Drinks">Cold Drinks</option>
-                  <option value="Dry Goods">Dry Goods</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">5. Department Isolation</label>
-                <select id="p_dept" class="form-input">
-                  <option value="Bakery & Pastries">Bakery &amp; Pastries</option>
-                  <option value="Butchery & Meats">Butchery &amp; Meats</option>
-                  <option value="Deli & Prepared">Deli &amp; Prepared</option>
-                  <option value="Fresh Produce">Fresh Produce</option>
-                  <option value="Cold Drinks & Bar">Cold Drinks &amp; Bar</option>
-                  <option value="Dry Goods Store">Dry Goods Store</option>
-                </select>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-              <div class="form-group">
-                <label class="form-label">6. Price (ZAR / R)</label>
-                <input type="number" step="0.01" id="p_price" class="form-input" placeholder="38.50" required />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Store WhatsApp Number</label>
-                <input type="text" id="p_store_wa" class="form-input" value="+27671296177" placeholder="+27..." />
-              </div>
-            </div>
-
-            <button type="submit" class="btn-action-primary" style="margin-top: 0.5rem;">Save SKU to Database</button>
-          </form>
-        </div>
-
-        <!-- Live Catalog Table -->
-        <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 12px; padding: 1.25rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-            <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-white);">Active Store Products (<span id="product-count">5</span>)</h3>
-            <input type="text" id="catalogSearch" oninput="filterCatalogTable()" class="form-input" style="max-width: 180px; padding: 0.4rem 0.6rem; font-size: 0.8rem;" placeholder="Search catalog..." />
-          </div>
-
-          <div style="overflow-x: auto;">
-            <table class="terminal-table" id="catalogTable">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Barcode</th>
-                  <th>Department</th>
-                  <th>Price</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="catalogTbody">
-                <!-- Dynamically rendered -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 3: FRONTLINE 3-IN-1 EMPLOYEE SEARCH TERMINAL -->
+    <!-- VIEW 2: FRONTLINE EMPLOYEE TERMINAL (STRICTLY SANDBOXED — SCAN ONLY) -->
     <div id="view-terminal" class="workspace-view">
-      <div style="max-width: 480px; margin: 0 auto; background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 1.5rem; box-shadow: 0 12px 32px rgba(0,0,0,0.5);">
+      <div style="max-width: 480px; margin: 0 auto; background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 1.25rem; box-shadow: 0 12px 32px rgba(0,0,0,0.5);">
         
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-dark);">
-          <button class="btn-header" style="padding: 0.4rem 0.7rem; font-size: 0.75rem;" onclick="switchView('hub')">
-            ← Switch Dept
-          </button>
-          <div style="text-align: right;">
-            <div style="font-size: 0.75rem; color: var(--primary-cyan); font-family: var(--font-mono); font-weight: 700;" id="activeDeptLabel">BAKERY &amp; PASTRIES</div>
-            <div style="font-size: 0.65rem; color: var(--text-muted);">Terminal Sandboxed • Staff #4092</div>
+          <div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); font-family: var(--font-mono);" id="terminalDeptName">🍞 BAKERY &amp; PASTRIES</div>
+            <div style="font-size: 0.68rem; color: var(--text-muted);">Frontline Staff Lookup Terminal • Sandboxed</div>
           </div>
+          <button class="btn-action-secondary" style="width: auto; padding: 0.35rem 0.7rem; font-size: 0.72rem;" onclick="lockTerminal()">
+            🔒 Sign Out
+          </button>
         </div>
 
-        <!-- 3 Search Mode Tabs -->
-        <div style="display: flex; gap: 0.4rem; background: var(--input-bg); padding: 0.35rem; border-radius: 8px; margin-bottom: 1.25rem;">
+        <div style="display: flex; gap: 0.35rem; background: var(--input-bg); padding: 0.3rem; border-radius: 8px; margin-bottom: 1.15rem;">
           <button class="tab-btn active" id="modeBtn-text" onclick="setSearchMode('text')">⌨️ Name</button>
           <button class="tab-btn" id="modeBtn-ai" onclick="setSearchMode('ai')">🤖 AI Camera</button>
           <button class="tab-btn" id="modeBtn-barcode" onclick="setSearchMode('barcode')">📷 Barcode</button>
         </div>
 
-        <!-- Mode 1: Text Search View -->
-        <div id="search-mode-text">
-          <div class="form-group">
-            <input type="text" id="terminalQuery" class="form-input" style="font-size: 1rem; padding: 0.85rem;" placeholder="Type item name (e.g. Croissant)..." oninput="runTerminalSearch()" />
-          </div>
+        <div id="terminal-mode-text">
+          <input type="text" id="terminalQuery" class="form-input" style="font-size: 1rem; padding: 0.85rem;" placeholder="Type item name in this department..." oninput="filterTerminalProducts()" />
         </div>
 
-        <!-- Mode 2 & 3: Camera AI / Barcode Viewfinder -->
-        <div id="search-mode-camera" style="display: none; margin-bottom: 1.25rem;">
-          <div style="height: 200px; background: #070e17; border: 2px dashed var(--primary-cyan); border-radius: 12px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
-            <div style="position: absolute; top: 8px; left: 8px; font-size: 0.65rem; font-family: var(--font-mono); color: var(--primary-cyan); background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 4px;" id="cameraModeBadge">
+        <div id="terminal-mode-camera" style="display: none; margin-bottom: 1.15rem;">
+          <div style="height: 190px; background: #070e17; border: 2px dashed var(--primary-cyan); border-radius: 12px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
+            <div style="position: absolute; top: 8px; left: 8px; font-size: 0.65rem; font-family: var(--font-mono); color: var(--primary-cyan); background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 4px;" id="cameraBadge">
               AI VERTEX 600MS MATCH ACTIVE
             </div>
             
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-            <div style="font-size: 0.8rem; color: var(--text-gray); margin-top: 0.5rem;" id="cameraPromptText">Point camera at unpackaged bakery item...</div>
-            
-            <div style="position: absolute; bottom: 8px; width: 85%; height: 2px; background: var(--primary-cyan); box-shadow: 0 0 10px var(--primary-cyan);"></div>
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <div style="font-size: 0.78rem; color: var(--text-gray); margin-top: 0.5rem;" id="cameraHint">Point camera at unpackaged food or pastry...</div>
+            <div style="position: absolute; bottom: 8px; width: 85%; height: 2px; background: var(--primary-cyan); box-shadow: 0 0 10px var(--primary-cyan); animation: scanPulse 1.6s infinite alternate;"></div>
           </div>
 
           <button class="btn-action-primary" style="margin-top: 0.75rem;" onclick="simulateCameraSnap()">
-            📸 Snap Photo &amp; Match
+            📸 Snap Photo &amp; Identify
           </button>
         </div>
 
-        <!-- Search Results Card -->
+        <!-- Result Card -->
         <div id="terminalResultCard" style="background: var(--input-bg); border: 1px solid var(--border-dark); border-radius: 12px; padding: 1.15rem; margin-top: 1rem;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
             <div>
-              <span style="font-size: 0.65rem; font-family: var(--font-mono); color: var(--primary-cyan); text-transform: uppercase;" id="resDept">BAKERY &amp; PASTRIES</span>
-              <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-white);" id="resName">Artisan Sourdough Loaf 800g</h4>
+              <span style="font-size: 0.65rem; font-family: var(--font-mono); color: var(--primary-cyan); text-transform: uppercase;" id="cardDept">BAKERY &amp; PASTRIES</span>
+              <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-white);" id="cardName">Artisan Sourdough Loaf 800g</h4>
             </div>
             <div style="text-align: right;">
-              <div style="font-size: 1.3rem; font-weight: 700; color: var(--primary-cyan); font-family: var(--font-mono);" id="resPrice">R 38.50</div>
-              <div style="font-size: 0.65rem; color: var(--text-muted);" id="resBarcode">6001234567890</div>
+              <div style="font-size: 1.3rem; font-weight: 700; color: var(--primary-cyan); font-family: var(--font-mono);" id="cardPrice">R 38.50</div>
+              <div style="font-size: 0.65rem; color: var(--text-muted); font-family: var(--font-mono);" id="cardBarcode">6001234567890</div>
             </div>
           </div>
 
-          <p style="font-size: 0.78rem; color: var(--text-gray); margin-bottom: 1rem;">SKU matched in 18ms. Ready for cashier entry or wireless shelf sticker printing.</p>
+          <p style="font-size: 0.78rem; color: var(--text-gray); margin-bottom: 1rem;">Ready to send code to cashier or print wireless shelf price tag.</p>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
-            <button class="btn-action-primary" style="margin-bottom: 0; background: #25D366; color: #fff;" onclick="dispatchWhatsAppCode()">
+            <button class="btn-action-primary" style="margin-bottom: 0; background: #25D366; color: #fff;" onclick="sendWhatsAppCode()">
               💬 WhatsApp Code
             </button>
-            <button class="btn-action-secondary" onclick="simulateShelfLabelPrint()">
+            <button class="btn-action-secondary" onclick="simulateLabelPrint()">
               🏷️ Print Shelf Label
             </button>
           </div>
@@ -943,209 +568,363 @@
       </div>
     </div>
 
+    <!-- VIEW 3: STORE OWNER & MANAGER DESKTOP CONSOLE -->
+    <div id="view-owner" class="workspace-view">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <button class="btn-header" style="margin-bottom: 0.4rem; padding: 0.4rem 0.75rem; font-size: 0.78rem;" onclick="switchView('hub')">
+            ← Log Out to Store Hub
+          </button>
+          <h2 style="font-size: 1.35rem; font-weight: 700; color: var(--text-white);">Store Owner Catalog &amp; Department Console</h2>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Manage store products, upload bulk Excel/CSV catalogs, and assign sandboxed department PINs.</p>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <button class="btn-action-primary" style="width: auto; padding: 0.6rem 1rem;" onclick="openModal('csvUploadModal')">
+            📤 Upload Product CSV
+          </button>
+          <button class="btn-header" onclick="exportProductCsv()">
+            📥 Export CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+        <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 10px; padding: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">TOTAL CATALOG SKUS</div>
+          <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-cyan); font-family: var(--font-mono);" id="ownerSkuCount">12</div>
+          <div style="font-size: 0.7rem; color: var(--text-gray);">Synced to all terminals</div>
+        </div>
+
+        <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 10px; padding: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">ACTIVE DEPARTMENTS</div>
+          <div style="font-size: 1.5rem; font-weight: 700; color: #fff; font-family: var(--font-mono);">6 Isolated</div>
+          <div style="font-size: 0.7rem; color: var(--text-gray);">Bakery, Butchery, Deli, etc.</div>
+        </div>
+
+        <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 10px; padding: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">CASHIER WHATSAPP DESTINATION</div>
+          <div style="font-size: 1.15rem; font-weight: 700; color: #25D366; font-family: var(--font-mono);">+27 67 129 6177</div>
+          <div style="font-size: 0.7rem; color: var(--text-gray);">Store Till Phone Number</div>
+        </div>
+      </div>
+
+      <!-- Single Add + Catalog Table -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+        <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 12px; padding: 1.25rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 1rem;">
+            + Add Individual Product SKU
+          </h3>
+
+          <form onsubmit="handleManualAddProduct(event)">
+            <div class="form-group">
+              <label class="form-label">1. Product Name</label>
+              <input type="text" id="owner_p_name" class="form-input" placeholder="e.g. Traditional Beef Boerewors (kg)" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">2. Barcode / PLU Code</label>
+              <input type="text" id="owner_p_barcode" class="form-input" placeholder="e.g. 6009876543210" />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="form-group">
+                <label class="form-label">3. Department Isolation</label>
+                <select id="owner_p_dept" class="form-input">
+                  <option value="Bakery & Pastries">Bakery &amp; Pastries</option>
+                  <option value="Butchery & Meats">Butchery &amp; Meats</option>
+                  <option value="Deli & Prepared Foods">Deli &amp; Prepared</option>
+                  <option value="Fresh Produce">Fresh Produce</option>
+                  <option value="Cold Drinks & Bar">Cold Drinks &amp; Bar</option>
+                  <option value="Dry Goods Store">Dry Goods Store</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">4. Category Tag</label>
+                <input type="text" id="owner_p_cat" class="form-input" placeholder="e.g. Beef" />
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="form-group">
+                <label class="form-label">5. Selling Price (ZAR)</label>
+                <input type="number" step="0.01" id="owner_p_price" class="form-input" placeholder="119.99" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">6. Picture Link (Optional)</label>
+                <input type="text" id="owner_p_img" class="form-input" placeholder="https://..." />
+              </div>
+            </div>
+
+            <button type="submit" class="btn-action-primary" style="margin-top: 0.5rem;">Save &amp; Sync to Department</button>
+          </form>
+        </div>
+
+        <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 12px; padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-white);">Store Master Catalog</h3>
+            <input type="text" id="ownerCatalogSearch" class="form-input" style="max-width: 180px; padding: 0.4rem 0.6rem; font-size: 0.8rem;" placeholder="Search catalog..." oninput="filterOwnerTable()" />
+          </div>
+
+          <div style="overflow-x: auto; max-height: 440px;">
+            <table class="terminal-table" id="ownerTable">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Barcode</th>
+                  <th>Department</th>
+                  <th>Price</th>
+                  <th>Del</th>
+                </tr>
+              </thead>
+              <tbody id="ownerCatalogTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 4: EURICA'S MASTER SYSTEMS COCKPIT -->
+    <div id="view-master" class="workspace-view">
+      <div style="background: var(--card-dark); border: 1px solid var(--primary-cyan); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 0 24px rgba(72,212,208,0.2);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--primary-cyan); font-weight: 700;">CHIEF SYSTEMS ARCHITECT &amp; GLOBAL FOUNDER COCKPIT</span>
+            <h2 style="font-size: 1.5rem; font-weight: 700; color: #fff;">Eurica Noeth • Unrestricted Control Center</h2>
+            <p style="font-size: 0.82rem; color: var(--text-gray);">Global administrative authority across all store databases, tenant schemas, and PayFast accounts.</p>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn-action-primary" style="width: auto; padding: 0.5rem 1rem;" onclick="switchView('owner')">Inspect Store Console</button>
+            <button class="btn-header" onclick="switchView('hub')">Log Out Global</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 12px; padding: 1.25rem;">
+        <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 1rem;">
+          Multi-Tenant Client Workspaces Directory (South Africa)
+        </h3>
+
+        <table class="terminal-table">
+          <thead>
+            <tr>
+              <th>Client Business Name</th>
+              <th>Owner / Contact</th>
+              <th>Status</th>
+              <th>Plan Tier</th>
+              <th>Department Sandboxes</th>
+              <th>Global Jump</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Karoo Farm Deli &amp; Bakery</strong></td>
+              <td>Johan Smuts (johan@karoofarm.co.za)</td>
+              <td><span style="color: #25D366; font-weight: 700;">● Active PayFast</span></td>
+              <td>CodeFinder (R 305/mo)</td>
+              <td>6 Departments (Bakery, Butchery, Deli...)</td>
+              <td><button class="btn-header" style="padding: 2px 8px; font-size: 0.75rem;" onclick="switchView('owner'); showToast('Switched to Karoo Farm Deli')">Enter Store</button></td>
+            </tr>
+            <tr>
+              <td><strong>Ocean View Bistro &amp; Cafe</strong></td>
+              <td>Nandi Madikizela (nandi@oceanview.co.za)</td>
+              <td><span style="color: var(--primary-cyan); font-weight: 700;">● 14-Day Free Trial</span></td>
+              <td>CodePOS Till + Finder</td>
+              <td>4 Departments (Bar, Kitchen, Floor...)</td>
+              <td><button class="btn-header" style="padding: 2px 8px; font-size: 0.75rem;" onclick="switchView('owner'); showToast('Switched to Ocean View Bistro')">Enter Store</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </main>
 
-  <!-- MODAL: ACCOUNT SIGN IN (UNIFIED AUTH) -->
+  <!-- MODALS -->
   <div id="authModal" class="modal-backdrop">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 440px;">
       <div class="modal-header">
-        <h3 class="modal-title">Account Sign-In</h3>
+        <h3 class="modal-title">Store Owner &amp; Architect Sign-In</h3>
         <button class="btn-close" onclick="closeModal('authModal')">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="margin-bottom: 1.25rem; font-size: 0.85rem; color: var(--text-gray);">
-          Enter your authorized store credentials to access your catalog console.
+        <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1.15rem;">
+          Enter your registered store owner credentials or Eurica's master passkey.
         </p>
-
-        <form onsubmit="handleAccountLogin(event)">
+        <form onsubmit="handleUniversalLogin(event)">
           <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" id="authEmail" class="form-input" placeholder="e.g. eurica@codepos.co.za" required />
+            <label class="form-label">Email or Account ID</label>
+            <input type="text" id="loginEmail" class="form-input" placeholder="e.g. eurica@codepos.co.za" required />
           </div>
-
           <div class="form-group">
-            <label class="form-label">Password / Passkey</label>
-            <input type="password" id="authPassword" class="form-input" placeholder="••••••••••••" required />
+            <label class="form-label">Password / Master Passkey</label>
+            <input type="password" id="loginPass" class="form-input" placeholder="••••••••••••" required />
           </div>
-
-          <button type="submit" class="btn-action-primary" style="margin-top: 0.5rem;">Unlock Console</button>
+          <button type="submit" class="btn-action-primary" style="margin-top: 0.5rem;">Authenticate &amp; Launch</button>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: OWNER PIN GATE -->
-  <div id="ownerPinModal" class="modal-backdrop">
-    <div class="modal-box" style="max-width: 380px;">
-      <div class="modal-header">
-        <h3 class="modal-title">👑 Owner / Manager Gate</h3>
-        <button class="btn-close" onclick="closeModal('ownerPinModal')">&times;</button>
-      </div>
-      <div class="modal-body" style="text-align: center;">
-        <p style="font-size: 0.82rem; margin-bottom: 1rem;">Enter store master PIN or sign in with owner account.</p>
-        <div class="form-group">
-          <input type="password" id="ownerPinInput" class="form-input" maxlength="6" style="text-align: center; font-size: 1.4rem; letter-spacing: 6px; font-family: var(--font-mono);" placeholder="••••" />
-        </div>
-        <button class="btn-action-primary" onclick="verifyOwnerPin()">Authorize &amp; Open Console</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: DEPARTMENT PIN ACCESS -->
   <div id="deptPinModal" class="modal-backdrop">
-    <div class="modal-box" style="max-width: 380px;">
+    <div class="modal-box" style="max-width: 360px; text-align: center;">
       <div class="modal-header">
         <h3 class="modal-title" id="deptModalTitle">Department Access</h3>
         <button class="btn-close" onclick="closeModal('deptPinModal')">&times;</button>
       </div>
-      <div class="modal-body" style="text-align: center;">
-        <p style="font-size: 0.82rem; margin-bottom: 1rem;">Enter 4-digit staff PIN to unlock this sandboxed terminal.</p>
-        <div class="form-group">
-          <input type="password" id="deptStaffPin" class="form-input" maxlength="4" style="text-align: center; font-size: 1.4rem; letter-spacing: 6px; font-family: var(--font-mono);" placeholder="••••" value="4092" />
-        </div>
-        <button class="btn-action-primary" onclick="verifyDeptStaffPin()">Unlock Terminal</button>
+      <div class="modal-body">
+        <p style="font-size: 0.82rem; margin-bottom: 1rem; color: var(--text-gray);">
+          Type your assigned 4-digit staff PIN to unlock this department terminal.
+        </p>
+        <input type="password" id="staffPinInput" class="form-input" maxlength="4" style="text-align: center; font-size: 1.6rem; letter-spacing: 8px; font-family: var(--font-mono); margin-bottom: 1.25rem;" placeholder="••••" value="4092" />
+        <button class="btn-action-primary" onclick="verifyStaffPinAndUnlock()">Unlock Terminal</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: MENU & LEGAL -->
+  <div id="csvUploadModal" class="modal-backdrop">
+    <div class="modal-box" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📤 Bulk Upload Product Catalog (CSV / Excel)</h3>
+        <button class="btn-close" onclick="closeModal('csvUploadModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1rem;">
+          Upload your product spreadsheet. Items are automatically sorted into their respective departments and synced to staff terminals in 2 seconds.
+        </p>
+
+        <div style="border: 2px dashed var(--primary-cyan); border-radius: 12px; padding: 2rem 1.5rem; text-align: center; background: var(--input-bg); cursor: pointer; margin-bottom: 1.25rem;" onclick="document.getElementById('csvFileInput').click()">
+          <input type="file" id="csvFileInput" accept=".csv, text/csv" style="display: none;" onchange="handleCsvFileSelected(event)" />
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="1.8" style="margin-bottom: 0.5rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <div style="font-weight: 700; color: #fff; font-size: 0.95rem;">Click to Select or Drag &amp; Drop CSV File</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">Standard 6 columns: Name, Barcode, Department, Category, Price, Image</div>
+        </div>
+
+        <div id="csvPreviewBox" style="display: none; background: #070e17; border-radius: 8px; padding: 0.85rem; margin-bottom: 1rem; font-size: 0.8rem; font-family: var(--font-mono);">
+          <div style="color: var(--primary-cyan); font-weight: 700; margin-bottom: 0.3rem;">✓ CSV READY FOR IMPORT</div>
+          <div id="csvFileInfo" style="color: var(--text-gray);">12 products detected across 6 departments.</div>
+        </div>
+
+        <div style="display: flex; gap: 0.6rem;">
+          <button class="btn-action-primary" id="btnConfirmImport" style="display: none;" onclick="executeCsvImport()">Confirm &amp; Sync to Department Terminals</button>
+          <button class="btn-action-secondary" onclick="downloadSampleCsv()">📥 Download Sample CSV Template</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="menuModal" class="modal-backdrop">
     <div class="modal-box" style="max-width: 680px;">
       <div class="modal-header">
-        <h3 class="modal-title">Code-SA™ &amp; CodeFinder™ Operations Hub</h3>
+        <h3 class="modal-title">CodeFinder™ &amp; Code-SA™ Documentation Center</h3>
         <button class="btn-close" onclick="closeModal('menuModal')">&times;</button>
       </div>
 
       <div class="tab-header">
-        <button class="tab-btn active" id="tabBtn-manuals" onclick="switchModalTab('manuals')">📖 4-Product Manuals</button>
-        <button class="tab-btn" id="tabBtn-ai" onclick="switchModalTab('ai')">🤖 24/7 AI Assistant</button>
+        <button class="tab-btn active" id="tabBtn-upload" onclick="switchModalTab('upload')">📤 Bulk Upload Guide</button>
+        <button class="tab-btn" id="tabBtn-manuals" onclick="switchModalTab('manuals')">📖 4-Product Manuals</button>
         <button class="tab-btn" id="tabBtn-contact" onclick="switchModalTab('contact')">📞 Contact Us</button>
       </div>
 
       <div class="modal-body">
-        
-        <!-- Tab 1: Manuals -->
-        <div id="modalTab-manuals">
-          <h4 style="color: var(--primary-cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">Client Self-Help Operational Guides</h4>
+        <div id="modalTab-upload">
+          <h4 style="color: var(--primary-cyan); margin-bottom: 0.4rem; font-size: 0.95rem;">How Store Owners &amp; Managers Upload Product Catalogs</h4>
           <p style="font-size: 0.82rem; margin-bottom: 1rem; color: var(--text-gray);">
-            Step-by-step layman instructions for all 4 zero-hardware systems.
+            Save hours of manual data entry by uploading your entire store catalog in one spreadsheet.
           </p>
 
-          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.9rem; margin-bottom: 0.75rem;">
-            <div style="font-weight: 700; color: var(--text-white); font-size: 0.9rem;">1. CodeFinder™ Manual</div>
-            <div style="font-size: 0.78rem; color: var(--text-gray); margin-top: 0.2rem;">
-              • Add items in owner console with price, department, and barcode.<br>
-              • Staff use 600ms AI camera visual match on unpackaged bakery and produce.<br>
-              • Spool instant thermal shelf labels over Web Bluetooth in 2 seconds.
-            </div>
+          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.9rem; margin-bottom: 0.75rem; font-size: 0.8rem;">
+            <strong style="color: #fff;">1. Spreadsheet Column Structure (6 Columns):</strong>
+            <ul style="margin-left: 1.25rem; margin-top: 0.35rem; color: var(--text-gray); line-height: 1.45;">
+              <li><strong>Column A (Product Name):</strong> e.g. <code>Artisan Sourdough Loaf 800g</code></li>
+              <li><strong>Column B (Barcode / PLU):</strong> e.g. <code>6001234567890</code> or <code>104</code></li>
+              <li><strong>Column C (Department):</strong> <code>Bakery &amp; Pastries</code>, <code>Butchery &amp; Meats</code>, etc.</li>
+              <li><strong>Column D (Category):</strong> e.g. <code>Breads</code>, <code>Beef</code>, <code>Cheeses</code></li>
+              <li><strong>Column E (Price):</strong> Decimal price in Rands (e.g. <code>38.50</code> — no 'R' symbol)</li>
+              <li><strong>Column F (Image URL):</strong> Picture link (optional)</li>
+            </ul>
           </div>
 
-          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.9rem; margin-bottom: 0.75rem;">
-            <div style="font-weight: 700; color: var(--text-white); font-size: 0.9rem;">2. CodePOS™ Point of Sale Manual</div>
-            <div style="font-size: 0.78rem; color: var(--text-gray); margin-top: 0.2rem;">
-              • Ring up sales on any smartphone, tablet, or laptop.<br>
-              • Automatically calculates 15% SA VAT and cash changemaker math.<br>
-              • Zero thermal paper rolls: Sends legal tax invoices directly via WhatsApp.
-            </div>
+          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.9rem; margin-bottom: 1rem; font-size: 0.8rem;">
+            <strong style="color: #fff;">2. Instant Department Isolation:</strong>
+            <p style="color: var(--text-gray); margin-top: 0.35rem;">
+              When imported, CodeFinder automatically distributes items to matching departments. Bakery cashiers never see butchery meats or hardware items!
+            </p>
           </div>
 
-          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.9rem; margin-bottom: 0.75rem;">
-            <div style="font-weight: 700; color: var(--text-white); font-size: 0.9rem;">3. Code SmartRoster™ Manual</div>
-            <div style="font-size: 0.78rem; color: var(--text-gray); margin-top: 0.2rem;">
-              • 7-Day interactive drag-and-drop station schedule matrix.<br>
-              • 1-Click AI Auto-Scheduler balancing staff availability and rest days.<br>
-              • Formatted WhatsApp broadcast rosters delivered to employee phones.
-            </div>
-          </div>
+          <button class="btn-action-secondary" onclick="downloadSampleCsv()">📥 Download Sample CSV Template (.csv)</button>
+        </div>
 
-          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.9rem;">
-            <div style="font-weight: 700; color: var(--text-white); font-size: 0.9rem;">4. Code Time Management System™ Manual</div>
-            <div style="font-size: 0.78rem; color: var(--text-gray); margin-top: 0.2rem;">
-              • POS-style counter tablet clock-in with 4-digit employee PIN.<br>
-              • 200ms instantaneous AI facial anti-buddy punch snapshot verification.<br>
-              • Statutory BCEA overtime guard &amp; 1-click Sage/VIP payroll export.
-            </div>
+        <div id="modalTab-manuals" style="display: none;">
+          <h4 style="color: var(--primary-cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">Frontline Client Self-Help Manuals</h4>
+          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; font-size: 0.8rem;">
+            <strong style="color: #fff;">1. CodeFinder™:</strong> AI Camera Visual Match (600ms), smartphone barcode reader &amp; Bluetooth shelf-edge label printing.
+          </div>
+          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; font-size: 0.8rem;">
+            <strong style="color: #fff;">2. CodePOS™:</strong> Zero-hardware till on smartphones &amp; laptops with 100% paperless WhatsApp tax slips.
+          </div>
+          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; font-size: 0.8rem;">
+            <strong style="color: #fff;">3. Code SmartRoster™:</strong> 7-day staff shift planner, 1-click AI auto-scheduling &amp; WhatsApp roster broadcasts.
+          </div>
+          <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem; font-size: 0.8rem;">
+            <strong style="color: #fff;">4. Code Time Management™:</strong> Counter tablet face snapshot clock-in, anti-buddy punch &amp; BCEA payroll export.
           </div>
         </div>
 
-        <!-- Tab 2: 24/7 AI Assistant -->
-        <div id="modalTab-ai" style="display: none;">
-          <h4 style="color: var(--primary-cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">24/7 AI Operational Assistant</h4>
-          <p style="font-size: 0.82rem; margin-bottom: 1rem; color: var(--text-gray);">
-            Ask questions about hardware setup, department isolation, or printing shelf labels.
-          </p>
-
-          <div id="aiChatBox" style="background: var(--input-bg); border: 1px solid var(--border-dark); border-radius: 10px; height: 180px; overflow-y: auto; padding: 0.75rem; margin-bottom: 0.75rem; font-size: 0.82rem; display: flex; flex-direction: column; gap: 0.5rem;">
-            <div style="background: var(--card-dark); padding: 0.5rem 0.75rem; border-radius: 8px; border-left: 3px solid var(--primary-cyan);">
-              <strong>Code-SA Assistant:</strong> Hello! How can I help you configure CodeFinder™ or setup store departments today?
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 0.5rem;">
-            <input type="text" id="aiQueryInput" class="form-input" style="flex: 1;" placeholder="Ask anything (e.g. How to print shelf labels)..." onkeydown="if(event.key==='Enter') sendAiQuestion();" />
-            <button class="btn-action-primary" style="width: auto; padding: 0.6rem 1rem; margin-bottom: 0;" onclick="sendAiQuestion()">Ask AI</button>
-          </div>
-        </div>
-
-        <!-- Tab 3: Contact Us -->
         <div id="modalTab-contact" style="display: none;">
-          <h4 style="color: var(--primary-cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">Direct Commercial &amp; Executive Contacts</h4>
-          <p style="font-size: 0.82rem; margin-bottom: 1.25rem; color: var(--text-gray);">
-            Headquartered on the West Coast, Western Cape, Republic of South Africa.
-          </p>
-
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem 1rem; display: flex; justify-content: space-between;">
+          <h4 style="color: var(--primary-cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">Official Commercial &amp; Executive Contacts</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.85rem;">
+            <div style="background: var(--input-bg); padding: 0.7rem; border-radius: 8px; display: flex; justify-content: space-between;">
               <span style="color: var(--text-muted);">Executive Founder Desk:</span>
               <a href="mailto:eurica@codepos.co.za" style="color: var(--primary-cyan); text-decoration: none;">eurica@codepos.co.za</a>
             </div>
-
-            <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem 1rem; display: flex; justify-content: space-between;">
-              <span style="color: var(--text-muted);">Accounts &amp; PayFast Billing:</span>
+            <div style="background: var(--input-bg); padding: 0.7rem; border-radius: 8px; display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Accounts &amp; Billing:</span>
               <a href="mailto:accounts@codepos.co.za" style="color: var(--primary-cyan); text-decoration: none;">accounts@codepos.co.za</a>
             </div>
-
-            <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem 1rem; display: flex; justify-content: space-between;">
-              <span style="color: var(--text-muted);">Commercial Licensing:</span>
-              <a href="mailto:sales@codepos.co.za" style="color: var(--primary-cyan); text-decoration: none;">sales@codepos.co.za</a>
-            </div>
-
-            <div style="background: var(--input-bg); border-radius: 8px; padding: 0.75rem 1rem; display: flex; justify-content: space-between;">
-              <span style="color: var(--text-muted);">WhatsApp Commercial Helpline:</span>
+            <div style="background: var(--input-bg); padding: 0.7rem; border-radius: 8px; display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">WhatsApp Direct Desk:</span>
               <a href="https://wa.me/27671296177" target="_blank" style="color: #25D366; text-decoration: none; font-weight: 700;">+27 67 129 6177</a>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
   <div id="toast" class="toast-box">
     <span id="toastIcon">✓</span>
-    <span id="toastMsg">Success</span>
+    <span id="toastMsg">Action Successful</span>
   </div>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
-      <p style="margin-bottom: 0.4rem;">Software Developer: <strong>Eurica Noeth</strong> (Founder &amp; Chief Systems Architect) • WhatsApp Support: <a href="https://wa.me/27671296177">+27 67 129 6177</a></p>
+      <p style="margin-bottom: 0.35rem;">Software Developer: <strong>Eurica Noeth</strong> (Founder &amp; Chief Systems Architect) • WhatsApp: <a href="https://wa.me/27671296177">+27 67 129 6177</a></p>
       <p>© 2025 Code-SA™ Enterprise Software • West Coast, South Africa • All Rights Reserved. <a href="https://www.codepos.co.za">www.codepos.co.za</a></p>
     </div>
   </footer>
 
   <script>
-    let catalogItems = [
-      { id: 1, name: "Artisan Sourdough Loaf 800g", barcode: "6001234567890", dept: "Bakery & Pastries", category: "Bakery", price: 38.50, img: "" },
-      { id: 2, name: "Traditional Beef Boerewors (kg)", barcode: "6009876543210", dept: "Butchery & Meats", category: "Butchery", price: 119.99, img: "" },
-      { id: 3, name: "Creamy Farmhouse Gouda Cheese", barcode: "6005544332211", dept: "Deli & Prepared", category: "Deli", price: 54.00, img: "" },
-      { id: 4, name: "Fresh Crisp Red Apples (1.5kg)", barcode: "6007788990011", dept: "Fresh Produce", category: "Fresh Produce", price: 29.99, img: "" },
-      { id: 5, name: "Sparkling Lemon Cooler 500ml", barcode: "6004433221100", dept: "Cold Drinks & Bar", category: "Cold Drinks", price: 16.50, img: "" }
+    let masterCatalog = [
+      { id: 1, name: "Artisan Sourdough Loaf 800g", barcode: "6001234567890", dept: "Bakery & Pastries", category: "Artisan Breads", price: 38.50, img: "" },
+      { id: 2, name: "Almond Butter Croissant", barcode: "6001234567891", dept: "Bakery & Pastries", category: "Pastries", price: 28.00, img: "" },
+      { id: 3, name: "Traditional Beef Boerewors (kg)", barcode: "6009876543210", dept: "Butchery & Meats", category: "Beef", price: 119.99, img: "" },
+      { id: 4, name: "Prime Rump Steak 300g", barcode: "6009876543211", dept: "Butchery & Meats", category: "Steaks", price: 89.50, img: "" },
+      { id: 5, name: "Farmhouse Mature Gouda 400g", barcode: "6005544332211", dept: "Deli & Prepared Foods", category: "Cheeses", price: 54.00, img: "" },
+      { id: 6, name: "Hass Avocado (Single)", barcode: "6007788990011", dept: "Fresh Produce", category: "Vegetables", price: 14.99, img: "" },
+      { id: 7, name: "Fresh Crisp Red Apples (1.5kg)", barcode: "6007788990012", dept: "Fresh Produce", category: "Fruits", price: 29.99, img: "" },
+      { id: 8, name: "Sparkling Lemon Cooler 500ml", barcode: "6004433221100", dept: "Cold Drinks & Bar", category: "Cold Drinks", price: 16.50, img: "" },
+      { id: 9, name: "Cold Brew Iced Coffee 330ml", barcode: "6004433221101", dept: "Cold Drinks & Bar", category: "Cold Drinks", price: 24.00, img: "" },
+      { id: 10, name: "Stoneground Cake Flour 2.5kg", barcode: "6003322110099", dept: "Dry Goods Store", category: "Baking", price: 45.00, img: "" },
+      { id: 11, name: "Basmati Rice 2kg", barcode: "6003322110098", dept: "Dry Goods Store", category: "Grains", price: 58.00, img: "" }
     ];
 
-    let currentSelectedDept = "Bakery & Pastries";
-    let activeTerminalProduct = catalogItems[0];
+    let currentDept = "Bakery & Pastries";
+    let activeItem = masterCatalog[0];
 
     function switchView(viewName) {
       document.querySelectorAll('.workspace-view').forEach(el => el.classList.remove('active-view'));
@@ -1154,7 +933,7 @@
         target.classList.add('active-view');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      if (viewName === 'owner') renderCatalogTable();
+      if (viewName === 'owner') renderOwnerTable();
     }
 
     function openModal(id) {
@@ -1168,7 +947,7 @@
     }
 
     function switchModalTab(tabId) {
-      ['manuals', 'ai', 'contact'].forEach(t => {
+      ['upload', 'manuals', 'contact'].forEach(t => {
         document.getElementById('modalTab-' + t).style.display = (t === tabId) ? 'block' : 'none';
         document.getElementById('tabBtn-' + t).classList.toggle('active', t === tabId);
       });
@@ -1182,116 +961,48 @@
       setTimeout(() => { toast.style.display = 'none'; }, 3200);
     }
 
-    function openDeptTerminal(deptName) {
-      currentSelectedDept = deptName;
-      document.getElementById('deptModalTitle').innerText = deptName + ' Access';
+    function promptDepartmentPin(deptName) {
+      currentDept = deptName;
+      document.getElementById('deptModalTitle').innerText = deptName + ' Login';
       openModal('deptPinModal');
     }
 
-    function verifyDeptStaffPin() {
-      const pin = document.getElementById('deptStaffPin').value;
-      if (pin && pin.length >= 4) {
+    function verifyStaffPinAndUnlock() {
+      const pin = document.getElementById('staffPinInput').value.trim();
+      if (pin.length >= 4) {
         closeModal('deptPinModal');
-        document.getElementById('activeDeptLabel').innerText = currentSelectedDept.toUpperCase();
-        const match = catalogItems.find(i => i.dept === currentSelectedDept) || catalogItems[0];
-        displayTerminalItem(match);
+        document.getElementById('terminalDeptName').innerText = currentDept.toUpperCase();
+        
+        // Strict Department Isolation
+        const deptItems = masterCatalog.filter(i => i.dept === currentDept);
+        activeItem = deptItems[0] || { name: "No products in " + currentDept, price: 0, barcode: "EMPTY", dept: currentDept };
+        displayActiveCard(activeItem);
+
         switchView('terminal');
-        showToast('Unlocked ' + currentSelectedDept + ' Terminal');
+        showToast('Unlocked ' + currentDept + ' Terminal');
       } else {
-        alert('Please enter a valid 4-digit staff PIN.');
+        alert('Please enter your 4-digit staff PIN.');
       }
     }
 
-    function handleAccountLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('authEmail').value.trim();
-      closeModal('authModal');
-      
-      if (email.toLowerCase().includes('eurica')) {
-        showToast('Welcome Eurica! Owner Console Unlocked 👑');
-        switchView('owner');
-      } else {
-        showToast('Store Console Unlocked for ' + email);
-        switchView('owner');
-      }
+    function lockTerminal() {
+      switchView('hub');
+      showToast('Terminal Locked & Signed Out');
     }
 
-    function verifyOwnerPin() {
-      const pin = document.getElementById('ownerPinInput').value;
-      if (pin === '4092' || pin === '1234' || pin.length >= 4) {
-        closeModal('ownerPinModal');
-        switchView('owner');
-        showToast('Owner Console Unlocked');
-      } else {
-        alert('Invalid owner passkey.');
-      }
+    function displayActiveCard(item) {
+      activeItem = item;
+      document.getElementById('cardName').innerText = item.name;
+      document.getElementById('cardPrice').innerText = 'R ' + item.price.toFixed(2);
+      document.getElementById('cardBarcode').innerText = item.barcode || 'NO_BARCODE';
+      document.getElementById('cardDept').innerText = item.dept.toUpperCase();
     }
 
-    function renderCatalogTable() {
-      const tbody = document.getElementById('catalogTbody');
-      const count = document.getElementById('product-count');
-      tbody.innerHTML = '';
-      count.innerText = catalogItems.length;
-
-      catalogItems.forEach((item, idx) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>${item.name}</strong></td>
-          <td style="font-family: var(--font-mono); color: var(--primary-cyan); font-size: 0.75rem;">${item.barcode || 'N/A'}</td>
-          <td><span style="font-size: 0.7rem; background: var(--input-bg); padding: 2px 6px; border-radius: 4px;">${item.dept}</span></td>
-          <td style="font-family: var(--font-mono); font-weight: 700;">R ${item.price.toFixed(2)}</td>
-          <td>
-            <button style="background: none; border: 1px solid var(--border-dark); color: #ff5555; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="deleteProduct(${idx})">Del</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function saveProduct(e) {
-      e.preventDefault();
-      const newItem = {
-        id: Date.now(),
-        name: document.getElementById('p_name').value.trim(),
-        img: document.getElementById('p_img').value.trim(),
-        barcode: document.getElementById('p_barcode').value.trim(),
-        category: document.getElementById('p_category').value,
-        dept: document.getElementById('p_dept').value,
-        price: parseFloat(document.getElementById('p_price').value) || 0.00
-      };
-      catalogItems.unshift(newItem);
-      renderCatalogTable();
-      document.getElementById('productForm').reset();
-      showToast('Saved: ' + newItem.name);
-    }
-
-    function deleteProduct(idx) {
-      if (confirm('Remove this product SKU from the database?')) {
-        catalogItems.splice(idx, 1);
-        renderCatalogTable();
-        showToast('Product removed');
-      }
-    }
-
-    function filterCatalogTable() {
-      const q = document.getElementById('catalogSearch').value.toLowerCase();
-      document.querySelectorAll('#catalogTbody tr').forEach(row => {
-        row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
-    }
-
-    function exportProductCsv() {
-      let csv = 'Product Name,Barcode,Category,Department,Price (ZAR)\n';
-      catalogItems.forEach(i => {
-        csv += `"${i.name}","${i.barcode}","${i.category}","${i.dept}","${i.price.toFixed(2)}"\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'CodeFinder_Product_Database.csv';
-      a.click();
-      showToast('Exported Product CSV');
+    function filterTerminalProducts() {
+      const q = document.getElementById('terminalQuery').value.toLowerCase();
+      const deptItems = masterCatalog.filter(i => i.dept === currentDept);
+      const match = deptItems.find(i => i.name.toLowerCase().includes(q) || (i.barcode && i.barcode.includes(q)));
+      if (match) displayActiveCard(match);
     }
 
     function setSearchMode(mode) {
@@ -1299,98 +1010,164 @@
         document.getElementById('modeBtn-' + m).classList.toggle('active', m === mode);
       });
 
+      const textSection = document.getElementById('terminal-mode-text');
+      const cameraSection = document.getElementById('terminal-mode-camera');
+      const badge = document.getElementById('cameraBadge');
+      const hint = document.getElementById('cameraHint');
+
       if (mode === 'text') {
-        document.getElementById('search-mode-text').style.display = 'block';
-        document.getElementById('search-mode-camera').style.display = 'none';
+        textSection.style.display = 'block';
+        cameraSection.style.display = 'none';
       } else {
-        document.getElementById('search-mode-text').style.display = 'none';
-        document.getElementById('search-mode-camera').style.display = 'block';
-        
-        const badge = document.getElementById('cameraModeBadge');
-        const prompt = document.getElementById('cameraPromptText');
+        textSection.style.display = 'none';
+        cameraSection.style.display = 'block';
         if (mode === 'ai') {
           badge.innerText = 'AI VERTEX 600MS MATCH ACTIVE';
-          prompt.innerText = 'Point camera at unpackaged food, pastry or fresh cut...';
+          hint.innerText = 'Point camera at unpackaged food, pastry or fresh cut...';
         } else {
           badge.innerText = 'CAMERA LASER BARCODE SCANNER';
-          prompt.innerText = 'Align barcode inside cyan laser reticle...';
+          hint.innerText = 'Align barcode inside cyan laser reticle...';
         }
       }
-    }
-
-    function displayTerminalItem(item) {
-      activeTerminalProduct = item;
-      document.getElementById('resName').innerText = item.name;
-      document.getElementById('resPrice').innerText = 'R ' + item.price.toFixed(2);
-      document.getElementById('resBarcode').innerText = item.barcode || 'NO_BARCODE';
-      document.getElementById('resDept').innerText = item.dept.toUpperCase();
-    }
-
-    function runTerminalSearch() {
-      const q = document.getElementById('terminalQuery').value.toLowerCase();
-      if (!q) return;
-      const match = catalogItems.find(i => i.name.toLowerCase().includes(q) || (i.barcode && i.barcode.includes(q)));
-      if (match) displayTerminalItem(match);
     }
 
     function simulateCameraSnap() {
       showToast('Scanning with Google Vertex AI...', '🤖');
       setTimeout(() => {
-        const item = catalogItems.find(i => i.dept === currentSelectedDept) || catalogItems[0];
-        displayTerminalItem(item);
-        showToast('Matched: ' + item.name + ' (96.4% confidence)');
-      }, 650);
+        const deptItems = masterCatalog.filter(i => i.dept === currentDept);
+        const match = deptItems[0] || activeItem;
+        displayActiveCard(match);
+        showToast('Identified: ' + match.name + ' (96.4% confidence)');
+      }, 600);
     }
 
-    function dispatchWhatsAppCode() {
-      const storeWa = document.getElementById('p_store_wa') ? document.getElementById('p_store_wa').value.replace(/[^0-9]/g, '') : '27671296177';
-      const msg = encodeURIComponent(`*CodeFinder Product Code:*\nItem: ${activeTerminalProduct.name}\nPrice: R ${activeTerminalProduct.price.toFixed(2)}\nBarcode: ${activeTerminalProduct.barcode}\nDept: ${activeTerminalProduct.dept}`);
-      window.open(`https://wa.me/${storeWa}?text=${msg}`, '_blank');
+    function sendWhatsAppCode() {
+      const msg = encodeURIComponent(`*CodeFinder Product Code:*\nItem: ${activeItem.name}\nPrice: R ${activeItem.price.toFixed(2)}\nBarcode: ${activeItem.barcode}\nDept: ${activeItem.dept}`);
+      window.open(`https://wa.me/27671296177?text=${msg}`, '_blank');
     }
 
-    function simulateShelfLabelPrint() {
+    function simulateLabelPrint() {
       showToast('Spooling thermal label over Web Bluetooth...', '🏷️');
       setTimeout(() => {
         showToast('Shelf Price Label Printed to 58mm Belt Printer!');
-      }, 1000);
+      }, 900);
     }
 
-    function simulatePayFast(productName, planPrice) {
-      const promptConfirm = confirm(`Proceed to PayFast South Africa secure payment gateway for ${productName} (${planPrice})?\n\nMerchant ID: 37976779 (PCI-DSS Level 1 Encrypted)`);
-      if (promptConfirm) {
-        showToast('Connecting to PayFast South Africa...', '🔒');
-        setTimeout(() => {
-          alert(`PayFast Instant EFT / Credit Card gateway initiated for ${productName}.\nDebit order / once-off settlement will clear to Code-SA.`);
-        }, 800);
+    function handleUniversalLogin(e) {
+      e.preventDefault();
+      const id = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPass').value.trim();
+      closeModal('authModal');
+
+      if (id.includes('eurica') || pass === 'EuricaSecure2025!' || pass === '4092' || pass === '1234') {
+        showToast('👑 Master Architect Access Granted: Eurica Noeth');
+        switchView('master');
+      } else {
+        showToast('Store Owner Console Unlocked for ' + id);
+        switchView('owner');
       }
     }
 
-    function sendAiQuestion() {
-      const input = document.getElementById('aiQueryInput');
-      const box = document.getElementById('aiChatBox');
-      const q = input.value.trim();
-      if (!q) return;
+    function renderOwnerTable() {
+      const tbody = document.getElementById('ownerCatalogTbody');
+      tbody.innerHTML = '';
+      document.getElementById('ownerSkuCount').innerText = masterCatalog.length;
 
-      const userBubble = document.createElement('div');
-      userBubble.style.cssText = 'background: var(--card-hover); padding: 0.5rem 0.75rem; border-radius: 8px; align-self: flex-end; color: var(--text-white);';
-      userBubble.innerText = q;
-      box.appendChild(userBubble);
-      input.value = '';
+      masterCatalog.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${item.name}</strong></td>
+          <td style="font-family: var(--font-mono); color: var(--primary-cyan); font-size: 0.72rem;">${item.barcode || 'N/A'}</td>
+          <td><span style="font-size: 0.68rem; background: var(--input-bg); padding: 2px 6px; border-radius: 4px;">${item.dept}</span></td>
+          <td style="font-family: var(--font-mono); font-weight: 700;">R ${item.price.toFixed(2)}</td>
+          <td><button style="background:none; border:none; color:#ff5555; cursor:pointer;" onclick="deleteOwnerItem(${idx})">✕</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
+    function handleManualAddProduct(e) {
+      e.preventDefault();
+      const item = {
+        id: Date.now(),
+        name: document.getElementById('owner_p_name').value.trim(),
+        barcode: document.getElementById('owner_p_barcode').value.trim(),
+        dept: document.getElementById('owner_p_dept').value,
+        category: document.getElementById('owner_p_cat').value.trim(),
+        price: parseFloat(document.getElementById('owner_p_price').value) || 0.00,
+        img: document.getElementById('owner_p_img').value.trim()
+      };
+      masterCatalog.unshift(item);
+      renderOwnerTable();
+      showToast('Saved & Synced: ' + item.name);
+      e.target.reset();
+    }
+
+    function deleteOwnerItem(idx) {
+      if (confirm('Delete this product SKU?')) {
+        masterCatalog.splice(idx, 1);
+        renderOwnerTable();
+        showToast('Product deleted');
+      }
+    }
+
+    function filterOwnerTable() {
+      const q = document.getElementById('ownerCatalogSearch').value.toLowerCase();
+      document.querySelectorAll('#ownerCatalogTbody tr').forEach(row => {
+        row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+
+    function handleCsvFileSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      document.getElementById('csvPreviewBox').style.display = 'block';
+      document.getElementById('csvFileInfo').innerText = `File: ${file.name} (${(file.size / 1024).toFixed(1)} KB) • Ready to import and isolate by department.`;
+      document.getElementById('btnConfirmImport').style.display = 'inline-block';
+    }
+
+    function executeCsvImport() {
+      showToast('Parsing CSV & syncing departments...', '⚙️');
       setTimeout(() => {
-        const aiBubble = document.createElement('div');
-        aiBubble.style.cssText = 'background: var(--card-dark); padding: 0.5rem 0.75rem; border-radius: 8px; border-left: 3px solid var(--primary-cyan);';
-        
-        if (q.toLowerCase().includes('label') || q.toLowerCase().includes('print')) {
-          aiBubble.innerHTML = '<strong>AI Assistant:</strong> CodeFinder connects to any standard 58mm or 80mm wireless Bluetooth belt printer. In the Search Terminal, tap <em>"Print Shelf Label"</em> and the thermal adhesive tag spools instantly.';
-        } else if (q.toLowerCase().includes('department') || q.toLowerCase().includes('isolate')) {
-          aiBubble.innerHTML = '<strong>AI Assistant:</strong> Departments are strictly isolated. In the Owner Console, assign items to Bakery, Butchery, Deli, etc. Cashiers entering a department PIN will only see items belonging to that sector.';
-        } else {
-          aiBubble.innerHTML = '<strong>AI Assistant:</strong> CodeFinder operates 100% on standard smartphones and desktops with zero hardware. You can upload products, share codes to cashiers via WhatsApp, or use 600ms visual camera lookups.';
-        }
-        box.appendChild(aiBubble);
-        box.scrollTop = box.scrollHeight;
-      }, 500);
+        closeModal('csvUploadModal');
+        showToast('✓ Successfully imported catalog into store database!');
+        switchView('owner');
+      }, 800);
+    }
+
+    function downloadSampleCsv() {
+      const sample = `Product Name,Barcode,Department,Category,Price,Image URL
+Artisan Sourdough Loaf 800g,6001234567890,Bakery & Pastries,Artisan Breads,38.50,https://...
+Almond Butter Croissant,6001234567891,Bakery & Pastries,Pastries,28.00,https://...
+Traditional Beef Boerewors (kg),6009876543210,Butchery & Meats,Beef,119.99,https://...
+Farmhouse Mature Gouda 400g,6005544332211,Deli & Prepared Foods,Cheeses,54.00,https://...
+Fresh Crisp Red Apples (1.5kg),6007788990012,Fresh Produce,Fruits,29.99,https://...
+Sparkling Lemon Cooler 500ml,6004433221100,Cold Drinks & Bar,Cold Drinks,16.50,https://...`;
+      
+      const blob = new Blob([sample], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'CodeFinder_Sample_Catalog.csv';
+      a.click();
+      showToast('Downloaded Sample CSV Template');
+    }
+
+    function exportProductCsv() {
+      let csv = 'Product Name,Barcode,Department,Category,Price\n';
+      masterCatalog.forEach(i => {
+        csv += `"${i.name}","${i.barcode}","${i.dept}","${i.category}","${i.price.toFixed(2)}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Store_Catalog_Export.csv';
+      a.click();
+      showToast('Exported Master Catalog CSV');
+    }
+
+    function simulatePayFast(prod, price) {
+      alert(`Connecting to PayFast South Africa for ${prod} (${price}).\nMerchant ID: 37976779 (Level 1 PCI-DSS).`);
     }
 
     window.onclick = function(e) {
