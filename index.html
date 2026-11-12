@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>CodeFinder™ — AI Camera SKU & Barcode Product Search (South Africa)</title>
   <meta name="description" content="CodeFinder™ by Code-SA: Zero-hardware AI product search, camera barcode scanner, and catalog management for retail stores, bakeries, delis, and supermarkets." />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230B1422' stroke='%2348D4D0' stroke-width='3'/%3E%3Crect x='32' y='18' width='36' height='64' rx='6' fill='none' stroke='%2348D4D0' stroke-width='3.5'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23101F33' stroke='%2348D4D0' stroke-width='3.5'/%3E%3Cline x1='60' y1='60' x2='74' y2='74' stroke='%2348D4D0' stroke-width='4' stroke-linecap='round'/%3E%3Cline x1='24' y1='50' x2='76' y2='50' stroke='%2348D4D0' stroke-width='2' stroke-dasharray='3 2'/%3E%3C/svg%3E" />
+  
+  <!-- Official Favicons -->
+  <link rel="icon" type="image/png" href="CodePOS App icon.PNG" />
+  <link rel="apple-touch-icon" href="CodePOS App icon.PNG" />
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,7 +49,6 @@
       overflow-x: hidden;
     }
 
-    /* Container */
     .container {
       width: 100%;
       max-width: 1240px;
@@ -77,13 +79,14 @@
       align-items: center;
       gap: 0.75rem;
       text-decoration: none;
-      color: var(--text-white);
     }
 
     .brand-logo-img {
-      height: 42px;
-      max-width: 140px;
+      height: 44px;
+      width: auto;
+      max-width: 170px;
       object-fit: contain;
+      display: block;
     }
 
     .header-actions {
@@ -133,16 +136,17 @@
     }
 
     .master-logo-wrap {
-      max-width: 320px;
+      max-width: 440px;
       margin: 0 auto 1.5rem;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
 
-    .master-logo-wrap img {
+    .master-hero-logo {
       width: 100%;
       height: auto;
-      max-height: 180px;
+      max-height: 190px;
       object-fit: contain;
       filter: drop-shadow(0 0 24px rgba(72, 212, 208, 0.25));
     }
@@ -167,7 +171,6 @@
       line-height: 1.5;
     }
 
-    /* Hardware Badges */
     .device-badges {
       display: flex;
       flex-wrap: wrap;
@@ -189,7 +192,6 @@
       gap: 0.4rem;
     }
 
-    /* Section Header */
     .section-title-wrap {
       display: flex;
       align-items: center;
@@ -282,7 +284,7 @@
       font-family: var(--font-mono);
     }
 
-    /* Suite Products Grid */
+    /* Products Grid */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -388,7 +390,7 @@
       color: var(--primary-cyan);
     }
 
-    /* Modal Styling */
+    /* Modals */
     .modal-backdrop {
       position: fixed;
       top: 0;
@@ -440,10 +442,6 @@
       line-height: 1;
     }
 
-    .btn-close:hover {
-      color: var(--text-white);
-    }
-
     .modal-body {
       padding: 1.25rem;
       overflow-y: auto;
@@ -481,7 +479,6 @@
       box-shadow: 0 0 8px rgba(72, 212, 208, 0.25);
     }
 
-    /* Tab switcher inside Legal/AI Drawer */
     .tab-header {
       display: flex;
       border-bottom: 1px solid var(--border-dark);
@@ -508,7 +505,6 @@
       background: var(--card-dark);
     }
 
-    /* Operational Workspaces */
     .workspace-view {
       display: none;
       padding-top: 1.5rem;
@@ -518,7 +514,6 @@
       display: block;
     }
 
-    /* Terminal Tables */
     .terminal-table {
       width: 100%;
       border-collapse: collapse;
@@ -545,7 +540,6 @@
       background: var(--card-hover);
     }
 
-    /* Footer */
     footer {
       margin-top: auto;
       border-top: 1px solid var(--border-dark);
@@ -561,7 +555,6 @@
       text-decoration: none;
     }
 
-    /* Toast */
     .toast-box {
       position: fixed;
       bottom: 1.5rem;
@@ -587,7 +580,7 @@
     <div class="container header-inner">
       <a href="#" class="brand-group" onclick="switchView('hub'); return false;">
         <!-- Code-SA Top Left Master Shield Logo -->
-        <img src="Code-SA Logo .png" alt="Code-SA™ Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/140x42/0B1422/48D4D0?text=Code-SA%E2%84%A2';">
+        <img src="Code-SA Logo .png" alt="Code-SA™ Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/150x44/0B1422/48D4D0?text=Code-SA%E2%84%A2';">
       </a>
       
       <div class="header-actions">
@@ -615,7 +608,7 @@
       <section class="hero-section">
         <!-- Master Centerpiece Logo -->
         <div class="master-logo-wrap">
-          <img src="odeFinder Logo.png" alt="CodeFinder™ Logo" onerror="this.onerror=null; this.src='https://placehold.co/320x160/0B1422/48D4D0?text=CodeFinder%E2%84%A2';">
+          <img src="CodeFinder On top left of app and dash Logo.PNG" alt="CodeFinder™ Logo" class="master-hero-logo" onerror="this.onerror=null; this.src='CodeFinder Logo Final.png';">
         </div>
 
         <h1 class="hero-title">Your Affordable All In One CodeFinder Product Search For Any Business That Needs Quick Item Identification.</h1>
@@ -890,7 +883,7 @@
           </div>
         </div>
 
-        <!-- 3 Search Mode Pills -->
+        <!-- 3 Search Mode Tabs -->
         <div style="display: flex; gap: 0.4rem; background: var(--input-bg); padding: 0.35rem; border-radius: 8px; margin-bottom: 1.25rem;">
           <button class="tab-btn active" id="modeBtn-text" onclick="setSearchMode('text')">⌨️ Name</button>
           <button class="tab-btn" id="modeBtn-ai" onclick="setSearchMode('ai')">🤖 AI Camera</button>
@@ -914,7 +907,7 @@
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
             <div style="font-size: 0.8rem; color: var(--text-gray); margin-top: 0.5rem;" id="cameraPromptText">Point camera at unpackaged bakery item...</div>
             
-            <div style="position: absolute; bottom: 8px; width: 85%; height: 2px; background: var(--primary-cyan); box-shadow: 0 0 10px var(--primary-cyan); animation: scanPulse 1.6s infinite alternate;"></div>
+            <div style="position: absolute; bottom: 8px; width: 85%; height: 2px; background: var(--primary-cyan); box-shadow: 0 0 10px var(--primary-cyan);"></div>
           </div>
 
           <button class="btn-action-primary" style="margin-top: 0.75rem;" onclick="simulateCameraSnap()">
@@ -937,7 +930,6 @@
 
           <p style="font-size: 0.78rem; color: var(--text-gray); margin-bottom: 1rem;">SKU matched in 18ms. Ready for cashier entry or wireless shelf sticker printing.</p>
 
-          <!-- 2 Essential Frontline Buttons -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
             <button class="btn-action-primary" style="margin-bottom: 0; background: #25D366; color: #fff;" onclick="dispatchWhatsAppCode()">
               💬 WhatsApp Code
@@ -982,7 +974,7 @@
     </div>
   </div>
 
-  <!-- MODAL: OWNER 4-DIGIT PIN GATE -->
+  <!-- MODAL: OWNER PIN GATE -->
   <div id="ownerPinModal" class="modal-backdrop">
     <div class="modal-box" style="max-width: 380px;">
       <div class="modal-header">
@@ -1016,7 +1008,7 @@
     </div>
   </div>
 
-  <!-- MODAL: MENU & LEGAL (WITH 24/7 AI ASSISTANT) -->
+  <!-- MODAL: MENU & LEGAL -->
   <div id="menuModal" class="modal-backdrop">
     <div class="modal-box" style="max-width: 680px;">
       <div class="modal-header">
@@ -1024,7 +1016,6 @@
         <button class="btn-close" onclick="closeModal('menuModal')">&times;</button>
       </div>
 
-      <!-- Tab Navigation -->
       <div class="tab-header">
         <button class="tab-btn active" id="tabBtn-manuals" onclick="switchModalTab('manuals')">📖 4-Product Manuals</button>
         <button class="tab-btn" id="tabBtn-ai" onclick="switchModalTab('ai')">🤖 24/7 AI Assistant</button>
@@ -1144,9 +1135,7 @@
     </div>
   </footer>
 
-  <!-- State & Logic Scripts -->
   <script>
-    // In-memory catalog state
     let catalogItems = [
       { id: 1, name: "Artisan Sourdough Loaf 800g", barcode: "6001234567890", dept: "Bakery & Pastries", category: "Bakery", price: 38.50, img: "" },
       { id: 2, name: "Traditional Beef Boerewors (kg)", barcode: "6009876543210", dept: "Butchery & Meats", category: "Butchery", price: 119.99, img: "" },
@@ -1158,7 +1147,6 @@
     let currentSelectedDept = "Bakery & Pastries";
     let activeTerminalProduct = catalogItems[0];
 
-    // Navigation View Switcher
     function switchView(viewName) {
       document.querySelectorAll('.workspace-view').forEach(el => el.classList.remove('active-view'));
       const target = document.getElementById('view-' + viewName);
@@ -1169,7 +1157,6 @@
       if (viewName === 'owner') renderCatalogTable();
     }
 
-    // Modal Handlers
     function openModal(id) {
       const modal = document.getElementById(id);
       if (modal) modal.style.display = 'flex';
@@ -1180,7 +1167,6 @@
       if (modal) modal.style.display = 'none';
     }
 
-    // Modal Tabs
     function switchModalTab(tabId) {
       ['manuals', 'ai', 'contact'].forEach(t => {
         document.getElementById('modalTab-' + t).style.display = (t === tabId) ? 'block' : 'none';
@@ -1188,7 +1174,6 @@
       });
     }
 
-    // Toast
     function showToast(msg, icon = '✓') {
       const toast = document.getElementById('toast');
       document.getElementById('toastMsg').innerText = msg;
@@ -1197,7 +1182,6 @@
       setTimeout(() => { toast.style.display = 'none'; }, 3200);
     }
 
-    // Department Terminal Gatekeeper
     function openDeptTerminal(deptName) {
       currentSelectedDept = deptName;
       document.getElementById('deptModalTitle').innerText = deptName + ' Access';
@@ -1209,8 +1193,6 @@
       if (pin && pin.length >= 4) {
         closeModal('deptPinModal');
         document.getElementById('activeDeptLabel').innerText = currentSelectedDept.toUpperCase();
-        
-        // Find matching sample item for this department
         const match = catalogItems.find(i => i.dept === currentSelectedDept) || catalogItems[0];
         displayTerminalItem(match);
         switchView('terminal');
@@ -1220,7 +1202,6 @@
       }
     }
 
-    // Owner Auth & PIN Handlers
     function handleAccountLogin(e) {
       e.preventDefault();
       const email = document.getElementById('authEmail').value.trim();
@@ -1246,7 +1227,6 @@
       }
     }
 
-    // Owner Catalog CRUD
     function renderCatalogTable() {
       const tbody = document.getElementById('catalogTbody');
       const count = document.getElementById('product-count');
@@ -1314,7 +1294,6 @@
       showToast('Exported Product CSV');
     }
 
-    // Terminal Operations
     function setSearchMode(mode) {
       ['text', 'ai', 'barcode'].forEach(m => {
         document.getElementById('modeBtn-' + m).classList.toggle('active', m === mode);
@@ -1376,7 +1355,6 @@
       }, 1000);
     }
 
-    // PayFast Checkout Simulation
     function simulatePayFast(productName, planPrice) {
       const promptConfirm = confirm(`Proceed to PayFast South Africa secure payment gateway for ${productName} (${planPrice})?\n\nMerchant ID: 37976779 (PCI-DSS Level 1 Encrypted)`);
       if (promptConfirm) {
@@ -1387,7 +1365,6 @@
       }
     }
 
-    // 24/7 AI Assistant in Menu
     function sendAiQuestion() {
       const input = document.getElementById('aiQueryInput');
       const box = document.getElementById('aiChatBox');
@@ -1416,7 +1393,6 @@
       }, 500);
     }
 
-    // Close Modals on outside click
     window.onclick = function(e) {
       if (e.target.classList.contains('modal-backdrop')) {
         e.target.style.display = 'none';
