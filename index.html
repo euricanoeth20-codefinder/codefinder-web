@@ -7,23 +7,20 @@
   <meta name="description" content="CodeFinder™ by Code-SA™: Zero-hardware AI product search, bulk CSV catalog upload, and sandboxed department terminals." />
   
   <!-- =====================================================================
-       OFFICIAL HOME SCREEN APP ICON FOR CODEFINDER™
-       Matches the CodePOS standard: Uses the exact centerpiece master logo.
-       Includes primary file path + fail-safe inline high-res vector Data URI
-       so your phone's home screen launcher will NEVER show a black "C".
+       PERMANENT HOME SCREEN APP ICON (Zero External File Dependency)
+       Direct inline high-DPI vector squircle Data URI.
+       Guarantees your iPhone & Android launcher NEVER show a generic black "C".
        ===================================================================== -->
-  <link rel="apple-touch-icon" sizes="180x180" href="odeFinder Logo.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="odeFinder Logo.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="odeFinder Logo.png" />
-  <link rel="shortcut icon" href="odeFinder Logo.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Crect x='160' y='75' width='192' height='325' rx='36' fill='%23101F33' stroke='%2348D4D0' stroke-width='14'/%3E%3Cline x1='80' y1='215' x2='432' y2='215' stroke='%2348D4D0' stroke-width='8' stroke-dasharray='18 10'/%3E%3Ccircle cx='256' cy='215' r='58' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Cline x1='298' y1='257' x2='348' y2='307' stroke='%2348D4D0' stroke-width='22' stroke-linecap='round'/%3E%3Cline x1='232' y1='215' x2='280' y2='215' stroke='%23FFFFFF' stroke-width='4'/%3E%3Cline x1='256' y1='191' x2='256' y2='239' stroke='%23FFFFFF' stroke-width='4'/%3E%3Ctext x='256' y='455' font-family='sans-serif' font-size='42' font-weight='800' fill='%23F4F8FC' text-anchor='middle' letter-spacing='3'%3ECODEFINDER%E2%84%A2%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Crect x='160' y='75' width='192' height='325' rx='36' fill='%23101F33' stroke='%2348D4D0' stroke-width='14'/%3E%3Cline x1='80' y1='215' x2='432' y2='215' stroke='%2348D4D0' stroke-width='8' stroke-dasharray='18 10'/%3E%3Ccircle cx='256' cy='215' r='58' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Cline x1='298' y1='257' x2='348' y2='307' stroke='%2348D4D0' stroke-width='22' stroke-linecap='round'/%3E%3Cline x1='232' y1='215' x2='280' y2='215' stroke='%23FFFFFF' stroke-width='4'/%3E%3Cline x1='256' y1='191' x2='256' y2='239' stroke='%23FFFFFF' stroke-width='4'/%3E%3Ctext x='256' y='455' font-family='sans-serif' font-size='42' font-weight='800' fill='%23F4F8FC' text-anchor='middle' letter-spacing='3'%3ECODEFINDER%E2%84%A2%3C/text%3E%3C/svg%3E" />
+  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Crect x='160' y='75' width='192' height='325' rx='36' fill='%23101F33' stroke='%2348D4D0' stroke-width='14'/%3E%3Ccircle cx='256' cy='215' r='58' fill='%230B1422' stroke='%2348D4D0' stroke-width='16'/%3E%3Cline x1='298' y1='257' x2='348' y2='307' stroke='%2348D4D0' stroke-width='22' stroke-linecap='round'/%3E%3C/svg%3E" />
   
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="CodeFinder™" />
   <meta name="theme-color" content="#0B1422" />
 
-  <!-- Typography -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -67,7 +64,7 @@
       padding: 0 1.25rem;
     }
 
-    /* Top Navigation */
+    /* Header */
     header {
       background: rgba(11, 20, 34, 0.95);
       backdrop-filter: blur(12px);
@@ -83,14 +80,6 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-    }
-
-    .brand-logo-img {
-      height: 44px;
-      width: auto;
-      max-width: 180px;
-      object-fit: contain;
-      display: block;
     }
 
     .header-actions {
@@ -144,21 +133,13 @@
       display: block;
     }
 
-    /* Master Centerpiece Logo */
+    /* Hero */
     .master-logo-wrap {
-      max-width: 440px;
-      margin: 1.5rem auto 1.25rem;
+      max-width: 320px;
+      margin: 1.25rem auto 1rem;
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    .master-hero-logo {
-      width: 100%;
-      height: auto;
-      max-height: 220px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 24px rgba(72, 212, 208, 0.25));
     }
 
     .hero-title {
@@ -353,7 +334,7 @@
     }
     .tab-btn.active { color: var(--primary-cyan); border-bottom: 2px solid var(--primary-cyan); background: var(--card-dark); }
 
-    /* Toast */
+    /* Toast Notification */
     .toast-box {
       position: fixed; bottom: 1.5rem; right: 1.5rem;
       background: #11283C; border: 1px solid var(--primary-cyan);
@@ -380,9 +361,27 @@
   <!-- Top Navigation Header -->
   <header>
     <div class="container header-inner">
-      <!-- Permanent Top-Left Code-SA Shield Emblem -->
+      <!-- Permanent Top-Left Code-SA Shield Emblem (Inline Vector) -->
       <a href="#" onclick="switchView('hub'); return false;" style="text-decoration: none; display: flex; align-items: center;" title="Code-SA™ Enterprise Software">
-        <img src="Code-SA Logo .png" alt="Code-SA™ Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://placehold.co/160x48/0B1422/48D4D0?text=Code-SA%E2%84%A2';" />
+        <svg style="height: 40px; width: auto;" viewBox="0 0 160 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="codeSaGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+            <linearGradient id="cyanShieldGrad" x1="0" y1="0" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#6af1ec"/>
+              <stop offset="100%" stop-color="#008b88"/>
+            </linearGradient>
+          </defs>
+          <path d="M8 17 L2 26 L8 35" stroke="#48D4D0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+          <rect x="15" y="6" width="38" height="40" rx="10" fill="#101F33" stroke="url(#cyanShieldGrad)" stroke-width="1.8" filter="url(#codeSaGlow)"/>
+          <path d="M20 18 Q23 11 34 11 Q45 11 48 18 L48 29 C48 39 34 44 34 44 C34 44 20 39 20 29 Z" fill="#14283A" stroke="#48D4D0" stroke-width="1.5"/>
+          <path d="M26 21 L30 20 L35 21 L38 23 L41 24 L42 27 L39 31 L37 36 L34 37 L31 37 L28 35 L27 31 L26 27 Z" fill="#48D4D0" opacity="0.9"/>
+          <path d="M60 17 L66 26 L60 35" stroke="#48D4D0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+          <text x="76" y="33" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="800" letter-spacing="1">Code<tspan fill="#48D4D0">-SA</tspan></text>
+          <text x="148" y="22" fill="#48D4D0" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">™</text>
+        </svg>
       </a>
       
       <div class="header-actions">
@@ -407,9 +406,73 @@
     <div id="view-hub" class="workspace-view active-view">
       
       <section style="text-align: center; padding-top: 1rem;">
-        <!-- CodeFinder Centerpiece Master Logo & App Icon -->
+        <!-- CodeFinder Centerpiece Master Logo Vector Emblem (Inline Vector) -->
         <div class="master-logo-wrap">
-          <img src="odeFinder Logo.png" alt="CodeFinder™ Master Logo" class="master-hero-logo" onerror="this.onerror=null; this.src='CodeFinder On top left of app and dash Logo.PNG';" />
+          <svg style="width: 100%; height: auto; max-height: 240px; filter: drop-shadow(0 0 24px rgba(72, 212, 208, 0.25));" viewBox="0 0 280 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="heroGlow" x="-25%" y="-25%" width="150%" height="150%">
+                <feGaussianBlur stdDeviation="4" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+              <linearGradient id="phoneBorder" x1="80" y1="10" x2="200" y2="190" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#71f7f2"/>
+                <stop offset="100%" stop-color="#006a68"/>
+              </linearGradient>
+              <radialGradient id="lensReflect" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#48D4D0" stop-opacity="0.35"/>
+                <stop offset="70%" stop-color="#101F33" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#0B1422" stop-opacity="0.9"/>
+              </radialGradient>
+            </defs>
+            <!-- Smartphone Frame -->
+            <rect x="92" y="18" width="96" height="164" rx="22" fill="#0d192a" stroke="url(#phoneBorder)" stroke-width="2.5" filter="url(#heroGlow)"/>
+            <rect x="100" y="28" width="80" height="144" rx="16" fill="#0B1422" stroke="#1B354D" stroke-width="1"/>
+            <rect x="130" y="23" width="20" height="3.5" rx="1.75" fill="#48D4D0" opacity="0.8"/>
+            <circle cx="140" cy="163" r="3.5" fill="#48D4D0" opacity="0.5"/>
+            
+            <!-- Barcode Array -->
+            <g opacity="0.95">
+              <line x1="58" y1="85" x2="58" y2="115" stroke="#FFFFFF" stroke-width="3"/>
+              <line x1="65" y1="85" x2="65" y2="115" stroke="#48D4D0" stroke-width="2"/>
+              <line x1="71" y1="85" x2="71" y2="115" stroke="#FFFFFF" stroke-width="4"/>
+              <line x1="79" y1="85" x2="79" y2="115" stroke="#48D4D0" stroke-width="1.5"/>
+              <line x1="85" y1="85" x2="85" y2="115" stroke="#FFFFFF" stroke-width="2.5"/>
+              <line x1="91" y1="85" x2="91" y2="115" stroke="#FFFFFF" stroke-width="3"/>
+              <line x1="98" y1="85" x2="98" y2="115" stroke="#48D4D0" stroke-width="2"/>
+              <line x1="104" y1="85" x2="104" y2="115" stroke="#FFFFFF" stroke-width="5"/>
+              <line x1="113" y1="85" x2="113" y2="115" stroke="#FFFFFF" stroke-width="2"/>
+              <line x1="119" y1="85" x2="119" y2="115" stroke="#48D4D0" stroke-width="3.5"/>
+              <line x1="126" y1="85" x2="126" y2="115" stroke="#FFFFFF" stroke-width="1.5"/>
+              <line x1="131" y1="85" x2="131" y2="115" stroke="#FFFFFF" stroke-width="4"/>
+              <line x1="139" y1="85" x2="139" y2="115" stroke="#48D4D0" stroke-width="2"/>
+              <line x1="145" y1="85" x2="145" y2="115" stroke="#FFFFFF" stroke-width="3"/>
+              <line x1="152" y1="85" x2="152" y2="115" stroke="#FFFFFF" stroke-width="5"/>
+              <line x1="161" y1="85" x2="161" y2="115" stroke="#48D4D0" stroke-width="1.5"/>
+              <line x1="166" y1="85" x2="166" y2="115" stroke="#FFFFFF" stroke-width="3"/>
+              <line x1="173" y1="85" x2="173" y2="115" stroke="#48D4D0" stroke-width="2.5"/>
+              <line x1="179" y1="85" x2="179" y2="115" stroke="#FFFFFF" stroke-width="4"/>
+              <line x1="187" y1="85" x2="187" y2="115" stroke="#FFFFFF" stroke-width="2"/>
+              <line x1="193" y1="85" x2="193" y2="115" stroke="#48D4D0" stroke-width="3"/>
+              <line x1="200" y1="85" x2="200" y2="115" stroke="#FFFFFF" stroke-width="1.5"/>
+              <line x1="205" y1="85" x2="205" y2="115" stroke="#FFFFFF" stroke-width="4"/>
+              <line x1="213" y1="85" x2="213" y2="115" stroke="#48D4D0" stroke-width="2"/>
+              <line x1="220" y1="85" x2="220" y2="115" stroke="#FFFFFF" stroke-width="3"/>
+            </g>
+
+            <!-- Laser Scan Line -->
+            <line x1="45" y1="100" x2="235" y2="100" stroke="#6af1ec" stroke-width="2" filter="url(#heroGlow)" stroke-dasharray="6 4"/>
+            
+            <!-- Magnifying Glass Reticle -->
+            <circle cx="140" cy="100" r="34" fill="url(#lensReflect)" stroke="#48D4D0" stroke-width="3.5" filter="url(#heroGlow)"/>
+            <line x1="164" y1="124" x2="190" y2="150" stroke="#48D4D0" stroke-width="6" stroke-linecap="round" filter="url(#heroGlow)"/>
+            <line x1="126" y1="100" x2="154" y2="100" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="140" y1="86" x2="140" y2="114" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="140" cy="100" r="6" stroke="#FFFFFF" stroke-width="1.5" fill="none"/>
+            
+            <!-- Wordmark & Subtitle -->
+            <text x="140" y="214" text-anchor="middle" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-size="27" font-weight="700" letter-spacing="0.5">Code<tspan fill="#48D4D0">Finder</tspan><tspan fill="#48D4D0" font-size="14" font-family="'JetBrains Mono', monospace" dy="-10">™</tspan></text>
+            <text x="140" y="234" text-anchor="middle" fill="#48D4D0" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" letter-spacing="2">• AI CAMERA SKU &amp; BARCODE SEARCH •</text>
+          </svg>
         </div>
 
         <h1 class="hero-title">Your Affordable All In One CodeFinder™ Product Search For Any Business That Needs Quick Item Identification.</h1>
@@ -503,7 +566,7 @@
 
     </div>
 
-    <!-- VIEW 2: FRONTLINE EMPLOYEE TERMINAL (STRICTLY SANDBOXED — SCAN ONLY) -->
+    <!-- VIEW 2: FRONTLINE EMPLOYEE TERMINAL (STRICTLY SANDBOXED) -->
     <div id="view-terminal" class="workspace-view">
       <div style="max-width: 480px; margin: 0 auto; background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 1.25rem; box-shadow: 0 12px 32px rgba(0,0,0,0.5);">
         
