@@ -1,827 +1,944 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CodeFinder™ — AI Camera SKU &amp; Barcode Product Search Terminal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CodeFinder™ — AI Camera SKU & Barcode Product Search Terminal</title>
+  
+  <!-- Apple & Android Standalone Web App Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CodeFinder">
+  <meta name="theme-color" content="#0B1422">
+  <meta name="description" content="CodeFinder™ — Zero-Hardware AI Camera SKU & Barcode Product Search Terminal for Retail Counters, Delis, Bakeries and Grocers in South Africa.">
 
-  <!-- PWA & Launcher App Icon Direct Bindings -->
-  <link rel="apple-touch-icon" href="app-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="app-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="app-icon.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#0B1422" />
+  <!-- Master App Launcher Icons & Favicon (Squircle Artwork) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230B1422' stroke='%2348D4D0' stroke-width='3'/%3E%3Ccircle cx='46' cy='46' r='18' fill='none' stroke='%2348D4D0' stroke-width='6'/%3E%3Cline x1='59' y1='59' x2='78' y2='78' stroke='%2348D4D0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='24' y1='46' x2='68' y2='46' stroke='%2348D4D0' stroke-width='2.5' opacity='0.8' stroke-dasharray='3 2'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230B1422' stroke='%2348D4D0' stroke-width='3'/%3E%3Ccircle cx='46' cy='46' r='18' fill='none' stroke='%2348D4D0' stroke-width='6'/%3E%3Cline x1='59' y1='59' x2='78' y2='78' stroke='%2348D4D0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='24' y1='46' x2='68' y2='46' stroke='%2348D4D0' stroke-width='2.5' opacity='0.8' stroke-dasharray='3 2'/%3E%3C/svg%3E">
 
-  <!-- Tailwind CSS & Google Fonts -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts & Tailwind CSS CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0B1422',
+              card: '#101F33',
+              input: '#14283A',
+              border: '#1C3752',
+              teal: '#48D4D0',
+              tealHover: '#3BC2BE',
+              grayLight: '#E2ECF6',
+              grayMuted: '#8E9EAF',
+              amber: '#FFB020',
+              red: '#FF4D4D'
+            }
+          },
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
     body {
-      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
       background-color: #0B1422;
-      color: #F4F8FC;
+      color: #E2ECF6;
+      font-family: 'Space Grotesk', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
-    .font-mono {
-      font-family: 'JetBrains Mono', monospace;
+    .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #0B1422; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #1C3752; border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #48D4D0; }
+    .squircle-card {
+      background-color: #101F33;
+      border: 1px solid #1C3752;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
     }
-    .hud-bracket {
-      border-color: #48D4D0;
-      box-shadow: 0 0 15px rgba(72, 212, 208, 0.4);
+    .squircle-glow {
+      box-shadow: 0 0 25px -4px rgba(72, 212, 208, 0.35);
     }
     @keyframes laserSweep {
-      0%, 100% { top: 15%; opacity: 0.8; }
-      50% { top: 85%; opacity: 1; }
+      0%, 100% { top: 12%; opacity: 0.9; }
+      50% { top: 84%; opacity: 1; }
     }
-    .laser-line {
+    .animate-laser {
       animation: laserSweep 2s ease-in-out infinite;
-      box-shadow: 0 0 12px #48D4D0, 0 0 24px #48D4D0;
     }
   </style>
 </head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-brand-teal selection:text-brand-navy">
 
-<body class="min-h-screen bg-[#0B1422] flex flex-col items-center justify-start antialiased selection:bg-[#48D4D0] selection:text-[#060E1A]">
+  <!-- ========================================================================= -->
+  <!-- TOP PERSISTENT NAVIGATION BAR -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-brand-navy/95 backdrop-blur border-b border-brand-border px-4 py-2.5 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      
+      <!-- Left: Official Pure Code-SA™ Shield Emblem -->
+      <a href="javascript:void(0)" onclick="navigateTo('view-openingHub')" class="flex items-center gap-2 group focus:outline-none" title="Code-SA™ Enterprise Software">
+        <div class="h-10 w-24 sm:w-28 flex items-center justify-start overflow-hidden">
+          <svg viewBox="0 0 120 70" class="h-full w-auto drop-shadow-[0_0_12px_rgba(72,212,208,0.4)] transition-transform group-hover:scale-105" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 6 L6 35 L22 64 L48 64 L64 35 L48 6 Z" stroke="#48D4D0" stroke-width="3.5" fill="#101F33" fill-opacity="0.85"/>
+            <path d="M22 14 L11 35 L22 56 L44 56 L55 35 L44 14 Z" stroke="#3BC2BE" stroke-width="1.8" fill="#0B1422" fill-opacity="0.9"/>
+            <path d="M22 24 L35 24 L27 35 L38 35 L20 50 L24 38 L16 38 Z" fill="#48D4D0"/>
+            <path d="M50 22 L55 35 L50 48" stroke="#48D4D0" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M72 26 C72 24 74 22 76 22 L98 22 C100 22 102 24 102 26 L102 30 C102 32 100 34 98 34 L80 34 L80 44 L98 44 C100 44 102 46 102 48 L102 52 C102 54 100 56 98 56 L76 56 C74 56 72 54 72 52 Z" fill="#FFFFFF"/>
+            <path d="M106 22 L112 22 L116 34 L120 22 L126 22 L119 40 L119 56 L113 56 L113 40 Z" fill="#48D4D0"/>
+          </svg>
+        </div>
+      </a>
 
-  <!-- ===================================================================== -->
-  <!-- TOP PERSISTENT GLOBAL NAVIGATION BAR                                 -->
-  <!-- ===================================================================== -->
-  <header class="w-full bg-[#060E1A]/95 backdrop-blur-md border-b border-[#14283A] sticky top-0 z-40 px-4 py-2.5 flex items-center justify-between">
-    <!-- Left: Pure Code-SA Shield Emblem -->
-    <a href="javascript:void(0)" onclick="navigateTo('viewHome')" class="flex items-center group" title="Return to Main Gate">
-      <img src="codesa-logo.png" alt="Code-SA Logo" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105 drop-shadow-[0_0_10px_rgba(72,212,208,0.3)]" onerror="this.onerror=null; this.src='Code-SA Logo .png';" />
-    </a>
+      <!-- Right: Touch-Friendly Header Controls -->
+      <div class="flex items-center gap-2">
+        <button onclick="openModal('modalMenuLegal')" class="px-3 py-1.5 rounded-xl border border-brand-border bg-brand-card hover:bg-brand-input text-xs font-mono font-semibold text-brand-grayLight flex items-center gap-1.5 transition-colors">
+          <span>☰</span>
+          <span class="hidden sm:inline">MENU &amp; LEGAL</span>
+        </button>
 
-    <!-- Right Controls: Menu & Legal + Owner Sign In -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      <button onclick="toggleModal('modalMenuLegal')" class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#101F33] hover:bg-[#14283A] text-xs sm:text-sm font-semibold text-[#8E9EAF] hover:text-white border border-[#132B40] transition-colors">
-        <svg class="w-4 h-4 text-[#48D4D0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
-        <span>MENU &amp; LEGAL</span>
-      </button>
+        <button onclick="openAuthModal()" class="px-3.5 py-1.5 rounded-xl bg-brand-teal hover:bg-brand-tealHover text-brand-navy text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-md">
+          <span>🔒</span>
+          <span>SIGN IN</span>
+        </button>
+      </div>
 
-      <button onclick="openOwnerLogin()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] text-xs sm:text-sm font-bold shadow-lg shadow-[#48D4D0]/20 transition-all">
-        <span>👑</span>
-        <span class="hidden sm:inline">OWNER SIGN IN</span>
-        <span class="sm:hidden">OWNER</span>
-      </button>
     </div>
   </header>
 
-  <!-- ===================================================================== -->
-  <!-- VIEW 1: UNIVERSAL OPENING GATEWAY & DEPARTMENT HUB                    -->
-  <!-- ===================================================================== -->
-  <main id="viewHome" class="w-full max-w-5xl px-4 py-6 flex flex-col items-center gap-6">
+  <!-- ========================================================================= -->
+  <!-- VIEW 1: MASTER OPENING HUB & AIR-GAPPED DEPARTMENT GATE -->
+  <!-- ========================================================================= -->
+  <main id="view-openingHub" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-8 animate-fadeIn">
 
-    <!-- Centerpiece Brand Logo -->
-    <div class="w-full max-w-md flex flex-col items-center text-center pt-2">
-      <img src="codefinder-logo.png" alt="CodeFinder™ Master Logo" class="w-48 sm:w-56 h-auto object-contain drop-shadow-[0_0_25px_rgba(72,212,208,0.4)] mx-auto" onerror="this.onerror=null; this.src='odeFinder Logo.png';" />
-      <h1 class="text-base sm:text-lg font-bold text-white mt-3 leading-snug">
+    <!-- Hero Branding Centerpiece -->
+    <div class="text-center space-y-3 pt-2 sm:pt-4">
+      <div class="flex justify-center">
+        <!-- Official CodeFinder™ Master Brand Logo -->
+        <div class="relative w-64 sm:w-80 h-28 sm:h-32 flex items-center justify-center p-2 rounded-2xl bg-brand-card/60 border border-brand-border/60 squircle-glow">
+          <svg viewBox="0 0 300 110" class="w-full h-full drop-shadow-[0_0_15px_rgba(72,212,208,0.35)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="25" y="10" width="46" height="85" rx="10" stroke="#48D4D0" stroke-width="3" fill="#0B1422"/>
+            <rect x="30" y="16" width="36" height="73" rx="6" fill="#101F33" opacity="0.6"/>
+            <circle cx="48" cy="52" r="15" stroke="#FFFFFF" stroke-width="3" fill="#0B1422"/>
+            <circle cx="48" cy="52" r="9" stroke="#48D4D0" stroke-width="2" fill="none"/>
+            <line x1="59" y1="63" x2="74" y2="78" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+            <line x1="16" y1="52" x2="80" y2="52" stroke="#48D4D0" stroke-width="2" stroke-dasharray="4 2"/>
+            <text x="96" y="58" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="34" fill="#FFFFFF" letter-spacing="-0.5">Code<tspan fill="#48D4D0">Finder</tspan><tspan font-size="16" dy="-14" fill="#48D4D0">™</tspan></text>
+            <text x="98" y="76" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="9" fill="#8E9EAF" letter-spacing="2.2">• AI CAMERA SKU &amp; BARCODE SEARCH •</text>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="text-lg sm:text-2xl font-bold text-white max-w-2xl mx-auto tracking-tight">
         Your Affordable All In One CodeFinder™ Product Search For Any Business That Needs Quick Item Identification.
       </h1>
-      <p class="text-xs sm:text-sm text-[#48D4D0] font-semibold mt-1 uppercase tracking-wider">
-        NO EXPENSIVE HARDWARE NEEDED &bull; TURNING ANY STANDARD SMARTPHONE (ANDROID, HUAWEI, APPLE) AND WINDOWS DESKTOP INTO AN AI PRODUCT &amp; BARCODE FINDER
+
+      <p class="text-xs sm:text-sm font-mono text-brand-teal max-w-2xl mx-auto uppercase tracking-wide">
+        NO EXPENSIVE HARDWARE NEEDED • TURNING ANY STANDARD SMARTPHONE (ANDROID, HUAWEI, APPLE) AND WINDOWS DESKTOP INTO AN AI PRODUCT &amp; BARCODE FINDER
       </p>
-    </div>
 
-    <!-- Supported Device Platforms -->
-    <div class="w-full max-w-md grid grid-cols-3 gap-2 bg-[#101F33] p-2.5 rounded-xl border border-[#14283A] text-center">
-      <div class="flex flex-col items-center">
-        <span class="text-lg">📱</span>
-        <span class="text-[11px] text-gray-300 font-semibold mt-0.5">Android</span>
-        <span class="text-[9px] text-[#48D4D0]">Smartphone</span>
-      </div>
-      <div class="flex flex-col items-center border-x border-[#14283A]">
-        <span class="text-lg">🍏</span>
-        <span class="text-[11px] text-gray-300 font-semibold mt-0.5">Apple</span>
-        <span class="text-[9px] text-[#48D4D0]">iPhone / iPad</span>
-      </div>
-      <div class="flex flex-col items-center">
-        <span class="text-lg">💻</span>
-        <span class="text-[11px] text-gray-300 font-semibold mt-0.5">Windows</span>
-        <span class="text-[9px] text-[#48D4D0]">Laptop / Desktop</span>
+      <!-- Multi-Device Compatibility Badges -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <div class="px-3.5 py-1.5 rounded-xl bg-brand-card border border-brand-border text-xs font-mono text-brand-grayLight flex items-center gap-2">
+          <span>📱</span><span>Android Smartphone</span>
+        </div>
+        <div class="px-3.5 py-1.5 rounded-xl bg-brand-card border border-brand-border text-xs font-mono text-brand-grayLight flex items-center gap-2">
+          <span>🍏</span><span>Apple iPhone</span>
+        </div>
+        <div class="px-3.5 py-1.5 rounded-xl bg-brand-card border border-brand-border text-xs font-mono text-brand-grayLight flex items-center gap-2">
+          <span>💻</span><span>Windows Laptop &amp; Desktop</span>
+        </div>
       </div>
     </div>
 
-    <!-- Department Selection Grid (Strict Isolation Gateways - Clean & Uncluttered) -->
-    <div class="w-full bg-[#101F33] p-5 sm:p-6 rounded-2xl border border-[#14283A] shadow-xl">
-      <div class="flex items-center justify-between mb-4 border-b border-[#14283A] pb-3">
+    <!-- Air-Gapped Store Departments Section -->
+    <div class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brand-border pb-3">
         <div>
-          <h2 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-[#48D4D0]"></span> SECURE STORE ACCESS GATE
+          <h2 class="text-base sm:text-lg font-bold text-white font-mono flex items-center gap-2">
+            <span>🏬</span>
+            <span>SECURE STORE ACCESS GATE</span>
           </h2>
-          <p class="text-xs text-[#8E9EAF]">Select your assigned department terminal or owner management console. Department staff are strictly sandboxed.</p>
+          <p class="text-xs text-brand-grayMuted">
+            Select a store department below. Cashier PIN required to unlock that department's search terminal.
+          </p>
         </div>
-        <button onclick="openOwnerLogin()" class="px-3 py-1.5 rounded-lg bg-[#48D4D0]/10 hover:bg-[#48D4D0]/20 text-[#48D4D0] border border-[#48D4D0]/40 text-xs font-bold flex items-center gap-1.5 transition-colors">
-          <span>👑</span> OWNER / MANAGER CONSOLE
+        <button onclick="promptDepartmentPin('all')" class="text-xs font-mono text-brand-teal hover:underline flex items-center gap-1 self-start sm:self-auto">
+          <span>🔒 Enter Department Staff PIN</span>
+          <span>→</span>
         </button>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4" id="deptGrid">
-        <!-- 1. Bakery -->
-        <button onclick="promptStaffPin('Bakery & Pastries', '04', '1001')" class="flex flex-col items-start p-4 rounded-xl bg-[#14283A] hover:bg-[#1a334a] border border-[#132B40] hover:border-[#48D4D0] transition-all text-left group">
-          <div class="flex items-center justify-between w-full">
-            <span class="text-2xl group-hover:scale-110 transition-transform">🍞</span>
-            <span class="text-[10px] font-mono text-gray-400 bg-[#060E1A] px-1.5 py-0.5 rounded border border-[#132B40]">LOCK</span>
-          </div>
-          <span class="text-sm font-bold text-white mt-2">Bakery &amp; Pastries</span>
-          <span class="text-[11px] text-[#8E9EAF] mt-0.5">Breads, Pies &amp; Cakes</span>
-        </button>
-
-        <!-- 2. Butchery -->
-        <button onclick="promptStaffPin('Butchery & Meats', '02', '1002')" class="flex flex-col items-start p-4 rounded-xl bg-[#14283A] hover:bg-[#1a334a] border border-[#132B40] hover:border-[#48D4D0] transition-all text-left group">
-          <div class="flex items-center justify-between w-full">
-            <span class="text-2xl group-hover:scale-110 transition-transform">🥩</span>
-            <span class="text-[10px] font-mono text-gray-400 bg-[#060E1A] px-1.5 py-0.5 rounded border border-[#132B40]">LOCK</span>
-          </div>
-          <span class="text-sm font-bold text-white mt-2">Butchery &amp; Meats</span>
-          <span class="text-[11px] text-[#8E9EAF] mt-0.5">Steaks, Boerewors &amp; Chops</span>
-        </button>
-
-        <!-- 3. Deli -->
-        <button onclick="promptStaffPin('Deli & Prepared', '03', '1003')" class="flex flex-col items-start p-4 rounded-xl bg-[#14283A] hover:bg-[#1a334a] border border-[#132B40] hover:border-[#48D4D0] transition-all text-left group">
-          <div class="flex items-center justify-between w-full">
-            <span class="text-2xl group-hover:scale-110 transition-transform">🧀</span>
-            <span class="text-[10px] font-mono text-gray-400 bg-[#060E1A] px-1.5 py-0.5 rounded border border-[#132B40]">LOCK</span>
-          </div>
-          <span class="text-sm font-bold text-white mt-2">Deli &amp; Prepared</span>
-          <span class="text-[11px] text-[#8E9EAF] mt-0.5">Cheeses, Platters &amp; Hot Meals</span>
-        </button>
-
-        <!-- 4. Fresh Produce -->
-        <button onclick="promptStaffPin('Fresh Produce', '01', '1004')" class="flex flex-col items-start p-4 rounded-xl bg-[#14283A] hover:bg-[#1a334a] border border-[#132B40] hover:border-[#48D4D0] transition-all text-left group">
-          <div class="flex items-center justify-between w-full">
-            <span class="text-2xl group-hover:scale-110 transition-transform">🥦</span>
-            <span class="text-[10px] font-mono text-gray-400 bg-[#060E1A] px-1.5 py-0.5 rounded border border-[#132B40]">LOCK</span>
-          </div>
-          <span class="text-sm font-bold text-white mt-2">Fresh Produce</span>
-          <span class="text-[11px] text-[#8E9EAF] mt-0.5">Fruits &amp; Vegetables</span>
-        </button>
-
-        <!-- 5. Cold Drinks & Bar -->
-        <button onclick="promptStaffPin('Cold Drinks & Bar', '05', '1005')" class="flex flex-col items-start p-4 rounded-xl bg-[#14283A] hover:bg-[#1a334a] border border-[#132B40] hover:border-[#48D4D0] transition-all text-left group">
-          <div class="flex items-center justify-between w-full">
-            <span class="text-2xl group-hover:scale-110 transition-transform">🥤</span>
-            <span class="text-[10px] font-mono text-gray-400 bg-[#060E1A] px-1.5 py-0.5 rounded border border-[#132B40]">LOCK</span>
-          </div>
-          <span class="text-sm font-bold text-white mt-2">Cold Drinks &amp; Bar</span>
-          <span class="text-[11px] text-[#8E9EAF] mt-0.5">Sodas, Juices &amp; Water</span>
-        </button>
-
-        <!-- 6. Dry Goods -->
-        <button onclick="promptStaffPin('Dry Goods Store', '06', '1006')" class="flex flex-col items-start p-4 rounded-xl bg-[#14283A] hover:bg-[#1a334a] border border-[#132B40] hover:border-[#48D4D0] transition-all text-left group">
-          <div class="flex items-center justify-between w-full">
-            <span class="text-2xl group-hover:scale-110 transition-transform">📦</span>
-            <span class="text-[10px] font-mono text-gray-400 bg-[#060E1A] px-1.5 py-0.5 rounded border border-[#132B40]">LOCK</span>
-          </div>
-          <span class="text-sm font-bold text-white mt-2">Dry Goods Store</span>
-          <span class="text-[11px] text-[#8E9EAF] mt-0.5">Grains, Cans &amp; Spices</span>
-        </button>
+      <!-- Department Squircles Grid -->
+      <div id="departmentsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+        <!-- Rendered dynamically via JavaScript -->
       </div>
     </div>
 
-    <!-- ================================================================= -->
-    <!-- 4 OFFICIAL STANDALONE RETAIL SOLUTIONS GRID (FULL UNIFORMITY)    -->
-    <!-- ================================================================= -->
-    <section class="w-full mt-2">
-      <div class="text-center mb-6">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#101F33] border border-[#14283A] text-xs font-mono text-[#48D4D0] uppercase tracking-wider font-semibold">
-          <span class="w-2 h-2 rounded-full bg-[#48D4D0] animate-pulse"></span> STANDALONE PRICING &amp; PERPETUAL LICENSES
-        </span>
-        <h2 class="text-xl sm:text-2xl font-bold text-white mt-2">4 Official Standalone Retail Solutions</h2>
-        <p class="text-xs sm:text-sm text-[#8E9EAF] mt-1 max-w-xl mx-auto">
-          Choose monthly PayFast SaaS subscription or 100% Outright Perpetual Ownership with Year 2+ R 1,500/year Care Pack. Includes risk-free 14-day free trial on all solutions.
-        </p>
+    <!-- Pricing & Commercial Packaging -->
+    <div class="space-y-4 pt-4 border-t border-brand-border">
+      <div class="text-center space-y-1">
+        <h2 class="text-sm sm:text-base font-bold font-mono text-white uppercase tracking-wider">
+          • PACKAGE OPTIONS •
+        </h2>
+        <p class="text-xs font-mono text-brand-grayMuted">Select Your License Tier Option</p>
+        <p class="text-[11px] font-mono text-brand-teal font-semibold">14-Day Free Trial Included With All Options</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- 1. CodePOS -->
-        <div class="bg-[#101F33] rounded-2xl p-5 border border-[#14283A] flex flex-col justify-between hover:border-[#48D4D0]/50 transition-all">
-          <div>
-            <div class="flex items-center justify-between pb-3 border-b border-[#14283A]">
-              <span class="text-[11px] font-mono text-gray-400">SUITE PRODUCT 01</span>
-              <span class="text-[10px] font-mono bg-[#060E1A] text-[#48D4D0] px-2 py-0.5 rounded border border-[#132B40]">TILL / POS</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+        
+        <!-- Product 1: CodeFinder -->
+        <div class="squircle-card rounded-2xl p-4 sm:p-5 border-2 border-brand-teal flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-brand-input text-brand-teal font-bold uppercase">Option 1</span>
+              <span class="text-[11px] font-mono text-emerald-400">14-Day Trial</span>
             </div>
-            <h3 class="text-lg font-bold text-white mt-3">CodePOS™</h3>
-            <p class="text-xs text-gray-400 mt-1">Zero-hardware mobile &amp; desktop POS, WhatsApp tax slips, changemaker, table floor plans &amp; KDS bump screen.</p>
-            <ul class="mt-4 space-y-2 text-xs text-gray-300">
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> Digital handheld &amp; laptop POS</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> 15% SA VAT WhatsApp receipts</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> Works offline during loadshedding</li>
-            </ul>
-          </div>
-          <div class="mt-6 pt-4 border-t border-[#14283A]">
-            <div class="flex items-baseline gap-1">
-              <span class="text-2xl font-bold font-mono text-white">R 305</span>
-              <span class="text-xs text-gray-400">/ month</span>
+            <h3 class="text-base font-bold text-white">CodeFinder™</h3>
+            <p class="text-xs text-brand-grayMuted">AI camera visual SKU matching, barcode scanning, and shelf-edge printing.</p>
+            <div class="pt-2 border-t border-brand-border/60">
+              <div class="text-2xl font-bold font-mono text-white">R 305 <span class="text-xs text-brand-grayMuted font-normal">/ mo</span></div>
+              <div class="text-[11px] font-mono text-brand-teal">or R 3,850 outright buy</div>
             </div>
-            <div class="text-[11px] text-gray-400 mt-1">or <strong class="text-white">R 4,850</strong> Outright Perpetual</div>
-            <a href="https://www.codepos.co.za" target="_blank" class="w-full mt-3 py-2 rounded-lg bg-[#14283A] hover:bg-[#1f3850] text-[#48D4D0] text-center block text-xs font-bold border border-[#48D4D0]/30 transition-colors">
-              Open CodePOS &rarr;
-            </a>
           </div>
-        </div>
-
-        <!-- 2. CodeFinder (Active App) -->
-        <div class="bg-[#101F33] rounded-2xl p-5 border-2 border-[#48D4D0] flex flex-col justify-between shadow-lg shadow-[#48D4D0]/10 relative">
-          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#48D4D0] text-[#060E1A] text-[10px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-full shadow">
-            ★ Current Standalone App
-          </span>
-          <div>
-            <div class="flex items-center justify-between pb-3 border-b border-[#14283A] mt-1">
-              <span class="text-[11px] font-mono text-[#48D4D0]">SUITE PRODUCT 02</span>
-              <span class="text-[10px] font-mono bg-[#060E1A] text-[#48D4D0] px-2 py-0.5 rounded border border-[#132B40]">AI SEARCH</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mt-3">CodeFinder™ <span class="text-xs px-2 py-0.5 rounded bg-[#48D4D0]/20 text-[#48D4D0] font-mono">ACTIVE</span></h3>
-            <p class="text-xs text-gray-400 mt-1">AI Camera SKU search, 600ms Google Vertex visual match, department isolation &amp; barcode tag spooler.</p>
-            <ul class="mt-4 space-y-2 text-xs text-gray-300">
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> 600ms neural visual SKU detection</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> 6 sandboxed store department gates</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> Web Bluetooth belt printer spooler</li>
-            </ul>
-          </div>
-          <div class="mt-6 pt-4 border-t border-[#14283A]">
-            <div class="flex items-baseline gap-1">
-              <span class="text-2xl font-bold font-mono text-[#48D4D0]">R 305</span>
-              <span class="text-xs text-gray-400">/ month</span>
-            </div>
-            <div class="text-[11px] text-gray-400 mt-1">or <strong class="text-white">R 3,850</strong> Outright Perpetual</div>
-            <button onclick="alert('Starting 14-Day Free Trial for CodeFinder™!\n\nDefault Sandbox PIN: 4092\nSupport: +27 67 129 6177')" class="w-full mt-3 py-2 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] text-center font-bold text-xs uppercase tracking-wider shadow">
-              Start 14-Day Free Trial
-            </button>
-          </div>
-        </div>
-
-        <!-- 3. Code SmartRoster -->
-        <div class="bg-[#101F33] rounded-2xl p-5 border border-[#14283A] flex flex-col justify-between hover:border-[#48D4D0]/50 transition-all">
-          <div>
-            <div class="flex items-center justify-between pb-3 border-b border-[#14283A]">
-              <span class="text-[11px] font-mono text-gray-400">SUITE PRODUCT 03</span>
-              <span class="text-[10px] font-mono bg-[#060E1A] text-[#48D4D0] px-2 py-0.5 rounded border border-[#132B40]">SHIFTS</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mt-3">Code SmartRoster™</h3>
-            <p class="text-xs text-gray-400 mt-1">Drag-and-drop 7-day staff shift planner, AI roster auto-fill, and 1-tap WhatsApp schedule dispatch.</p>
-            <ul class="mt-4 space-y-2 text-xs text-gray-300">
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> 7-day visual weekly bench planner</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> AI rule-based shift coverage auto-fill</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> 1-tap WhatsApp schedule dispatch</li>
-            </ul>
-          </div>
-          <div class="mt-6 pt-4 border-t border-[#14283A]">
-            <div class="flex items-baseline gap-1">
-              <span class="text-2xl font-bold font-mono text-white">R 305</span>
-              <span class="text-xs text-gray-400">/ month</span>
-            </div>
-            <div class="text-[11px] text-gray-400 mt-1">or <strong class="text-white">R 3,850</strong> Outright Perpetual</div>
-            <button onclick="alert('Code SmartRoster™ Standalone Launching!\nContact Eurica Noeth (+27 67 129 6177) for early access.')" class="w-full mt-3 py-2 rounded-lg bg-[#14283A] hover:bg-[#1f3850] text-[#48D4D0] text-center font-bold text-xs border border-[#48D4D0]/30 transition-colors">
-              Request Trial &rarr;
-            </button>
-          </div>
-        </div>
-
-        <!-- 4. Code Time Management System -->
-        <div class="bg-[#101F33] rounded-2xl p-5 border border-[#14283A] flex flex-col justify-between hover:border-[#48D4D0]/50 transition-all">
-          <div>
-            <div class="flex items-center justify-between pb-3 border-b border-[#14283A]">
-              <span class="text-[11px] font-mono text-gray-400">SUITE PRODUCT 04</span>
-              <span class="text-[10px] font-mono bg-[#060E1A] text-[#48D4D0] px-2 py-0.5 rounded border border-[#132B40]">BIOMETRICS</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mt-3">Code Time Management™</h3>
-            <p class="text-xs text-gray-400 mt-1">Camera tablet biometric facial verification, 4-digit employee PIN attendance &amp; payroll CSV export.</p>
-            <ul class="mt-4 space-y-2 text-xs text-gray-300">
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> Real-time tablet facial verification</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> Anti-buddy punching PIN attendance</li>
-              <li class="flex items-center gap-2"><span class="text-[#48D4D0]">✓</span> VIP / SimplePay payroll CSV export</li>
-            </ul>
-          </div>
-          <div class="mt-6 pt-4 border-t border-[#14283A]">
-            <div class="flex items-baseline gap-1">
-              <span class="text-2xl font-bold font-mono text-white">R 305</span>
-              <span class="text-xs text-gray-400">/ month</span>
-            </div>
-            <div class="text-[11px] text-gray-400 mt-1">or <strong class="text-white">R 4,850</strong> Outright Perpetual</div>
-            <button onclick="alert('Code Time Management System™ Standalone Launching!\nContact Eurica Noeth (+27 67 129 6177) for setup.')" class="w-full mt-3 py-2 rounded-lg bg-[#14283A] hover:bg-[#1f3850] text-[#48D4D0] text-center font-bold text-xs border border-[#48D4D0]/30 transition-colors">
-              Request Trial &rarr;
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer Copyright & Developer Attribution -->
-    <footer class="w-full text-center text-xs text-gray-500 pt-4 pb-6 border-t border-[#14283A]">
-      <p class="text-gray-400 font-semibold">Software Developer &amp; Systems Architect: Eurica Noeth</p>
-      <p class="mt-0.5 text-[11px]">&copy; 2025 Code-SA™ Enterprise Software &bull; CodeFinder™ Standalone &bull; All Rights Reserved.</p>
-      <p class="mt-0.5 text-[10px] text-gray-500">West Coast, Western Cape, South Africa &bull; Direct Desk: +27 67 129 6177</p>
-    </footer>
-  </main>
-
-  <!-- ===================================================================== -->
-  <!-- VIEW 2: FRONTLINE EMPLOYEE 3-WAY SEARCH TERMINAL                     -->
-  <!-- ===================================================================== -->
-  <main id="viewEmployeeTerminal" class="w-full max-w-md px-4 py-4 flex flex-col gap-4 hidden">
-    <div class="flex items-center justify-between border-b border-[#14283A] pb-3">
-      <button onclick="navigateTo('viewHome')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101F33] hover:bg-[#14283A] text-xs font-semibold text-gray-300">
-        &larr; Exit Terminal
-      </button>
-      <div class="text-right">
-        <span id="activeDeptBadge" class="text-xs font-bold text-[#48D4D0] flex items-center gap-1 justify-end">
-          <span>🥖</span> Bakery &amp; Pastries
-        </span>
-        <span class="text-[10px] font-mono text-gray-400">Operator: Thabo N. (1001) &bull; <span class="text-green-400">Online</span></span>
-      </div>
-    </div>
-
-    <!-- 3 Scan Modes Switcher -->
-    <div class="grid grid-cols-3 gap-1.5 bg-[#101F33] p-1.5 rounded-xl border border-[#14283A]">
-      <button onclick="setScanMode('ai')" id="btnModeAi" class="py-2 px-1 rounded-lg text-xs font-bold bg-[#48D4D0] text-[#060E1A] shadow flex flex-col items-center gap-0.5 transition-all">
-        <span>🤖</span> <span>AI Camera</span>
-      </button>
-      <button onclick="setScanMode('barcode')" id="btnModeBarcode" class="py-2 px-1 rounded-lg text-xs font-bold bg-transparent text-gray-300 hover:text-white flex flex-col items-center gap-0.5 transition-all">
-        <span>📷</span> <span>Barcode</span>
-      </button>
-      <button onclick="setScanMode('plu')" id="btnModePlu" class="py-2 px-1 rounded-lg text-xs font-bold bg-transparent text-gray-300 hover:text-white flex flex-col items-center gap-0.5 transition-all">
-        <span>⌨️</span> <span>PLU / Key</span>
-      </button>
-    </div>
-
-    <!-- Active Viewfinder -->
-    <div class="w-full bg-[#101F33] rounded-2xl border border-[#14283A] overflow-hidden p-4 flex flex-col items-center gap-3">
-      <div id="aiViewfinder" class="relative w-full h-56 bg-black rounded-xl overflow-hidden flex items-center justify-center border border-[#132B40]">
-        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Bread Sample" class="w-full h-full object-cover opacity-80" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40"></div>
-        <div class="absolute w-44 h-36 hud-bracket border-2 border-dashed rounded-lg flex items-center justify-center">
-          <div class="w-full h-0.5 bg-[#48D4D0] laser-line absolute"></div>
-          <span class="text-[10px] text-white bg-[#060E1A]/80 px-2 py-0.5 rounded font-mono border border-[#48D4D0]/40">600ms Vertex AI</span>
-        </div>
-        <button onclick="simulateScan()" class="absolute bottom-3 px-5 py-2 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] font-bold text-xs shadow-lg uppercase tracking-wider flex items-center gap-1.5">
-          <span>📸</span> <span>Scan Item</span>
-        </button>
-      </div>
-
-      <div id="barcodeViewfinder" class="hidden relative w-full h-56 bg-black rounded-xl overflow-hidden flex flex-col items-center justify-center border border-[#132B40] text-center p-4">
-        <div class="w-48 h-28 border-2 border-[#48D4D0] rounded flex items-center justify-center relative">
-          <div class="w-full h-0.5 bg-red-500 laser-line absolute"></div>
-          <span class="text-xs text-gray-300 font-mono">Align Barcode Here</span>
-        </div>
-        <button onclick="simulateScan()" class="mt-3 px-4 py-1.5 rounded bg-[#48D4D0] text-[#060E1A] font-bold text-xs">Simulate Barcode Read</button>
-      </div>
-
-      <div id="pluInputContainer" class="hidden w-full flex flex-col gap-2">
-        <label class="text-xs text-gray-400">Search Product Name or 3-Digit PLU</label>
-        <div class="flex gap-2">
-          <input id="inputPlu" type="text" placeholder="e.g. 104 or Sourdough" class="w-full bg-[#14283A] text-white px-3 py-2 rounded-lg border border-[#132B40] focus:border-[#48D4D0] outline-none font-mono text-sm" />
-          <button onclick="simulateScan()" class="px-4 py-2 rounded-lg bg-[#48D4D0] text-[#060E1A] font-bold text-xs">Search</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Identified Product Result Card -->
-    <div id="scanResultCard" class="w-full bg-[#101F33] p-4 rounded-2xl border border-[#48D4D0]/40 flex flex-col gap-3 shadow-lg">
-      <div class="flex items-center justify-between border-b border-[#14283A] pb-2">
-        <span class="text-[11px] font-mono text-[#48D4D0] flex items-center gap-1">
-          <span>✓</span> 96.8% AI Match &bull; 582ms
-        </span>
-        <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded font-bold">IN STOCK</span>
-      </div>
-
-      <div class="flex items-center justify-between">
-        <div>
-          <span class="text-xs text-gray-400 uppercase tracking-wider block">Artisan Breads</span>
-          <h4 id="resTitle" class="text-base font-bold text-white">Artisan Sourdough Loaf 800g</h4>
-          <span class="text-xs font-mono text-gray-300">PLU: <strong class="text-[#48D4D0]" id="resPlu">104</strong> &bull; SKU: BAK-800-SD</span>
-        </div>
-        <div class="text-right">
-          <span class="text-xs text-gray-400 block">Unit Price</span>
-          <span class="text-lg font-bold font-mono text-white" id="resPrice">R 38.50</span>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-2 pt-2 border-t border-[#14283A]">
-        <button onclick="dispatchWhatsapp()" class="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-[#48D4D0] border border-[#48D4D0]/30 font-bold text-xs">
-          <span>💬</span> <span>WhatsApp Code</span>
-        </button>
-        <button onclick="spoolLabel()" class="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] font-bold text-xs shadow-md">
-          <span>🏷️</span> <span>Print 58mm Label</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="p-3 rounded-xl bg-[#060E1A] border border-[#132B40] text-[11px] text-gray-400 text-center">
-      🔒 <strong>Strict Frontline Isolation Active:</strong> Session locked to Bakery &amp; Pastries. Zero access to Butchery, Deli, or Financial Turnover.
-    </div>
-  </main>
-
-  <!-- ===================================================================== -->
-  <!-- VIEW 3: DEPARTMENT HEAD SCOPED MANAGEMENT CONSOLE                    -->
-  <!-- ===================================================================== -->
-  <main id="viewDeptHeadConsole" class="w-full max-w-5xl px-4 py-6 flex flex-col gap-6 hidden">
-    <div class="flex items-center justify-between border-b border-[#14283A] pb-3">
-      <div class="flex items-center gap-3">
-        <button onclick="navigateTo('viewHome')" class="px-3 py-1.5 rounded-lg bg-[#101F33] hover:bg-[#14283A] text-xs font-semibold text-gray-300">
-          &larr; Exit to Hub
-        </button>
-        <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span>🥖</span> Bakery &amp; Pastries Management Console
-          </h2>
-          <span class="text-xs text-gray-400">Head of Department: Maria van der Merwe</span>
-        </div>
-      </div>
-      <span class="px-3 py-1 rounded bg-green-500/20 text-green-400 font-mono text-xs border border-green-500/30">
-        🔒 SCOPED SESSION: BAKERY ONLY
-      </span>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2 bg-[#101F33] p-5 rounded-2xl border border-[#14283A] flex flex-col gap-4">
-        <div class="flex items-center justify-between border-b border-[#14283A] pb-3">
-          <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-            <span>➕</span> Smart Add / Edit Bakery SKU
-          </h3>
-          <button onclick="document.getElementById('inputCsvFile').click()" class="text-xs text-[#48D4D0] hover:underline flex items-center gap-1 font-semibold">
-            <span>📤 Upload Bakery CSV</span>
+          <button onclick="initiateTrialPayFast('CodeFinder™', 305)" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs font-mono hover:bg-brand-tealHover transition-all shadow">
+            START 14-DAY TRIAL
           </button>
-          <input type="file" id="inputCsvFile" class="hidden" accept=".csv" onchange="alert('Bulk CSV Upload parsed successfully!\n\n12 Bakery SKUs synced to frontline staff terminals in 1.4s.')" />
         </div>
 
-        <form id="formAddProduct" onsubmit="handleAddProduct(event)" class="flex flex-col gap-3">
-          <div>
-            <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Product Title / Description *</label>
-            <input required id="inProdName" type="text" placeholder="e.g. Artisan Sourdough Loaf 800g" class="w-full bg-[#14283A] text-white px-3 py-2 rounded-lg border border-[#132B40] text-sm" />
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Product Picture Link</label>
-              <input id="inProdImage" type="text" placeholder="https://..." class="w-full bg-[#14283A] text-white px-3 py-2 rounded-lg border border-[#132B40] text-sm" />
+        <!-- Product 2: CodePOS -->
+        <div class="squircle-card rounded-2xl p-4 sm:p-5 border border-brand-border hover:border-brand-teal/60 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-brand-input text-brand-grayLight font-bold uppercase">Option 2</span>
+              <span class="text-[11px] font-mono text-emerald-400">14-Day Trial</span>
             </div>
-            <div>
-              <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Barcode &amp; Internal PLU *</label>
-              <div class="grid grid-cols-2 gap-2">
-                <input required id="inProdPlu" type="text" placeholder="PLU 104" class="w-full bg-[#14283A] text-[#48D4D0] font-mono px-3 py-2 rounded-lg border border-[#132B40] text-sm" />
-                <input required id="inProdBarcode" type="text" placeholder="60098234109" class="w-full bg-[#14283A] text-white font-mono px-3 py-2 rounded-lg border border-[#132B40] text-sm" />
-              </div>
+            <h3 class="text-base font-bold text-white">CodePOS™</h3>
+            <p class="text-xs text-brand-grayMuted">Zero-hardware Point of Sale for phones and laptops with WhatsApp tax receipts.</p>
+            <div class="pt-2 border-t border-brand-border/60">
+              <div class="text-2xl font-bold font-mono text-white">R 305 <span class="text-xs text-brand-grayMuted font-normal">/ mo</span></div>
+              <div class="text-[11px] font-mono text-brand-teal">or R 4,850 outright buy</div>
             </div>
           </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div>
-              <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Department (Locked)</label>
-              <input readonly value="Bakery &amp; Pastries" class="w-full bg-[#060E1A] text-gray-400 px-3 py-2 rounded-lg border border-[#132B40] text-sm cursor-not-allowed font-semibold" />
-            </div>
-            <div>
-              <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Sub-Category *</label>
-              <select id="inProdCat" class="w-full bg-[#14283A] text-white px-3 py-2 rounded-lg border border-[#132B40] text-sm outline-none">
-                <option value="Artisan Breads">Artisan Breads</option>
-                <option value="Croissants & Pastries">Croissants &amp; Pastries</option>
-                <option value="Cakes & Tarts">Cakes &amp; Tarts</option>
-                <option value="Rusks & Biscuits">Rusks &amp; Biscuits</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Selling Price (ZAR) *</label>
-              <div class="relative">
-                <span class="absolute left-3 top-2 text-gray-400 text-sm">R</span>
-                <input required id="inProdPrice" type="number" step="0.50" placeholder="38.50" class="w-full bg-[#14283A] text-white font-mono pl-7 pr-3 py-2 rounded-lg border border-[#132B40] text-sm" />
-              </div>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#14283A]">
-            <button type="submit" class="px-5 py-2.5 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] font-bold text-xs uppercase tracking-wider shadow-md">
-              Save to Bakery Terminal
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Right: Frontline Staff PIN Manager -->
-      <div class="bg-[#101F33] p-5 rounded-2xl border border-[#14283A] flex flex-col gap-4">
-        <div class="border-b border-[#14283A] pb-3">
-          <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-            <span>👥</span> Frontline Bakery Staff PINs
-          </h3>
-          <p class="text-xs text-gray-400 mt-1">Staff using these PINs can only scan and search.</p>
+          <button onclick="initiateTrialPayFast('CodePOS™', 305)" class="w-full py-2.5 rounded-xl bg-brand-input hover:bg-brand-card text-brand-teal font-bold text-xs font-mono border border-brand-border transition-all">
+            START 14-DAY TRIAL
+          </button>
         </div>
 
-        <div class="flex flex-col gap-2 p-3 rounded-xl bg-[#14283A]/70 border border-[#132B40]">
-          <span class="text-xs text-white font-bold">Quick Delegate New Staff PIN</span>
-          <input id="newStaffName" type="text" placeholder="Staff Name" class="bg-[#101F33] text-white px-2.5 py-1.5 rounded text-xs border border-[#132B40]" />
-          <div class="flex gap-2">
-            <input id="newStaffPin" maxlength="4" type="password" placeholder="4-Digit PIN" class="w-28 bg-[#101F33] text-[#48D4D0] font-mono px-2.5 py-1.5 rounded text-xs border border-[#132B40]" />
-            <button onclick="addStaffPin()" class="flex-1 bg-[#48D4D0] text-[#060E1A] font-bold rounded text-xs py-1.5">Create PIN</button>
+        <!-- Product 3: Code SmartRoster -->
+        <div class="squircle-card rounded-2xl p-4 sm:p-5 border border-brand-border hover:border-brand-teal/60 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-brand-input text-brand-grayLight font-bold uppercase">Option 3</span>
+              <span class="text-[11px] font-mono text-emerald-400">14-Day Trial</span>
+            </div>
+            <h3 class="text-base font-bold text-white">Code SmartRoster™</h3>
+            <p class="text-xs text-brand-grayMuted">7-day visual staff scheduling matrix with 1-click WhatsApp shift broadcast.</p>
+            <div class="pt-2 border-t border-brand-border/60">
+              <div class="text-2xl font-bold font-mono text-white">R 305 <span class="text-xs text-brand-grayMuted font-normal">/ mo</span></div>
+              <div class="text-[11px] font-mono text-brand-teal">or R 3,850 outright buy</div>
+            </div>
           </div>
+          <button onclick="initiateTrialPayFast('Code SmartRoster™', 305)" class="w-full py-2.5 rounded-xl bg-brand-input hover:bg-brand-card text-brand-teal font-bold text-xs font-mono border border-brand-border transition-all">
+            START 14-DAY TRIAL
+          </button>
         </div>
 
-        <div class="flex flex-col gap-2" id="staffPinsList">
-          <div class="flex items-center justify-between p-2.5 rounded-lg bg-[#14283A] text-xs">
-            <div>
-              <span class="text-white font-semibold block">Thabo Ndlovu</span>
-              <span class="text-gray-400 font-mono text-[10px]">PIN: 1001 &bull; Active</span>
+        <!-- Product 4: Code Time Management -->
+        <div class="squircle-card rounded-2xl p-4 sm:p-5 border border-brand-border hover:border-brand-teal/60 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-brand-input text-brand-grayLight font-bold uppercase">Option 4</span>
+              <span class="text-[11px] font-mono text-emerald-400">14-Day Trial</span>
             </div>
-            <span class="text-green-400 font-mono text-[10px]">ACTIVE</span>
-          </div>
-          <div class="flex items-center justify-between p-2.5 rounded-lg bg-[#14283A] text-xs">
-            <div>
-              <span class="text-white font-semibold block">Nomvula Sithole</span>
-              <span class="text-gray-400 font-mono text-[10px]">PIN: 1002 &bull; Active</span>
+            <h3 class="text-base font-bold text-white">Code Time System™</h3>
+            <p class="text-xs text-brand-grayMuted">Biometric anti-buddy punch tablet clocking with statutory SA overtime rules.</p>
+            <div class="pt-2 border-t border-brand-border/60">
+              <div class="text-2xl font-bold font-mono text-white">R 305 <span class="text-xs text-brand-grayMuted font-normal">/ mo</span></div>
+              <div class="text-[11px] font-mono text-brand-teal">or R 4,850 outright buy</div>
             </div>
-            <span class="text-green-400 font-mono text-[10px]">ACTIVE</span>
           </div>
+          <button onclick="initiateTrialPayFast('Code Time Management System™', 305)" class="w-full py-2.5 rounded-xl bg-brand-input hover:bg-brand-card text-brand-teal font-bold text-xs font-mono border border-brand-border transition-all">
+            START 14-DAY TRIAL
+          </button>
         </div>
+
       </div>
     </div>
+
   </main>
 
-  <!-- ===================================================================== -->
-  <!-- VIEW 4: STORE OWNER MASTER DESKTOP CONSOLE                           -->
-  <!-- ===================================================================== -->
-  <main id="viewOwnerConsole" class="w-full max-w-5xl px-4 py-6 flex flex-col gap-6 hidden">
-    <div class="flex items-center justify-between border-b border-[#14283A] pb-3">
+  <!-- ========================================================================= -->
+  <!-- VIEW 2: FRONTLINE EMPLOYEE 3-WAY SEARCH TERMINAL (DEPARTMENT SCOPED) -->
+  <!-- ========================================================================= -->
+  <section id="view-departmentTerminal" class="hidden flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 space-y-5 animate-fadeIn">
+    
+    <!-- Department Top Header & Switcher -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 squircle-card p-4 rounded-2xl border border-brand-border">
       <div class="flex items-center gap-3">
-        <button onclick="navigateTo('viewHome')" class="px-3 py-1.5 rounded-lg bg-[#101F33] hover:bg-[#14283A] text-xs font-semibold text-gray-300">
-          &larr; Exit to Hub
+        <button onclick="navigateTo('view-openingHub')" class="p-2 rounded-xl bg-brand-input hover:bg-brand-border text-brand-teal font-mono text-sm transition-colors" title="Back to Main Gate">
+          ← Back
         </button>
         <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span>👑</span> Store Owner &amp; Master Architect Management Console
-          </h2>
-          <span class="text-xs text-[#48D4D0] font-semibold">Storewide Catalog Control &bull; Eurica Noeth</span>
+          <div class="flex items-center gap-2">
+            <span id="activeTerminalEmoji" class="text-2xl">🍞</span>
+            <h2 id="activeTerminalTitle" class="text-base sm:text-lg font-bold text-white font-mono tracking-tight">
+              Bakery Department Terminal
+            </h2>
+          </div>
+          <p class="text-xs text-brand-grayMuted font-mono">
+            Frontline 3-Way Product Search • Air-Gapped Scoped View
+          </p>
         </div>
       </div>
 
+      <!-- Quick Switcher & Manager Access -->
       <div class="flex items-center gap-2">
-        <button onclick="openNewDeptModal()" class="px-3.5 py-2 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] font-bold text-xs shadow flex items-center gap-1">
-          <span>+</span> <span>New Department</span>
+        <select id="terminalDeptSwitcher" onchange="switchTerminalDepartment(this.value)" class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border text-xs text-brand-grayLight font-mono focus:outline-none focus:border-brand-teal">
+          <!-- Dynamically populated -->
+        </select>
+        <button onclick="openAuthModal()" class="px-3 py-1.5 rounded-xl border border-brand-border hover:border-brand-teal text-xs font-mono text-brand-grayLight hover:text-white transition-colors">
+          👑 Switch Role
         </button>
-        <button onclick="alert('Storewide catalog exported to CSV!')" class="px-3.5 py-2 rounded-lg bg-[#101F33] hover:bg-[#14283A] text-gray-300 text-xs font-semibold border border-[#132B40]">
-          📥 Export CSV
-        </button>
       </div>
     </div>
 
-    <!-- Storewide Department Partitions Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-      <div class="p-3 bg-[#101F33] rounded-xl border border-[#14283A] text-center">
-        <span class="text-xs text-gray-400 uppercase tracking-wider block">Bakery</span>
-        <span class="text-base font-bold text-white font-mono mt-1 block">14 SKUs</span>
+    <!-- 3-Way Search Modality Selector -->
+    <div class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-brand-input/70 border border-brand-border font-mono text-xs font-semibold">
+      <button id="searchTab-text" onclick="setSearchMode('text')" class="py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold transition-all shadow flex items-center justify-center gap-1.5">
+        <span>⌨️</span>
+        <span class="hidden sm:inline">1. Text &amp; PLU</span>
+      </button>
+      <button id="searchTab-camera" onclick="setSearchMode('camera')" class="py-2.5 rounded-xl text-brand-grayLight hover:text-white transition-all flex items-center justify-center gap-1.5">
+        <span>📸</span>
+        <span class="hidden sm:inline">2. AI Camera (600ms)</span>
+      </button>
+      <button id="searchTab-barcode" onclick="setSearchMode('barcode')" class="py-2.5 rounded-xl text-brand-grayLight hover:text-white transition-all flex items-center justify-center gap-1.5">
+        <span>⚡</span>
+        <span class="hidden sm:inline">3. Barcode Scanner</span>
+      </button>
+    </div>
+
+    <!-- MODE A: Keyboard & PLU Code Search -->
+    <div id="modeContainer-text" class="space-y-4">
+      <div class="relative">
+        <input type="text" id="terminalProductSearchInput" oninput="filterTerminalProducts()" placeholder="Type product name, PLU code, or category..." class="w-full px-4 py-3.5 pl-11 rounded-2xl bg-brand-card border border-brand-border text-white placeholder-brand-grayMuted focus:outline-none focus:border-brand-teal text-sm font-mono shadow-inner">
+        <span class="absolute left-4 top-3.5 text-base text-brand-grayMuted">🔍</span>
       </div>
-      <div class="p-3 bg-[#101F33] rounded-xl border border-[#14283A] text-center">
-        <span class="text-xs text-gray-400 uppercase tracking-wider block">Butchery</span>
-        <span class="text-base font-bold text-white font-mono mt-1 block">18 SKUs</span>
-      </div>
-      <div class="p-3 bg-[#101F33] rounded-xl border border-[#14283A] text-center">
-        <span class="text-xs text-gray-400 uppercase tracking-wider block">Deli &amp; Foods</span>
-        <span class="text-base font-bold text-white font-mono mt-1 block">12 SKUs</span>
-      </div>
-      <div class="p-3 bg-[#101F33] rounded-xl border border-[#14283A] text-center">
-        <span class="text-xs text-gray-400 uppercase tracking-wider block">Produce</span>
-        <span class="text-base font-bold text-white font-mono mt-1 block">22 SKUs</span>
-      </div>
-      <div class="p-3 bg-[#101F33] rounded-xl border border-[#14283A] text-center">
-        <span class="text-xs text-gray-400 uppercase tracking-wider block">Cold Drinks</span>
-        <span class="text-base font-bold text-white font-mono mt-1 block">35 SKUs</span>
-      </div>
-      <div class="p-3 bg-[#101F33] rounded-xl border border-[#14283A] text-center">
-        <span class="text-xs text-gray-400 uppercase tracking-wider block">Dry Goods</span>
-        <span class="text-base font-bold text-white font-mono mt-1 block">85 SKUs</span>
+
+      <!-- Scoped Product Cards Grid -->
+      <div id="terminalProductResultsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        <!-- Rendered dynamically -->
       </div>
     </div>
-  </main>
 
-  <!-- ===================================================================== -->
-  <!-- MODAL 1: STAFF 4-DIGIT PIN AUTHENTICATION KEYPAD                      -->
-  <!-- ===================================================================== -->
-  <div id="modalStaffPin" class="fixed inset-0 z-50 bg-[#060E1A]/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#101F33] rounded-2xl max-w-sm w-full p-6 shadow-2xl flex flex-col items-center gap-4 border border-[#48D4D0]/30 text-center">
-      <span class="text-3xl" id="pinModalIcon">🥖</span>
-      <div>
-        <h3 class="text-lg font-bold text-white" id="pinModalDeptName">Bakery &amp; Pastries</h3>
-        <p class="text-xs text-gray-400 mt-1">Enter your assigned 4-digit staff PIN to unlock the 3-in-1 search terminal.</p>
-      </div>
-
-      <div class="flex items-center gap-3 py-2">
-        <span class="w-4 h-4 rounded-full bg-[#14283A] border border-[#48D4D0]" id="dot1"></span>
-        <span class="w-4 h-4 rounded-full bg-[#14283A] border border-[#48D4D0]" id="dot2"></span>
-        <span class="w-4 h-4 rounded-full bg-[#14283A] border border-[#48D4D0]" id="dot3"></span>
-        <span class="w-4 h-4 rounded-full bg-[#14283A] border border-[#48D4D0]" id="dot4"></span>
-      </div>
-
-      <div class="grid grid-cols-3 gap-2 w-full max-w-[240px]">
-        <button onclick="pressPin('1')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">1</button>
-        <button onclick="pressPin('2')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">2</button>
-        <button onclick="pressPin('3')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">3</button>
-        <button onclick="pressPin('4')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">4</button>
-        <button onclick="pressPin('5')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">5</button>
-        <button onclick="pressPin('6')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">6</button>
-        <button onclick="pressPin('7')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">7</button>
-        <button onclick="pressPin('8')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">8</button>
-        <button onclick="pressPin('9')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">9</button>
-        <button onclick="clearPin()" class="py-3 rounded-lg bg-[#060E1A] text-xs font-bold text-red-400">Clear</button>
-        <button onclick="pressPin('0')" class="py-3 rounded-lg bg-[#14283A] hover:bg-[#1c3850] text-lg font-bold text-white">0</button>
-        <button onclick="toggleModal('modalStaffPin')" class="py-3 rounded-lg bg-[#060E1A] text-xs font-bold text-gray-400">Cancel</button>
-      </div>
-      <span class="text-[11px] text-gray-500 font-mono">Demo: Enter 1001 or Master PIN 4092</span>
-    </div>
-  </div>
-
-  <!-- ===================================================================== -->
-  <!-- MODAL 2: OWNER & MASTER ARCHITECT LOGIN                               -->
-  <!-- ===================================================================== -->
-  <div id="modalOwnerLogin" class="fixed inset-0 z-50 bg-[#060E1A]/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#101F33] rounded-2xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 border border-[#48D4D0]/40">
-      <div class="flex items-center justify-between border-b border-[#14283A] pb-3">
-        <div class="flex items-center gap-2">
-          <span class="text-xl">👑</span>
-          <h3 class="text-base font-bold text-white">Store Owner Management Console</h3>
+    <!-- MODE B: 600ms Google Vertex AI Photo Scanner Viewfinder -->
+    <div id="modeContainer-camera" class="hidden space-y-4">
+      <div class="relative aspect-video max-w-xl mx-auto rounded-2xl overflow-hidden bg-brand-navy border-2 border-brand-teal/80 shadow-2xl flex flex-col items-center justify-center p-4 text-center">
+        <!-- Laser Sweep Animation Line -->
+        <div class="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-brand-teal to-transparent shadow-[0_0_12px_#48D4D0] animate-laser"></div>
+        
+        <!-- Viewport Reticle -->
+        <div class="w-48 h-48 border-2 border-dashed border-brand-teal/60 rounded-2xl flex flex-col items-center justify-center p-3 relative">
+          <span class="text-4xl animate-pulse">📷</span>
+          <span class="text-[10px] font-mono text-brand-teal mt-2">VERTEX AI NEURAL RETICLE</span>
         </div>
-        <button onclick="toggleModal('modalOwnerLogin')" class="text-gray-400 hover:text-white">✕</button>
+
+        <p class="text-xs font-mono text-brand-grayLight mt-3 z-10">
+          Point phone camera at unlabelled baked item, fresh meat cut, or produce.
+        </p>
+
+        <button onclick="triggerSimulatedAiScan()" class="mt-3 px-5 py-2.5 rounded-xl bg-brand-teal hover:bg-brand-tealHover text-brand-navy font-bold text-xs font-mono shadow-lg transition-transform active:scale-95 flex items-center gap-2">
+          <span>⚡</span>
+          <span>SIMULATE 600MS AI SCAN</span>
+        </button>
       </div>
 
-      <form onsubmit="handleOwnerAuth(event)" class="flex flex-col gap-3">
+      <!-- AI Recognition Results Banner -->
+      <div id="aiScanOutputContainer" class="hidden max-w-xl mx-auto squircle-card p-4 rounded-2xl border border-brand-teal space-y-3">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+
+    <!-- MODE C: Smartphone Camera Barcode Scanner Viewfinder -->
+    <div id="modeContainer-barcode" class="hidden space-y-4">
+      <div class="relative aspect-video max-w-xl mx-auto rounded-2xl overflow-hidden bg-brand-navy border-2 border-emerald-400/80 shadow-2xl flex flex-col items-center justify-center p-4 text-center">
+        <!-- Laser Line -->
+        <div class="absolute inset-x-8 top-1/2 -translate-y-1/2 h-1 bg-red-500 shadow-[0_0_15px_#EF4444]"></div>
+        
+        <div class="w-64 h-28 border-2 border-emerald-400 rounded-xl flex items-center justify-center">
+          <span class="text-xs font-mono text-emerald-400">ALIGN RETAIL BARCODE HERE</span>
+        </div>
+
+        <p class="text-xs font-mono text-brand-grayLight mt-4 z-10">
+          Scans standard EAN-13, UPC, and Code 128 barcodes using standard phone camera.
+        </p>
+
+        <button onclick="triggerSimulatedBarcodeScan()" class="mt-3 px-5 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-500 text-brand-navy font-bold text-xs font-mono shadow-lg transition-transform active:scale-95 flex items-center gap-2">
+          <span>⚡</span>
+          <span>SIMULATE BARCODE READ</span>
+        </button>
+      </div>
+
+      <!-- Barcode Output Banner -->
+      <div id="barcodeOutputContainer" class="hidden max-w-xl mx-auto squircle-card p-4 rounded-2xl border border-emerald-400 space-y-3">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- VIEW 3: STORE OWNER & MASTER ADMIN MANAGEMENT CONSOLE -->
+  <!-- ========================================================================= -->
+  <section id="view-masterConsole" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6 animate-fadeIn">
+    
+    <!-- Management Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 squircle-card p-5 rounded-2xl border border-brand-border">
+      <div class="flex items-center gap-3">
+        <button onclick="navigateTo('view-openingHub')" class="p-2 rounded-xl bg-brand-input hover:bg-brand-border text-brand-teal font-mono text-sm" title="Back to Main Gate">
+          ← Back
+        </button>
         <div>
-          <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Owner Email</label>
-          <input required id="loginEmail" type="email" value="eurica@codepos.co.za" class="w-full bg-[#14283A] text-white px-3 py-2 rounded-lg border border-[#132B40] text-sm" />
+          <div class="flex items-center gap-2">
+            <span class="text-xl">👑</span>
+            <h2 class="text-lg font-bold text-white font-mono tracking-tight">CodeFinder™ Store Management Console</h2>
+          </div>
+          <p class="text-xs text-brand-grayMuted font-mono">
+            Signed in as: <span id="activeMgmtUserLabel" class="text-brand-teal font-semibold">Eurica Noeth (Master Architect)</span>
+          </p>
         </div>
-        <div>
-          <label class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Master Password or Master PIN</label>
-          <input required id="loginPass" type="password" value="EuricaSecure2025!" class="w-full bg-[#14283A] text-white px-3 py-2 rounded-lg border border-[#132B40] text-sm font-mono" />
-        </div>
-        <button type="submit" class="w-full py-2.5 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] font-bold text-xs uppercase tracking-wider mt-2 shadow-md">
-          Authenticate &amp; Open Console
-        </button>
-      </form>
-    </div>
-  </div>
+      </div>
 
-  <!-- ===================================================================== -->
-  <!-- MODAL 3: OWNER DYNAMIC DEPARTMENT CREATOR                            -->
-  <!-- ===================================================================== -->
-  <div id="modalNewDept" class="fixed inset-0 z-50 bg-[#060E1A]/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#101F33] rounded-2xl max-w-lg w-full p-6 shadow-2xl flex flex-col gap-4 border border-[#48D4D0]/30">
-      <div class="flex items-center justify-between border-b border-[#14283A] pb-3">
-        <h3 class="text-base font-bold text-white flex items-center gap-2">
-          <span>+</span> Create New Isolated Department
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="openAddNewDepartmentModal()" class="px-3.5 py-2 rounded-xl bg-brand-teal hover:bg-brand-tealHover text-brand-navy text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow">
+          <span>🏢➕</span>
+          <span>Add Department</span>
+        </button>
+        <button onclick="exportCatalogCsv()" class="px-3.5 py-2 rounded-xl border border-brand-border bg-brand-input hover:bg-brand-card text-xs font-mono font-semibold text-brand-grayLight flex items-center gap-1.5 transition-colors">
+          <span>📥</span>
+          <span>Export Product CSV</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Role Switcher & Department Filter Tabs -->
+    <div class="flex flex-wrap items-center gap-2 border-b border-brand-border pb-3 text-xs font-mono font-semibold">
+      <button id="mgmtTab-overview" onclick="switchMgmtRoleTab('overview')" class="px-3.5 py-2 rounded-xl bg-brand-teal text-brand-navy font-bold transition-all flex items-center gap-1.5">
+        <span>👑 Eurica Master Cockpit</span>
+      </button>
+      <button id="mgmtTab-owner" onclick="switchMgmtRoleTab('owner')" class="px-3.5 py-2 rounded-xl bg-brand-input text-brand-grayLight hover:text-white transition-all flex items-center gap-1.5">
+        <span>🏢 Store Owner Console</span>
+      </button>
+      <button id="mgmtTab-depthead" onclick="switchMgmtRoleTab('depthead')" class="px-3.5 py-2 rounded-xl bg-brand-input text-brand-grayLight hover:text-white transition-all flex items-center gap-1.5">
+        <span>📋 Dept Head Scoped View</span>
+      </button>
+      <button id="mgmtTab-frontline" onclick="switchMgmtRoleTab('frontline')" class="px-3.5 py-2 rounded-xl bg-brand-input text-brand-grayLight hover:text-white transition-all flex items-center gap-1.5">
+        <span>🔍 Frontline 3-Way Search</span>
+      </button>
+    </div>
+
+    <!-- Management KPI Stats Overview -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="squircle-card p-4 rounded-xl space-y-1 border border-brand-border">
+        <div class="text-xs font-mono text-brand-grayMuted flex items-center justify-between">
+          <span>Active Departments</span>
+          <span class="text-brand-teal text-base">🏢</span>
+        </div>
+        <div class="text-2xl font-bold font-mono text-white" id="statTotalDepts">6 Sandboxed</div>
+        <div class="text-[10px] text-emerald-400 font-mono">100% Department Isolation</div>
+      </div>
+
+      <div class="squircle-card p-4 rounded-xl space-y-1 border border-brand-border">
+        <div class="text-xs font-mono text-brand-grayMuted flex items-center justify-between">
+          <span>Master Catalog SKUs</span>
+          <span class="text-brand-teal text-base">🏷️</span>
+        </div>
+        <div class="text-2xl font-bold font-mono text-white" id="statTotalSkus">36 Products</div>
+        <div class="text-[10px] text-brand-teal font-mono">600ms AI Vision Ready</div>
+      </div>
+
+      <div class="squircle-card p-4 rounded-xl space-y-1 border border-brand-border">
+        <div class="text-xs font-mono text-brand-grayMuted flex items-center justify-between">
+          <span>Frontline Staff PINs</span>
+          <span class="text-brand-teal text-base">🔑</span>
+        </div>
+        <div class="text-2xl font-bold font-mono text-white" id="statTotalPins">12 Cashiers</div>
+        <div class="text-[10px] text-emerald-400 font-mono">Sandboxed Access Only</div>
+      </div>
+
+      <div class="squircle-card p-4 rounded-xl space-y-1 border border-brand-border">
+        <div class="text-xs font-mono text-brand-grayMuted flex items-center justify-between">
+          <span>PayFast SaaS License</span>
+          <span class="text-brand-teal text-base">⚡</span>
+        </div>
+        <div class="text-2xl font-bold font-mono text-brand-teal">R 305 / mo</div>
+        <div class="text-[10px] text-brand-grayMuted font-mono">or R 3,850 Outright Buy</div>
+      </div>
+    </div>
+
+    <!-- Main SKU & PIN Management Workspace -->
+    <div id="mgmtPanel-overview" class="space-y-6">
+      
+      <!-- Products Table Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left: Product List Table -->
+        <div class="lg:col-span-2 squircle-card rounded-2xl p-5 border border-brand-border space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brand-border/60 pb-3">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
+                <span>📦 Master Store Sku Catalog</span>
+              </h3>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-input text-brand-teal border border-brand-teal/40 font-bold">Live Edit &amp; Add</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input type="text" id="mgmtSkuSearchInput" oninput="filterMgmtSkus()" placeholder="Search SKU, product or barcode..." class="px-3 py-1.5 rounded-lg bg-brand-input border border-brand-border text-xs text-white font-mono focus:outline-none focus:border-brand-teal">
+              <button onclick="openAddNewSkuModal()" class="px-3 py-1.5 rounded-lg bg-brand-teal text-brand-navy font-bold text-xs font-mono hover:bg-brand-tealHover transition-all flex items-center gap-1">
+                <span>➕ Add SKU</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="text-brand-grayMuted border-b border-brand-border/60">
+                <tr>
+                  <th class="py-2">SKU</th>
+                  <th>Product Name</th>
+                  <th>Department</th>
+                  <th>Price</th>
+                  <th>Barcode</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="masterSkuTableBody" class="divide-y divide-brand-border/40 text-brand-grayLight">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Staff PIN Delegation Matrix -->
+        <div class="space-y-4">
+          <div class="squircle-card rounded-2xl p-5 border border-brand-border space-y-3">
+            <div class="flex items-center justify-between border-b border-brand-border/60 pb-2">
+              <h3 class="text-sm font-bold text-white font-mono uppercase tracking-wider flex items-center gap-1.5">
+                <span>🔑 Cashier PIN Matrix</span>
+              </h3>
+              <button onclick="promptAddNewEmployeePin()" class="text-xs font-mono text-brand-teal hover:underline">+ Assign PIN</button>
+            </div>
+            <p class="text-[11px] text-brand-grayMuted">
+              Every employee PIN is locked to a single department terminal with zero cross-store access.
+            </p>
+            <div class="space-y-2 max-h-72 overflow-y-auto custom-scroll" id="staffDepartmentAssignmentCards">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- 4-Level Permission Badges Reassurance -->
+          <div class="squircle-card rounded-2xl p-4 border border-brand-teal/40 space-y-2.5 bg-brand-input/40">
+            <div class="flex items-center justify-between text-xs font-mono font-bold text-brand-teal">
+              <span>⚡ 4-Level Architecture Status</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            </div>
+            <div class="space-y-1.5 text-[11px] font-mono text-brand-grayLight">
+              <div>• <strong class="text-white">Frontline Staff:</strong> 3-Way sandboxed search only.</div>
+              <div>• <strong class="text-white">Dept Head:</strong> Scoped department inventory &amp; pricing.</div>
+              <div>• <strong class="text-white">Store Owner:</strong> All departments, cashier PINs &amp; sales.</div>
+              <div>• <strong class="text-white">Eurica (Master):</strong> System architect root telemetry.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: MENU & LEGAL CENTER -->
+  <!-- ========================================================================= -->
+  <div id="modalMenuLegal" class="fixed inset-0 z-50 bg-brand-navy/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="squircle-card rounded-2xl max-w-2xl w-full p-5 sm:p-6 space-y-5 border border-brand-border max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-brand-border pb-3">
+        <h3 class="text-base font-bold text-white font-mono flex items-center gap-2">
+          <span>☰</span>
+          <span>CodeFinder™ Menu &amp; Legal Center</span>
         </h3>
-        <button onclick="toggleModal('modalNewDept')" class="text-gray-400 hover:text-white">✕</button>
+        <button onclick="closeModal('modalMenuLegal')" class="p-1 rounded-lg text-brand-grayMuted hover:text-white font-mono text-sm">✕</button>
       </div>
 
-      <form onsubmit="handleCreateDept(event)" class="flex flex-col gap-3">
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-xs text-gray-400 block mb-1">Department Name *</label>
-            <input required id="inNewDeptName" type="text" placeholder="e.g. Seafood & Sushi" class="w-full bg-[#14283A] text-white px-3 py-2 rounded border border-[#132B40] text-sm" />
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-2 border-b border-brand-border pb-2 text-xs font-mono">
+        <button onclick="switchLegalTab('manual')" id="tabBtn-manual" class="px-3 py-1.5 rounded-lg bg-brand-teal text-brand-navy font-bold">Operational Manual</button>
+        <button onclick="switchLegalTab('upload')" id="tabBtn-upload" class="px-3 py-1.5 rounded-lg text-brand-grayMuted hover:text-white">Catalog CSV Upload</button>
+        <button onclick="switchLegalTab('popia')" id="tabBtn-popia" class="px-3 py-1.5 rounded-lg text-brand-grayMuted hover:text-white">POPI Act &amp; Privacy</button>
+        <button onclick="switchLegalTab('contact')" id="tabBtn-contact" class="px-3 py-1.5 rounded-lg text-brand-grayMuted hover:text-white">Contact Us</button>
+      </div>
+
+      <div class="overflow-y-auto custom-scroll flex-1 pr-1 text-xs text-brand-grayLight space-y-3 font-mono">
+        <div id="legalTab-manual" class="space-y-3">
+          <h4 class="text-sm font-bold text-brand-teal">CodeFinder™ Frontline User Guide</h4>
+          <p>1. <strong>Select Department:</strong> Cashier selects their department terminal (Bakery, Butchery, Produce) on their smartphone.</p>
+          <p>2. <strong>Enter Staff PIN:</strong> Enter assigned 4-digit PIN to unlock lookup reticle.</p>
+          <p>3. <strong>Find Product Code:</strong> Use keyboard text search, camera barcode scan, or 600ms AI photo match.</p>
+          <p>4. <strong>Dispatch via WhatsApp:</strong> 1-tap WhatsApp button dispatches name, PLU, and price directly to the till counter.</p>
+        </div>
+
+        <div id="legalTab-upload" class="hidden space-y-3">
+          <h4 class="text-sm font-bold text-brand-teal">Store Catalog CSV Bulk Upload Guide</h4>
+          <p>Store owners can upload entire product catalogs in seconds via spreadsheet:</p>
+          <p>• <strong>Columns required:</strong> Product Name, Barcode, Department, Category, Selling Price (ZAR).</p>
+          <p>• <strong>Instant Distribution:</strong> In under 2 seconds, CodeFinder imports and partitions items to frontline mobile terminals.</p>
+        </div>
+
+        <div id="legalTab-popia" class="hidden space-y-3">
+          <h4 class="text-sm font-bold text-brand-teal">POPI Act (2013) Compliance &amp; Privacy</h4>
+          <p>CodeFinder operates with strict air-gapped data segregation. No customer telephone numbers or transaction logs are ever shared, sold, or exposed across store tenants.</p>
+        </div>
+
+        <div id="legalTab-contact" class="hidden space-y-3">
+          <h4 class="text-sm font-bold text-brand-teal">Official Executive Contact Directory</h4>
+          <p>• <strong>Founder, CEO &amp; Chief Systems Architect:</strong> Eurica Noeth</p>
+          <p>• <strong>Corporate Inquiries:</strong> sales@codepos.co.za</p>
+          <p>• <strong>Accounts &amp; Subscriptions:</strong> accounts@codepos.co.za</p>
+          <p>• <strong>Support Desk:</strong> support@codepos.co.za</p>
+          <p>• <strong>Direct Commercial WhatsApp:</strong> +27 67 129 6177</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: AUTHENTICATION & ROLE GATE -->
+  <!-- ========================================================================= -->
+  <div id="modalAuth" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="squircle-card rounded-2xl max-w-md w-full p-6 space-y-5 border border-brand-teal">
+      <div class="flex items-center justify-between border-b border-brand-border pb-3">
+        <h3 class="text-base font-bold text-white font-mono flex items-center gap-2">
+          <span>🔒</span>
+          <span>Sign In / Enter Passkey</span>
+        </h3>
+        <button onclick="closeModal('modalAuth')" class="p-1 text-brand-grayMuted hover:text-white font-mono">✕</button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-mono text-brand-grayLight mb-1.5 font-semibold">Username, Email, or 4-Digit PIN</label>
+          <input type="text" id="authIdentityInput" placeholder="Enter PIN (e.g. 4092, 1001) or Email..." class="w-full px-3.5 py-2.5 rounded-xl bg-brand-input border border-brand-border text-white text-sm font-mono focus:outline-none focus:border-brand-teal">
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-brand-grayLight mb-1.5 font-semibold">Password / Master Passkey (For Owners)</label>
+          <input type="password" id="authPasswordInput" placeholder="Enter password (optional for PIN)..." class="w-full px-3.5 py-2.5 rounded-xl bg-brand-input border border-brand-border text-white text-sm font-mono focus:outline-none focus:border-brand-teal">
+        </div>
+
+        <!-- Quick Master Bypass Hint for Eurica Testing -->
+        <div class="p-3 rounded-xl bg-brand-input/60 border border-brand-border text-[11px] font-mono text-brand-grayLight space-y-1">
+          <div class="text-brand-teal font-bold">Quick Role Passkeys:</div>
+          <div>• <strong>4092</strong> &rarr; Master Architect Cockpit (Eurica)</div>
+          <div>• <strong>1001</strong> &rarr; Bakery Frontline Search Terminal</div>
+          <div>• <strong>1002</strong> &rarr; Butchery Frontline Search Terminal</div>
+          <div>• <strong>1003</strong> &rarr; Produce Frontline Search Terminal</div>
+          <div>• <strong>owner@karoofarm.co.za</strong> &rarr; Store Owner Console</div>
+        </div>
+
+        <button onclick="processAuthSubmission()" class="w-full py-3 rounded-xl bg-brand-teal hover:bg-brand-tealHover text-brand-navy font-bold text-xs font-mono shadow-lg transition-transform active:scale-95">
+          SIGN IN &amp; UNLOCK
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: ADD CUSTOM DEPARTMENT WITH 40+ EMOJI PICKER -->
+  <!-- ========================================================================= -->
+  <div id="modalAddDepartment" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="squircle-card rounded-2xl max-w-lg w-full p-5 sm:p-6 space-y-4 border border-brand-border flex flex-col max-h-[90vh]">
+      <div class="flex items-center justify-between border-b border-brand-border pb-3">
+        <h3 class="text-sm sm:text-base font-bold text-white font-mono flex items-center gap-2">
+          <span>🏢➕</span>
+          <span>Add Custom Department</span>
+        </h3>
+        <button onclick="closeModal('modalAddDepartment')" class="p-1 text-brand-grayMuted hover:text-white font-mono">✕</button>
+      </div>
+
+      <div class="space-y-3 overflow-y-auto custom-scroll pr-1">
+        <div>
+          <label class="block text-xs font-mono text-brand-grayLight mb-1">Department Name</label>
+          <input type="text" id="newDeptNameInput" placeholder="e.g. Fresh Fish, Coffee Roastery, Farm Dairy..." class="w-full px-3.5 py-2 rounded-xl bg-brand-input border border-brand-border text-white text-xs font-mono focus:outline-none focus:border-brand-teal">
+        </div>
+
+        <!-- 40+ Granular Emoji Picker -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-mono text-brand-grayLight">Select Icon (40+ Commercial Emojis):</label>
+            <span id="selectedEmojiPreview" class="text-xl">🐟</span>
           </div>
-          <div>
-            <label class="text-xs text-gray-400 block mb-1">Air-Gap Code (3-char) *</label>
-            <input required id="inNewDeptCode" maxlength="4" type="text" placeholder="e.g. SFI" class="w-full bg-[#14283A] text-[#48D4D0] font-mono px-3 py-2 rounded border border-[#132B40] text-sm uppercase" />
+          <div class="grid grid-cols-8 sm:grid-cols-10 gap-1.5 p-2 rounded-xl bg-brand-input border border-brand-border max-h-48 overflow-y-auto custom-scroll text-lg">
+            <!-- 40+ Commercial Emojis -->
+            <button type="button" onclick="selectDeptEmoji('🐟')" class="p-1.5 hover:bg-brand-card rounded">🐟</button>
+            <button type="button" onclick="selectDeptEmoji('🦐')" class="p-1.5 hover:bg-brand-card rounded">🦐</button>
+            <button type="button" onclick="selectDeptEmoji('🦀')" class="p-1.5 hover:bg-brand-card rounded">🦀</button>
+            <button type="button" onclick="selectDeptEmoji('🥩')" class="p-1.5 hover:bg-brand-card rounded">🥩</button>
+            <button type="button" onclick="selectDeptEmoji('🍗')" class="p-1.5 hover:bg-brand-card rounded">🍗</button>
+            <button type="button" onclick="selectDeptEmoji('🍖')" class="p-1.5 hover:bg-brand-card rounded">🍖</button>
+            <button type="button" onclick="selectDeptEmoji('🥓')" class="p-1.5 hover:bg-brand-card rounded">🥓</button>
+            <button type="button" onclick="selectDeptEmoji('🌭')" class="p-1.5 hover:bg-brand-card rounded">🌭</button>
+            <button type="button" onclick="selectDeptEmoji('🥖')" class="p-1.5 hover:bg-brand-card rounded">🥖</button>
+            <button type="button" onclick="selectDeptEmoji('🍞')" class="p-1.5 hover:bg-brand-card rounded">🍞</button>
+            <button type="button" onclick="selectDeptEmoji('🥐')" class="p-1.5 hover:bg-brand-card rounded">🥐</button>
+            <button type="button" onclick="selectDeptEmoji('🥯')" class="p-1.5 hover:bg-brand-card rounded">🥯</button>
+            <button type="button" onclick="selectDeptEmoji('🥨')" class="p-1.5 hover:bg-brand-card rounded">🥨</button>
+            <button type="button" onclick="selectDeptEmoji('🍰')" class="p-1.5 hover:bg-brand-card rounded">🍰</button>
+            <button type="button" onclick="selectDeptEmoji('🧁')" class="p-1.5 hover:bg-brand-card rounded">🧁</button>
+            <button type="button" onclick="selectDeptEmoji('🥧')" class="p-1.5 hover:bg-brand-card rounded">🥧</button>
+            <button type="button" onclick="selectDeptEmoji('🥦')" class="p-1.5 hover:bg-brand-card rounded">🥦</button>
+            <button type="button" onclick="selectDeptEmoji('🍎')" class="p-1.5 hover:bg-brand-card rounded">🍎</button>
+            <button type="button" onclick="selectDeptEmoji('🥑')" class="p-1.5 hover:bg-brand-card rounded">🥑</button>
+            <button type="button" onclick="selectDeptEmoji('🍌')" class="p-1.5 hover:bg-brand-card rounded">🍌</button>
+            <button type="button" onclick="selectDeptEmoji('🥕')" class="p-1.5 hover:bg-brand-card rounded">🥕</button>
+            <button type="button" onclick="selectDeptEmoji('🥔')" class="p-1.5 hover:bg-brand-card rounded">🥔</button>
+            <button type="button" onclick="selectDeptEmoji('🍅')" class="p-1.5 hover:bg-brand-card rounded">🍅</button>
+            <button type="button" onclick="selectDeptEmoji('🥗')" class="p-1.5 hover:bg-brand-card rounded">🥗</button>
+            <button type="button" onclick="selectDeptEmoji('🧀')" class="p-1.5 hover:bg-brand-card rounded">🧀</button>
+            <button type="button" onclick="selectDeptEmoji('🥚')" class="p-1.5 hover:bg-brand-card rounded">🥚</button>
+            <button type="button" onclick="selectDeptEmoji('🧈')" class="p-1.5 hover:bg-brand-card rounded">🧈</button>
+            <button type="button" onclick="selectDeptEmoji('🥪')" class="p-1.5 hover:bg-brand-card rounded">🥪</button>
+            <button type="button" onclick="selectDeptEmoji('🍕')" class="p-1.5 hover:bg-brand-card rounded">🍕</button>
+            <button type="button" onclick="selectDeptEmoji('🍲')" class="p-1.5 hover:bg-brand-card rounded">🍲</button>
+            <button type="button" onclick="selectDeptEmoji('🫒')" class="p-1.5 hover:bg-brand-card rounded">🫒</button>
+            <button type="button" onclick="selectDeptEmoji('🍱')" class="p-1.5 hover:bg-brand-card rounded">🍱</button>
+            <button type="button" onclick="selectDeptEmoji('🥤')" class="p-1.5 hover:bg-brand-card rounded">🥤</button>
+            <button type="button" onclick="selectDeptEmoji('🧃')" class="p-1.5 hover:bg-brand-card rounded">🧃</button>
+            <button type="button" onclick="selectDeptEmoji('☕')" class="p-1.5 hover:bg-brand-card rounded">☕</button>
+            <button type="button" onclick="selectDeptEmoji('🫖')" class="p-1.5 hover:bg-brand-card rounded">🫖</button>
+            <button type="button" onclick="selectDeptEmoji('🥛')" class="p-1.5 hover:bg-brand-card rounded">🥛</button>
+            <button type="button" onclick="selectDeptEmoji('🍺')" class="p-1.5 hover:bg-brand-card rounded">🍺</button>
+            <button type="button" onclick="selectDeptEmoji('🍷')" class="p-1.5 hover:bg-brand-card rounded">🍷</button>
+            <button type="button" onclick="selectDeptEmoji('🍾')" class="p-1.5 hover:bg-brand-card rounded">🍾</button>
+            <button type="button" onclick="selectDeptEmoji('📦')" class="p-1.5 hover:bg-brand-card rounded">📦</button>
+            <button type="button" onclick="selectDeptEmoji('🥫')" class="p-1.5 hover:bg-brand-card rounded">🥫</button>
+            <button type="button" onclick="selectDeptEmoji('🌾')" class="p-1.5 hover:bg-brand-card rounded">🌾</button>
+            <button type="button" onclick="selectDeptEmoji('🍫')" class="p-1.5 hover:bg-brand-card rounded">🍫</button>
+            <button type="button" onclick="selectDeptEmoji('🧼')" class="p-1.5 hover:bg-brand-card rounded">🧼</button>
+            <button type="button" onclick="selectDeptEmoji('🕯️')" class="p-1.5 hover:bg-brand-card rounded">🕯️</button>
+            <button type="button" onclick="selectDeptEmoji('🔧')" class="p-1.5 hover:bg-brand-card rounded">🔧</button>
+            <button type="button" onclick="selectDeptEmoji('🏷️')" class="p-1.5 hover:bg-brand-card rounded">🏷️</button>
           </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-brand-grayLight mb-1">Assigned Cashier PIN</label>
+          <input type="text" id="newDeptPinInput" maxlength="4" placeholder="4-digit PIN (e.g. 1007)" class="w-full px-3.5 py-2 rounded-xl bg-brand-input border border-brand-border text-white text-xs font-mono focus:outline-none focus:border-brand-teal">
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-brand-border">
+        <button onclick="saveNewDepartment()" class="w-full py-2.5 rounded-xl bg-brand-teal hover:bg-brand-tealHover text-brand-navy font-bold text-xs font-mono shadow transition-all">
+          SAVE &amp; CREATE AIR-GAPPED TERMINAL
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: ADD / EDIT PRODUCT SKU -->
+  <!-- ========================================================================= -->
+  <div id="modalAddSku" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="squircle-card rounded-2xl max-w-md w-full p-5 sm:p-6 space-y-4 border border-brand-border">
+      <div class="flex items-center justify-between border-b border-brand-border pb-2.5">
+        <h3 class="text-sm font-bold text-white font-mono">➕ Add Product SKU</h3>
+        <button onclick="closeModal('modalAddSku')" class="p-1 text-brand-grayMuted hover:text-white font-mono text-sm">✕</button>
+      </div>
+
+      <div class="space-y-3 font-mono text-xs">
+        <div>
+          <label class="block text-brand-grayLight mb-1">Product Name</label>
+          <input type="text" id="skuInputName" placeholder="e.g. Sourdough Loaf 800g" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:outline-none focus:border-brand-teal">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="text-xs text-gray-400 block mb-1">Department Emoji Icon</label>
-            <select id="inNewDeptIcon" class="w-full bg-[#14283A] text-white px-3 py-2 rounded border border-[#132B40] text-sm">
-              <option value="🐟">Fish &amp; Seafood (🐟)</option>
-              <option value="🍷">Liquor &amp; Wine (🍷)</option>
-              <option value="🍲">Hot Deli / Food (🍲)</option>
-              <option value="💐">Floral &amp; Garden (💐)</option>
+            <label class="block text-brand-grayLight mb-1">Department</label>
+            <select id="skuInputDept" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:outline-none focus:border-brand-teal">
+              <!-- Dynamically populated -->
             </select>
           </div>
           <div>
-            <label class="text-xs text-gray-400 block mb-1">Assigned Department Head</label>
-            <input id="inNewDeptHead" type="text" placeholder="Manager Name" class="w-full bg-[#14283A] text-white px-3 py-2 rounded border border-[#132B40] text-sm" />
+            <label class="block text-brand-grayLight mb-1">Selling Price (ZAR)</label>
+            <input type="text" id="skuInputPrice" placeholder="e.g. 42.00" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:outline-none focus:border-brand-teal">
           </div>
         </div>
 
-        <div class="flex justify-end gap-2 pt-2 border-t border-[#14283A]">
-          <button type="button" onclick="toggleModal('modalNewDept')" class="px-3 py-1.5 rounded bg-[#14283A] text-gray-400 text-xs">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded bg-[#48D4D0] text-[#060E1A] font-bold text-xs">Provision Department</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ===================================================================== -->
-  <!-- MODAL 4: MENU & LEGAL / AI ASSISTANT / BULK UPLOAD SPECIFICATIONS     -->
-  <!-- ===================================================================== -->
-  <div id="modalMenuLegal" class="fixed inset-0 z-50 bg-[#060E1A]/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#101F33] rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 shadow-2xl flex flex-col gap-4 border border-[#14283A]">
-      <div class="flex items-center justify-between border-b border-[#14283A] pb-3 sticky top-0 bg-[#101F33] z-10">
-        <h3 class="text-base font-bold text-white flex items-center gap-2">
-          <span>📖</span> CodeFinder™ Menu &amp; Legal Center
-        </h3>
-        <button onclick="toggleModal('modalMenuLegal')" class="text-gray-400 hover:text-white text-lg">✕</button>
-      </div>
-
-      <!-- 4 Tab Switcher Buttons (Including 🤖 24/7 AI Support) -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <button onclick="showLegalTab('ai')" id="tabBtnAi" class="py-2 px-2.5 rounded-lg text-xs font-bold bg-[#48D4D0] text-[#060E1A] flex items-center justify-center gap-1">
-          <span>🤖</span> <span>AI Assistant</span>
-        </button>
-        <button onclick="showLegalTab('bulk')" id="tabBtnBulk" class="py-2 px-2.5 rounded-lg text-xs font-bold bg-[#14283A] text-gray-300 hover:text-white flex items-center justify-center gap-1">
-          <span>📤</span> <span>Upload Guide</span>
-        </button>
-        <button onclick="showLegalTab('popia')" id="tabBtnPopia" class="py-2 px-2.5 rounded-lg text-xs font-bold bg-[#14283A] text-gray-300 hover:text-white flex items-center justify-center gap-1">
-          <span>⚖️</span> <span>POPIA &amp; Terms</span>
-        </button>
-        <button onclick="showLegalTab('contact')" id="tabBtnContact" class="py-2 px-2.5 rounded-lg text-xs font-bold bg-[#14283A] text-gray-300 hover:text-white flex items-center justify-center gap-1">
-          <span>📞</span> <span>Contact Desk</span>
-        </button>
-      </div>
-
-      <!-- TAB 1: 24/7 AI ASSISTANT -->
-      <div id="legalTabAi" class="flex flex-col gap-3">
-        <div class="p-3.5 rounded-xl bg-[#14283A] border border-[#48D4D0]/30 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-[#48D4D0]/20 flex items-center justify-center text-xl shrink-0">🤖</div>
+        <div class="grid grid-cols-2 gap-3">
           <div>
-            <h4 class="text-sm font-bold text-white">CodeFinder™ AI Operations Assistant</h4>
-            <p class="text-xs text-[#8E9EAF]">Instant operational answers for store staff, managers &amp; cashiers.</p>
+            <label class="block text-brand-grayLight mb-1">Internal PLU / Code</label>
+            <input type="text" id="skuInputPlu" placeholder="e.g. 104" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:outline-none focus:border-brand-teal">
+          </div>
+          <div>
+            <label class="block text-brand-grayLight mb-1">Barcode (EAN-13)</label>
+            <input type="text" id="skuInputBarcode" placeholder="e.g. 600100123045" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:outline-none focus:border-brand-teal">
           </div>
         </div>
-
-        <div class="flex flex-wrap gap-1.5">
-          <button onclick="askAiQuestion('How do I scan an unlabelled croissant with the camera?')" class="px-2.5 py-1 rounded-full bg-[#060E1A] hover:bg-[#14283A] text-[#48D4D0] border border-[#132B40] text-[11px]">
-            📸 How to scan unlabelled food?
-          </button>
-          <button onclick="askAiQuestion('How do I upload my bulk Excel product list?')" class="px-2.5 py-1 rounded-full bg-[#060E1A] hover:bg-[#14283A] text-[#48D4D0] border border-[#132B40] text-[11px]">
-            📤 Bulk Excel upload?
-          </button>
-          <button onclick="askAiQuestion('How do I print a 58mm shelf price label?')" class="px-2.5 py-1 rounded-full bg-[#060E1A] hover:bg-[#14283A] text-[#48D4D0] border border-[#132B40] text-[11px]">
-            🏷️ Print Bluetooth labels?
-          </button>
-          <button onclick="askAiQuestion('What is my department PIN?')" class="px-2.5 py-1 rounded-full bg-[#060E1A] hover:bg-[#14283A] text-[#48D4D0] border border-[#132B40] text-[11px]">
-            🔑 Department PINs?
-          </button>
-        </div>
-
-        <div id="aiChatBox" class="p-3.5 rounded-xl bg-[#060E1A] border border-[#132B40] min-h-[140px] flex flex-col justify-between text-xs text-gray-300">
-          <div id="aiResponseText" class="space-y-2">
-            <p class="text-gray-400 italic">👋 Hi! I am your 24/7 CodeFinder Assistant. Tap any question chip above or type your operational question below to get instant guidance.</p>
-          </div>
-        </div>
-
-        <div class="flex gap-2">
-          <input id="aiCustomInput" type="text" placeholder="Type an operational question..." class="flex-1 bg-[#14283A] text-white px-3 py-2 rounded-lg border border-[#132B40] focus:border-[#48D4D0] outline-none text-xs" onkeydown="if(event.key==='Enter') sendCustomAiQuestion()" />
-          <button onclick="sendCustomAiQuestion()" class="px-4 py-2 rounded-lg bg-[#48D4D0] hover:bg-[#6FF3EF] text-[#060E1A] font-bold text-xs uppercase tracking-wider">
-            Ask AI
-          </button>
-        </div>
       </div>
 
-      <!-- TAB 2: BULK UPLOAD SPECIFICATIONS -->
-      <div id="legalTabBulk" class="hidden flex flex-col gap-3 text-xs text-gray-300">
-        <h4 class="text-sm font-bold text-white">How Store Owners Upload Bulk CSV Catalogs:</h4>
-        <p>Instead of manually keying in hundreds of products, store managers prepare a standard spreadsheet with 6 columns:</p>
-        <div class="p-3 bg-[#060E1A] rounded-xl font-mono text-[11px] text-[#48D4D0] border border-[#132B40] overflow-x-auto">
-          Column A: Product Name (e.g. Artisan Sourdough Loaf 800g)<br>
-          Column B: Barcode / PLU (e.g. 6001234567890 or 104)<br>
-          Column C: Department (e.g. Bakery &amp; Pastries)<br>
-          Column D: Category (e.g. Artisan Breads)<br>
-          Column E: Price ZAR (e.g. 38.50)<br>
-          Column F: Image URL (Optional photo link)
-        </div>
-        <p>In the Owner Console, click <strong>"📤 Upload Product CSV"</strong> to distribute items to staff terminals in under 2 seconds.</p>
-      </div>
-
-      <!-- TAB 3: POPIA & TERMS -->
-      <div id="legalTabPopia" class="hidden flex flex-col gap-3 text-xs text-gray-300">
-        <h4 class="text-sm font-bold text-white">POPIA Act Data Privacy &amp; Commercial Terms:</h4>
-        <p>&bull; <strong>Protection of Personal Information:</strong> CodeFinder processes zero personal identity numbers without explicit store authorization. Customer WhatsApp numbers entered for receipt dispatches are encrypted via SHA-256 and never shared with third parties.</p>
-        <p>&bull; <strong>Perpetual Commercial EULA:</strong> Outright software buyers hold a permanent, unrevokable perpetual license. Annual Care Pack (Year 2+) is optional at R 1,500/year for continuous Google Vertex AI vision and cloud backups.</p>
-      </div>
-
-      <!-- TAB 4: CONTACT & SUPPORT -->
-      <div id="legalTabContact" class="hidden flex flex-col gap-3 text-xs text-gray-300">
-        <h4 class="text-sm font-bold text-white">Executive Desk &amp; Commercial Help:</h4>
-        <div class="p-3.5 rounded-xl bg-[#14283A] flex flex-col gap-1.5">
-          <p><strong>Founder, CEO &amp; Chief Architect:</strong> Eurica Noeth</p>
-          <p><strong>Headquarters:</strong> West Coast, Western Cape, South Africa</p>
-          <p><strong>Direct WhatsApp:</strong> <a href="https://wa.me/27671296177" class="text-[#48D4D0] underline">+27 67 129 6177</a></p>
-          <p><strong>Official Accounts Desk:</strong> accounts@codepos.co.za</p>
-          <p><strong>Support &amp; Technical:</strong> support@codepos.co.za</p>
-        </div>
+      <div class="pt-2 border-t border-brand-border">
+        <button onclick="saveNewSku()" class="w-full py-2.5 rounded-xl bg-brand-teal hover:bg-brand-tealHover text-brand-navy font-bold text-xs font-mono shadow">
+          CONFIRM &amp; SYNC TO TERMINALS
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- APPLICATION LOGIC & ROUTING ENGINE                                   -->
-  <!-- ===================================================================== -->
-  <script>
-    let currentPinInput = '';
-    let targetDept = '';
-    let targetNode = '';
-    let expectedPin = '1001';
+  <!-- ========================================================================= -->
+  <!-- FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="mt-auto border-t border-brand-border bg-brand-navy py-4 px-4 text-center font-mono text-xs text-brand-grayMuted space-y-1">
+    <div class="flex flex-wrap items-center justify-center gap-4 text-brand-grayLight">
+      <a href="javascript:void(0)" onclick="openModal('modalMenuLegal')" class="hover:text-brand-teal transition-colors">Operational Manual</a>
+      <span>•</span>
+      <a href="javascript:void(0)" onclick="openModal('modalMenuLegal')" class="hover:text-brand-teal transition-colors">Catalog Bulk Upload</a>
+      <span>•</span>
+      <a href="https://wa.me/27671296177" target="_blank" class="hover:text-brand-teal transition-colors flex items-center gap-1">
+        <span>💬</span> WhatsApp: +27 67 129 6177
+      </a>
+    </div>
+    <p class="text-[11px]">
+      © 2025 Code-SA™ &amp; CodeFinder™. All Rights Reserved. Engineered by Eurica Noeth.
+    </p>
+  </footer>
 
+  <!-- ========================================================================= -->
+  <!-- APPLICATION LOGIC SCRIPT (STRICT 4-TIER SECURITY & 40+ EMOJIS) -->
+  <!-- ========================================================================= -->
+  <script>
+    // --- 1. CORE DATA STORE ---
+    let currentDepartment = 'bakery';
+    let currentSearchMode = 'text';
+    let selectedEmoji = '🐟';
+
+    let departments = [
+      { id: 'bakery', name: 'Bakery', emoji: '🥖', pin: '1001', skus: 8 },
+      { id: 'pastries', name: 'Pastries', emoji: '🥐', pin: '1002', skus: 6 },
+      { id: 'butchery', name: 'Butchery', emoji: '🥩', pin: '1003', skus: 10 },
+      { id: 'seafood', name: 'Fish & Seafood', emoji: '🐟', pin: '1004', skus: 5 },
+      { id: 'produce', name: 'Fresh Produce', emoji: '🥦', pin: '1005', skus: 12 },
+      { id: 'deli', name: 'Deli & Prepared', emoji: '🧀', pin: '1006', skus: 7 }
+    ];
+
+    let products = [
+      { id: 'SKU-BK-001', dept: 'bakery', name: 'Artisan Sourdough Loaf (800g)', price: 'R 42.00', plu: '101', barcode: '600100123045', category: 'Breads' },
+      { id: 'SKU-BK-002', dept: 'bakery', name: 'Traditional Ciabatta', price: 'R 28.50', plu: '102', barcode: '600100123046', category: 'Breads' },
+      { id: 'SKU-PS-001', dept: 'pastries', name: 'Almond Butter Croissant', price: 'R 34.00', plu: '103', barcode: '600100123047', category: 'Pastries' },
+      { id: 'SKU-PS-002', dept: 'pastries', name: 'Pain au Chocolat', price: 'R 32.00', plu: '104', barcode: '600100123048', category: 'Pastries' },
+      { id: 'SKU-BT-101', dept: 'butchery', name: 'Traditional Beef Boerewors (1kg)', price: 'R 119.99', plu: '201', barcode: '600980145209', category: 'Beef' },
+      { id: 'SKU-BT-102', dept: 'butchery', name: 'Prime Karoo Lamb Chops (500g)', price: 'R 98.00', plu: '202', barcode: '600980145210', category: 'Lamb' },
+      { id: 'SKU-SF-001', dept: 'seafood', name: 'Fresh Cape Hake Fillets (kg)', price: 'R 89.00', plu: '301', barcode: '600456123999', category: 'Fresh Fish' },
+      { id: 'SKU-SF-002', dept: 'seafood', name: 'Tiger Prawns Box (800g)', price: 'R 185.00', plu: '302', barcode: '600456123998', category: 'Shellfish' },
+      { id: 'SKU-PR-301', dept: 'produce', name: 'Hass Avocado (Single Ripe)', price: 'R 14.99', plu: '401', barcode: '600234891101', category: 'Vegetables' },
+      { id: 'SKU-PR-302', dept: 'produce', name: 'Crisp Red Gala Apples (1.5kg)', price: 'R 32.50', plu: '402', barcode: '600234891102', category: 'Fruits' },
+      { id: 'SKU-DL-201', dept: 'deli', name: 'Mature Farmhouse Cheddar (250g)', price: 'R 58.00', plu: '501', barcode: '600345781201', category: 'Cheeses' },
+      { id: 'SKU-DL-202', dept: 'deli', name: 'Smoked Ham Cold Cut (200g)', price: 'R 46.50', plu: '502', barcode: '600345781202', category: 'Meats' }
+    ];
+
+    // --- 2. INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDepartmentsGrid();
+      populateDepartmentSelects();
+      renderMasterSkuTable();
+      renderStaffPinCards();
+    });
+
+    // --- 3. RENDERING ENGINE ---
+    function renderDepartmentsGrid() {
+      const container = document.getElementById('departmentsGrid');
+      if (!container) return;
+      container.innerHTML = departments.map(d => `
+        <div onclick="unlockDepartmentTerminal('${d.id}')" class="squircle-card p-4 rounded-2xl border border-brand-border hover:border-brand-teal transition-all cursor-pointer flex flex-col items-center justify-between text-center group active:scale-95">
+          <div class="text-3xl sm:text-4xl group-hover:scale-110 transition-transform mb-2">${d.emoji}</div>
+          <div class="space-y-0.5">
+            <h3 class="font-bold text-xs sm:text-sm text-white font-mono tracking-tight group-hover:text-brand-teal transition-colors">${d.name}</h3>
+            <p class="text-[10px] text-brand-grayMuted font-mono">PIN Locked</p>
+          </div>
+          <span class="mt-3 text-[10px] font-mono px-2 py-0.5 rounded bg-brand-input border border-brand-border text-brand-teal group-hover:bg-brand-teal group-hover:text-brand-navy transition-all">
+            Enter PIN →
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function populateDepartmentSelects() {
+      const switcher = document.getElementById('terminalDeptSwitcher');
+      const skuDeptSelect = document.getElementById('skuInputDept');
+      
+      const optionsHtml = departments.map(d => `<option value="${d.id}">${d.emoji} ${d.name}</option>`).join('');
+      if (switcher) switcher.innerHTML = optionsHtml;
+      if (skuDeptSelect) skuDeptSelect.innerHTML = optionsHtml;
+    }
+
+    function renderMasterSkuTable(filtered = null) {
+      const tbody = document.getElementById('masterSkuTableBody');
+      if (!tbody) return;
+      const list = filtered || products;
+      tbody.innerHTML = list.map(p => `
+        <tr class="hover:bg-brand-input/40 transition-colors">
+          <td class="py-2.5 font-bold text-brand-teal">${p.id}</td>
+          <td class="text-white font-semibold">${p.name}</td>
+          <td><span class="px-2 py-0.5 rounded bg-brand-input text-brand-grayLight capitalize">${p.dept}</span></td>
+          <td>${p.price}</td>
+          <td>${p.barcode}</td>
+          <td class="text-right space-x-1">
+            <button onclick="editSkuPrompt('${p.id}')" class="px-2 py-1 rounded bg-brand-input hover:bg-brand-card text-brand-teal border border-brand-border">Edit</button>
+            <button onclick="dispatchWhatsAppCode('${p.id}','${p.name}','${p.price}','${p.barcode}')" class="px-2 py-1 rounded bg-brand-teal text-brand-navy font-bold">WhatsApp</button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Update stat counter
+      const statSkus = document.getElementById('statTotalSkus');
+      if (statSkus) statSkus.textContent = `${products.length} Products`;
+    }
+
+    function renderStaffPinCards() {
+      const container = document.getElementById('staffDepartmentAssignmentCards');
+      if (!container) return;
+      container.innerHTML = departments.map(d => `
+        <div class="p-2.5 rounded-xl bg-brand-input/70 border border-brand-border flex items-center justify-between text-xs font-mono">
+          <div class="flex items-center gap-2">
+            <span>${d.emoji}</span>
+            <span class="font-bold text-white">${d.name}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-brand-navy text-brand-teal font-bold tracking-widest">${d.pin}</span>
+            <button onclick="editDeptPinPrompt('${d.id}')" class="text-[10px] text-brand-grayMuted hover:text-white">Change</button>
+          </div>
+        </div>
+      `).join('');
+
+      const statPins = document.getElementById('statTotalPins');
+      if (statPins) statPins.textContent = `${departments.length} Active PINs`;
+    }
+
+    // --- 4. NAVIGATION & ROLE GATES ---
     function navigateTo(viewId) {
-      document.getElementById('viewHome').classList.add('hidden');
-      document.getElementById('viewEmployeeTerminal').classList.add('hidden');
-      document.getElementById('viewDeptHeadConsole').classList.add('hidden');
-      document.getElementById('viewOwnerConsole').classList.add('hidden');
+      document.getElementById('view-openingHub').classList.add('hidden');
+      document.getElementById('view-departmentTerminal').classList.add('hidden');
+      document.getElementById('view-masterConsole').classList.add('hidden');
 
       const target = document.getElementById(viewId);
       if (target) {
@@ -830,220 +947,398 @@
       }
     }
 
-    function toggleModal(modalId) {
-      const el = document.getElementById(modalId);
-      if (el) el.classList.toggle('hidden');
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('hidden');
     }
 
-    function promptStaffPin(deptName, nodeCode, defaultPin) {
-      targetDept = deptName;
-      targetNode = nodeCode;
-      expectedPin = defaultPin;
-      currentPinInput = '';
-      updatePinDots();
-
-      document.getElementById('pinModalDeptName').textContent = deptName;
-      document.getElementById('modalStaffPin').classList.remove('hidden');
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
     }
 
-    function pressPin(digit) {
-      if (currentPinInput.length < 4) {
-        currentPinInput += digit;
-        updatePinDots();
-      }
-      if (currentPinInput.length === 4) {
-        setTimeout(verifyStaffPin, 200);
-      }
+    function openAuthModal() {
+      document.getElementById('authIdentityInput').value = '';
+      document.getElementById('authPasswordInput').value = '';
+      openModal('modalAuth');
     }
 
-    function clearPin() {
-      currentPinInput = '';
-      updatePinDots();
-    }
+    function processAuthSubmission() {
+      const input = document.getElementById('authIdentityInput').value.trim();
+      closeModal('modalAuth');
 
-    function updatePinDots() {
-      for (let i = 1; i <= 4; i++) {
-        const dot = document.getElementById('dot' + i);
-        if (i <= currentPinInput.length) {
-          dot.classList.add('bg-[#48D4D0]');
-          dot.classList.remove('bg-[#14283A]');
-        } else {
-          dot.classList.remove('bg-[#48D4D0]');
-          dot.classList.add('bg-[#14283A]');
-        }
-      }
-    }
-
-    function verifyStaffPin() {
-      if (currentPinInput === expectedPin || currentPinInput === '4092') {
-        document.getElementById('modalStaffPin').classList.add('hidden');
-        document.getElementById('activeDeptBadge').innerHTML = `<span>🏬</span> ${targetDept} (Node ${targetNode})`;
-        navigateTo('viewEmployeeTerminal');
-      } else {
-        alert('❌ Invalid Department PIN.\n\nEnter the correct 4-digit PIN for ' + targetDept + ' (or Master PIN 4092).');
-        clearPin();
-      }
-    }
-
-    function openOwnerLogin() {
-      toggleModal('modalOwnerLogin');
-    }
-
-    function handleOwnerAuth(e) {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim();
-      const pass = document.getElementById('loginPass').value.trim();
-
-      if (email === 'eurica@codepos.co.za' || pass === '4092' || pass.length >= 4) {
-        toggleModal('modalOwnerLogin');
-        navigateTo('viewOwnerConsole');
-      } else {
-        alert('Invalid Owner credentials.');
-      }
-    }
-
-    function setScanMode(mode) {
-      const btnAi = document.getElementById('btnModeAi');
-      const btnBarcode = document.getElementById('btnModeBarcode');
-      const btnPlu = document.getElementById('btnModePlu');
-
-      const vfAi = document.getElementById('aiViewfinder');
-      const vfBarcode = document.getElementById('barcodeViewfinder');
-      const vfPlu = document.getElementById('pluInputContainer');
-
-      [btnAi, btnBarcode, btnPlu].forEach(b => {
-        b.className = 'py-2 px-1 rounded-lg text-xs font-bold bg-transparent text-gray-300 hover:text-white flex flex-col items-center gap-0.5 transition-all';
-      });
-      [vfAi, vfBarcode, vfPlu].forEach(v => v.classList.add('hidden'));
-
-      if (mode === 'ai') {
-        btnAi.className = 'py-2 px-1 rounded-lg text-xs font-bold bg-[#48D4D0] text-[#060E1A] shadow flex flex-col items-center gap-0.5 transition-all';
-        vfAi.classList.remove('hidden');
-      } else if (mode === 'barcode') {
-        btnBarcode.className = 'py-2 px-1 rounded-lg text-xs font-bold bg-[#48D4D0] text-[#060E1A] shadow flex flex-col items-center gap-0.5 transition-all';
-        vfBarcode.classList.remove('hidden');
-      } else if (mode === 'plu') {
-        btnPlu.className = 'py-2 px-1 rounded-lg text-xs font-bold bg-[#48D4D0] text-[#060E1A] shadow flex flex-col items-center gap-0.5 transition-all';
-        vfPlu.classList.remove('hidden');
-      }
-    }
-
-    function simulateScan() {
-      const card = document.getElementById('scanResultCard');
-      card.classList.add('ring-2', 'ring-[#48D4D0]');
-      setTimeout(() => card.classList.remove('ring-2', 'ring-[#48D4D0]'), 800);
-      alert('⚡ Visual match identified in 582ms!\n\n• Item: Artisan Sourdough Loaf 800g\n• PLU: 104\n• Price: R 38.50');
-    }
-
-    function dispatchWhatsapp() {
-      const text = encodeURIComponent('CodeFinder Lookup: Artisan Sourdough Loaf 800g (PLU 104) - R 38.50. Barcode: 60098234109');
-      window.open('https://wa.me/27671296177?text=' + text, '_blank');
-    }
-
-    function spoolLabel() {
-      alert('🏷️ Spooling 58mm Thermal Adhesive Label...\n\nConnecting to Bluetooth Belt Printer...\nStatus: Label Printed Successfully (104 - R 38.50)');
-    }
-
-    function handleAddProduct(e) {
-      e.preventDefault();
-      const title = document.getElementById('inProdName').value;
-      const plu = document.getElementById('inProdPlu').value;
-      const price = document.getElementById('inProdPrice').value;
-
-      alert(`✅ Product Saved to Bakery Terminal!\n\n• Title: ${title}\n• PLU: ${plu}\n• Price: R ${price}\n• Sync: Distributed to cashier phones in 0.8s`);
-      document.getElementById('formAddProduct').reset();
-    }
-
-    function addStaffPin() {
-      const name = document.getElementById('newStaffName').value.trim();
-      const pin = document.getElementById('newStaffPin').value.trim();
-      if (!name || pin.length !== 4) {
-        alert('Please enter staff name and a 4-digit PIN.');
+      // Level 4: Master Architect (Eurica)
+      if (input === '4092' || input.toLowerCase() === 'eurica@codepos.co.za') {
+        document.getElementById('activeMgmtUserLabel').textContent = "Eurica Noeth (Master Architect)";
+        navigateTo('view-masterConsole');
+        switchMgmtRoleTab('overview');
         return;
       }
 
-      const list = document.getElementById('staffPinsList');
-      const card = document.createElement('div');
-      card.className = 'flex items-center justify-between p-2.5 rounded-lg bg-[#14283A] text-xs';
-      card.innerHTML = `<div><span class="text-white font-semibold block">${name}</span><span class="text-gray-400 font-mono text-[10px]">PIN: ${pin} &bull; Frontline Search</span></div><span class="text-green-400 font-mono text-[10px]">ACTIVE</span>`;
-      list.appendChild(card);
+      // Level 3: Store Owner
+      if (input.toLowerCase().includes('owner') || input === '9999') {
+        document.getElementById('activeMgmtUserLabel').textContent = "Johan Smuts (Store Owner)";
+        navigateTo('view-masterConsole');
+        switchMgmtRoleTab('owner');
+        return;
+      }
 
-      document.getElementById('newStaffName').value = '';
-      document.getElementById('newStaffPin').value = '';
-      alert(`✅ Staff PIN ${pin} created for ${name}!`);
+      // Level 1 or 2: Department PIN lookup
+      const dept = departments.find(d => d.pin === input);
+      if (dept) {
+        currentDepartment = dept.id;
+        loadDepartmentTerminal(dept.id);
+        return;
+      }
+
+      alert("Unrecognized credentials. Try '4092' for Master Architect, 'owner' for Store Owner, or '1001' for Bakery PIN.");
     }
 
-    function openNewDeptModal() {
-      toggleModal('modalNewDept');
+    function promptDepartmentPin(deptId) {
+      const pin = prompt(`Enter 4-Digit Staff PIN to unlock department:`, "");
+      if (!pin) return;
+
+      if (pin === '4092') { // Master bypass
+        unlockDepartmentTerminal(deptId === 'all' ? 'bakery' : deptId);
+        return;
+      }
+
+      const match = departments.find(d => d.pin === pin);
+      if (match) {
+        unlockDepartmentTerminal(match.id);
+      } else {
+        alert("Invalid Department PIN. Please consult your store manager.");
+      }
     }
 
-    function handleCreateDept(e) {
-      e.preventDefault();
-      const name = document.getElementById('inNewDeptName').value.trim();
-      const code = document.getElementById('inNewDeptCode').value.trim().toUpperCase();
-      const icon = document.getElementById('inNewDeptIcon').value;
-      if (!name || !code) return;
+    function unlockDepartmentTerminal(deptId) {
+      currentDepartment = deptId;
+      loadDepartmentTerminal(deptId);
+    }
 
-      const grid = document.getElementById('deptGrid');
-      const btn = document.createElement('button');
-      btn.className = 'flex flex-col items-start p-4 rounded-xl bg-[#14283A] hover:bg-[#1a334a] border border-[#132B40] hover:border-[#48D4D0] transition-all text-left group';
-      btn.onclick = () => promptStaffPin(name, code, '1008');
-      btn.innerHTML = `
-        <div class="flex items-center justify-between w-full">
-          <span class="text-2xl group-hover:scale-110 transition-transform">${icon}</span>
-          <span class="text-[10px] font-mono text-gray-400 bg-[#060E1A] px-1.5 py-0.5 rounded border border-[#132B40]">LOCK</span>
+    function loadDepartmentTerminal(deptId) {
+      const dept = departments.find(d => d.id === deptId) || departments[0];
+      currentDepartment = dept.id;
+
+      document.getElementById('activeTerminalEmoji').textContent = dept.emoji;
+      document.getElementById('activeTerminalTitle').textContent = `${dept.name} Search Terminal`;
+      
+      const switcher = document.getElementById('terminalDeptSwitcher');
+      if (switcher) switcher.value = dept.id;
+
+      renderTerminalProducts(dept.id);
+      navigateTo('view-departmentTerminal');
+    }
+
+    function switchTerminalDepartment(deptId) {
+      loadDepartmentTerminal(deptId);
+    }
+
+    function renderTerminalProducts(deptId, searchQuery = '') {
+      const container = document.getElementById('terminalProductResultsGrid');
+      if (!container) return;
+
+      let list = products.filter(p => p.dept === deptId);
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        list = list.filter(p => p.name.toLowerCase().includes(q) || p.plu.includes(q) || p.barcode.includes(q));
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-8 text-center squircle-card rounded-2xl border border-brand-border text-brand-grayMuted font-mono text-xs">
+            No items found matching criteria in this department terminal.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(p => `
+        <div class="squircle-card p-4 rounded-2xl border border-brand-border space-y-3 hover:border-brand-teal transition-all">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-input text-brand-teal font-bold">PLU #${p.plu}</span>
+              <h4 class="font-bold text-sm text-white mt-1">${p.name}</h4>
+              <p class="text-xs text-brand-grayMuted font-mono">${p.category}</p>
+            </div>
+            <div class="text-right">
+              <div class="text-base font-bold font-mono text-brand-teal">${p.price}</div>
+              <div class="text-[10px] font-mono text-brand-grayMuted">${p.barcode}</div>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-brand-border/60 flex items-center gap-2">
+            <button onclick="dispatchWhatsAppCode('${p.id}','${p.name}','${p.price}','${p.barcode}')" class="flex-1 py-1.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs font-mono hover:bg-brand-tealHover transition-all flex items-center justify-center gap-1">
+              <span>💬 WhatsApp Code</span>
+            </button>
+            <button onclick="printShelfLabel('${p.name}','${p.price}','${p.barcode}')" class="px-2.5 py-1.5 rounded-xl bg-brand-input hover:bg-brand-card text-brand-grayLight border border-brand-border text-xs font-mono" title="Print 58/80mm Bluetooth Label">
+              🖨️
+            </button>
+          </div>
         </div>
-        <span class="text-sm font-bold text-white mt-2">${name}</span>
-        <span class="text-[11px] text-[#8E9EAF] mt-0.5">Isolated Department Gate</span>
-      `;
-      grid.appendChild(btn);
-
-      toggleModal('modalNewDept');
-      alert(`✅ Isolated Department Created!\n\n• Name: ${name}\n• Code: ${code}\n• Partition: Synced to staff handhelds immediately.`);
+      `).join('');
     }
 
-    function showLegalTab(tab) {
-      ['Ai', 'Bulk', 'Popia', 'Contact'].forEach(t => {
-        const pane = document.getElementById('legalTab' + t);
-        const btn = document.getElementById('tabBtn' + t);
-        if (pane) pane.classList.add('hidden');
-        if (btn) btn.className = 'py-2 px-2.5 rounded-lg text-xs font-bold bg-[#14283A] text-gray-300 hover:text-white flex items-center justify-center gap-1';
+    function filterTerminalProducts() {
+      const q = document.getElementById('terminalProductSearchInput').value;
+      renderTerminalProducts(currentDepartment, q);
+    }
+
+    // --- 5. 3-WAY SEARCH MODALITIES ---
+    function setSearchMode(mode) {
+      currentSearchMode = mode;
+      
+      const tabText = document.getElementById('searchTab-text');
+      const tabCamera = document.getElementById('searchTab-camera');
+      const tabBarcode = document.getElementById('searchTab-barcode');
+
+      const containerText = document.getElementById('modeContainer-text');
+      const containerCamera = document.getElementById('modeContainer-camera');
+      const containerBarcode = document.getElementById('modeContainer-barcode');
+
+      [tabText, tabCamera, tabBarcode].forEach(b => {
+        b.className = "py-2.5 rounded-xl text-brand-grayLight hover:text-white transition-all flex items-center justify-center gap-1.5";
       });
 
-      const activePane = document.getElementById('legalTab' + tab.charAt(0).toUpperCase() + tab.slice(1));
-      const activeBtn = document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
-      if (activePane) activePane.classList.remove('hidden');
-      if (activeBtn) activeBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-bold bg-[#48D4D0] text-[#060E1A] flex items-center justify-center gap-1';
+      [containerText, containerCamera, containerBarcode].forEach(c => c.classList.add('hidden'));
+
+      if (mode === 'text') {
+        tabText.className = "py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold transition-all shadow flex items-center justify-center gap-1.5";
+        containerText.classList.remove('hidden');
+      } else if (mode === 'camera') {
+        tabCamera.className = "py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold transition-all shadow flex items-center justify-center gap-1.5";
+        containerCamera.classList.remove('hidden');
+      } else if (mode === 'barcode') {
+        tabBarcode.className = "py-2.5 rounded-xl bg-emerald-400 text-brand-navy font-bold transition-all shadow flex items-center justify-center gap-1.5";
+        containerBarcode.classList.remove('hidden');
+      }
     }
 
-    const aiKnowledgeBase = {
-      croissant: "📸 **To Scan Unlabelled Food:**\n1. Select your Department (e.g. Bakery).\n2. Enter PIN `1001` to unlock the camera.\n3. Keep **AI Camera** mode selected.\n4. Point your phone camera at the item and tap **'Scan Item'**.\n5. In ~600ms, Google Vertex AI identifies the product name, PLU code, and price automatically!",
-      upload: "📤 **To Upload a Bulk Excel/CSV Catalog:**\n1. Prepare an Excel file with 6 columns: Product Name, Barcode/PLU, Department, Category, Price, Image URL.\n2. In Owner Console, click **'Upload Bakery CSV'**.\n3. The items sync instantly to all staff phones across your store!",
-      label: "🏷️ **To Print 58mm / 80mm Shelf Labels:**\n1. Once an item is identified or searched, tap the **'Print 58mm Label'** button.\n2. CodeFinder connects via Web Bluetooth to your portable belt printer in ~1.5s.\n3. The adhesive thermal label spools immediately!",
-      pin: "🔑 **Department PINs:**\n• Bakery: `1001`\n• Butchery: `1002`\n• Deli: `1003`\n• Produce: `1004`\n• Cold Drinks: `1005`\n• Dry Goods: `1006`\n• Universal Master Architect PIN: `4092`"
-    };
+    function triggerSimulatedAiScan() {
+      const output = document.getElementById('aiScanOutputContainer');
+      output.classList.remove('hidden');
+      output.innerHTML = `<div class="text-center font-mono text-xs text-brand-teal py-4 animate-pulse">Running Google Vertex AI Neural Embedding Match... (600ms)</div>`;
 
-    function askAiQuestion(question) {
-      const q = question.toLowerCase();
-      let answer = "🤖 I'm here to assist with store operations! For specialized setup or billing changes, contact Eurica Noeth on WhatsApp: +27 67 129 6177.";
-
-      if (q.includes('unlabelled') || q.includes('croissant') || q.includes('camera')) answer = aiKnowledgeBase.croissant;
-      else if (q.includes('upload') || q.includes('excel') || q.includes('csv')) answer = aiKnowledgeBase.upload;
-      else if (q.includes('print') || q.includes('label')) answer = aiKnowledgeBase.label;
-      else if (q.includes('pin')) answer = aiKnowledgeBase.pin;
-
-      document.getElementById('aiResponseText').innerHTML = `
-        <div class="p-2 rounded bg-[#101F33] text-[#48D4D0] font-semibold mb-1">❓ "${question}"</div>
-        <div class="whitespace-pre-line leading-relaxed text-gray-200">${answer}</div>
-      `;
+      setTimeout(() => {
+        const item = products.find(p => p.dept === currentDepartment) || products[0];
+        output.innerHTML = `
+          <div class="flex items-center justify-between border-b border-brand-teal/40 pb-2">
+            <span class="text-xs font-mono font-bold text-emerald-400">✅ 96.8% Confidence Neural Match</span>
+            <span class="text-[10px] font-mono text-brand-grayMuted">Latency: 582ms</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-sm font-bold text-white">${item.name}</div>
+              <div class="text-xs font-mono text-brand-grayMuted">PLU #${item.plu} • Barcode: ${item.barcode}</div>
+            </div>
+            <div class="text-lg font-bold font-mono text-brand-teal">${item.price}</div>
+          </div>
+          <div class="flex items-center gap-2 pt-2">
+            <button onclick="dispatchWhatsAppCode('${item.id}','${item.name}','${item.price}','${item.barcode}')" class="flex-1 py-1.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs font-mono">
+              💬 WhatsApp Code to Cashier
+            </button>
+            <button onclick="printShelfLabel('${item.name}','${item.price}','${item.barcode}')" class="px-3 py-1.5 rounded-xl bg-brand-input text-brand-grayLight border border-brand-border text-xs font-mono">
+              🖨️ Print Label
+            </button>
+          </div>
+        `;
+      }, 600);
     }
 
-    function sendCustomAiQuestion() {
-      const input = document.getElementById('aiCustomInput');
-      const val = input.value.trim();
-      if (!val) return;
-      askAiQuestion(val);
-      input.value = '';
+    function triggerSimulatedBarcodeScan() {
+      const output = document.getElementById('barcodeOutputContainer');
+      output.classList.remove('hidden');
+      output.innerHTML = `<div class="text-center font-mono text-xs text-emerald-400 py-3 animate-pulse">Scanning optical barcode array...</div>`;
+
+      setTimeout(() => {
+        const item = products.find(p => p.dept === currentDepartment) || products[0];
+        output.innerHTML = `
+          <div class="flex items-center justify-between border-b border-emerald-400/40 pb-2">
+            <span class="text-xs font-mono font-bold text-emerald-400">⚡ Barcode Captured: ${item.barcode}</span>
+            <span class="text-[10px] font-mono text-brand-grayMuted">EAN-13 Verified</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-bold text-white">${item.name}</div>
+            <div class="text-base font-bold font-mono text-emerald-400">${item.price}</div>
+          </div>
+          <button onclick="dispatchWhatsAppCode('${item.id}','${item.name}','${item.price}','${item.barcode}')" class="w-full py-2 rounded-xl bg-emerald-400 text-brand-navy font-bold text-xs font-mono">
+            💬 Dispatch Code
+          </button>
+        `;
+      }, 350);
+    }
+
+    // --- 6. MANAGEMENT & DISPATCH ACTIONS ---
+    function dispatchWhatsAppCode(sku, name, price, barcode) {
+      const msg = encodeURIComponent(`*CodeFinder™ Price Lookup*\nProduct: ${name}\nPrice: ${price}\nSKU: ${sku}\nBarcode: ${barcode}`);
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+
+    function printShelfLabel(name, price, barcode) {
+      alert(`[Wireless Bluetooth Spooler]\nPrinted 58mm Shelf Label for:\n${name}\nPrice: ${price}\nBarcode: ${barcode}`);
+    }
+
+    function openAddNewDepartmentModal() {
+      document.getElementById('newDeptNameInput').value = '';
+      document.getElementById('newDeptPinInput').value = Math.floor(1000 + Math.random() * 9000).toString();
+      selectDeptEmoji('🐟');
+      openModal('modalAddDepartment');
+    }
+
+    function selectDeptEmoji(emoji) {
+      selectedEmoji = emoji;
+      document.getElementById('selectedEmojiPreview').textContent = emoji;
+    }
+
+    function saveNewDepartment() {
+      const name = document.getElementById('newDeptNameInput').value.trim();
+      const pin = document.getElementById('newDeptPinInput').value.trim() || '1008';
+      if (!name) {
+        alert("Please provide a department name.");
+        return;
+      }
+
+      const id = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      departments.push({
+        id: id,
+        name: name,
+        emoji: selectedEmoji,
+        pin: pin,
+        skus: 0
+      });
+
+      closeModal('modalAddDepartment');
+      renderDepartmentsGrid();
+      populateDepartmentSelects();
+      renderStaffPinCards();
+
+      const statDepts = document.getElementById('statTotalDepts');
+      if (statDepts) statDepts.textContent = `${departments.length} Sandboxed`;
+
+      alert(`✅ Dedicated Department '${name}' (${selectedEmoji}) created with Staff PIN ${pin}!`);
+    }
+
+    function openAddNewSkuModal() {
+      document.getElementById('skuInputName').value = '';
+      document.getElementById('skuInputPrice').value = '';
+      document.getElementById('skuInputPlu').value = Math.floor(100 + Math.random() * 900).toString();
+      document.getElementById('skuInputBarcode').value = '600' + Math.floor(100000000 + Math.random() * 900000000).toString();
+      openModal('modalAddSku');
+    }
+
+    function saveNewSku() {
+      const name = document.getElementById('skuInputName').value.trim();
+      const dept = document.getElementById('skuInputDept').value;
+      const price = document.getElementById('skuInputPrice').value.trim();
+      const plu = document.getElementById('skuInputPlu').value.trim();
+      const barcode = document.getElementById('skuInputBarcode').value.trim();
+
+      if (!name || !price) {
+        alert("Product Name and Selling Price are required.");
+        return;
+      }
+
+      const newId = `SKU-${dept.substring(0,2).toUpperCase()}-${plu}`;
+      products.push({
+        id: newId,
+        dept: dept,
+        name: name,
+        price: price.startsWith('R') ? price : `R ${price}`,
+        plu: plu,
+        barcode: barcode,
+        category: 'General'
+      });
+
+      closeModal('modalAddSku');
+      renderMasterSkuTable();
+      alert(`✅ Product '${name}' saved and synced to ${dept.toUpperCase()} terminals!`);
+    }
+
+    function editSkuPrompt(skuId) {
+      const item = products.find(p => p.id === skuId);
+      if (!item) return;
+      const newPrice = prompt(`Update price for ${item.name}:`, item.price);
+      if (newPrice) {
+        item.price = newPrice.startsWith('R') ? newPrice : `R ${newPrice}`;
+        renderMasterSkuTable();
+      }
+    }
+
+    function editDeptPinPrompt(deptId) {
+      const dept = departments.find(d => d.id === deptId);
+      if (!dept) return;
+      const newPin = prompt(`Enter new 4-digit PIN for ${dept.name}:`, dept.pin);
+      if (newPin && newPin.length === 4) {
+        dept.pin = newPin;
+        renderStaffPinCards();
+      }
+    }
+
+    function promptAddNewEmployeePin() {
+      const deptName = prompt("Assign new PIN to which department? (e.g. bakery, butchery, produce):", "bakery");
+      if (!deptName) return;
+      const match = departments.find(d => d.id.includes(deptName.toLowerCase()));
+      if (match) {
+        editDeptPinPrompt(match.id);
+      } else {
+        alert("Department not found.");
+      }
+    }
+
+    function filterMgmtSkus() {
+      const q = document.getElementById('mgmtSkuSearchInput').value.toLowerCase();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.id.toLowerCase().includes(q) || p.barcode.includes(q));
+      renderMasterSkuTable(filtered);
+    }
+
+    function exportCatalogCsv() {
+      let csv = "SKU,Product Name,Department,Price,Barcode\n";
+      products.forEach(p => {
+        csv += `"${p.id}","${p.name}","${p.dept}","${p.price}","${p.barcode}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `CodeFinder_Store_Catalog_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function initiateTrialPayFast(productName, price) {
+      alert(`[PayFast South Africa Gateway]\nActivating 14-Day Free Trial for:\n${productName}\nSubscription: R ${price}.00 / month\nDirect Debit: Level 1 PCI-DSS Secure`);
+    }
+
+    function switchMgmtRoleTab(tab) {
+      ['overview', 'owner', 'depthead', 'frontline'].forEach(t => {
+        const btn = document.getElementById(`mgmtTab-${t}`);
+        if (btn) {
+          btn.className = (t === tab)
+            ? "px-3.5 py-2 rounded-xl bg-brand-teal text-brand-navy font-bold transition-all flex items-center gap-1.5"
+            : "px-3.5 py-2 rounded-xl bg-brand-input text-brand-grayLight hover:text-white transition-all flex items-center gap-1.5";
+        }
+      });
+
+      if (tab === 'frontline') {
+        unlockDepartmentTerminal(currentDepartment);
+      }
+    }
+
+    function switchLegalTab(tab) {
+      ['manual', 'upload', 'popia', 'contact'].forEach(t => {
+        const btn = document.getElementById(`tabBtn-${t}`);
+        const panel = document.getElementById(`legalTab-${t}`);
+        if (btn && panel) {
+          if (t === tab) {
+            btn.className = "px-3 py-1.5 rounded-lg bg-brand-teal text-brand-navy font-bold";
+            panel.classList.remove('hidden');
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg text-brand-grayMuted hover:text-white";
+            panel.classList.add('hidden');
+          }
+        }
+      });
     }
   </script>
 </body>
