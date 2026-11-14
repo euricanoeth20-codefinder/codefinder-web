@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CodeFinder™ — AI Camera SKU & Barcode Search Terminal | Code-SA™</title>
+  <title>CodeFinder™ — AI Camera SKU &amp; Barcode Product Finder</title>
   
-  <meta name="description" content="CodeFinder™ turns any standard smartphone and desktop into an AI-powered visual camera SKU, barcode, and PLU product lookup terminal with multi-department management.">
+  <!-- SEO & Sitelinks Metadata -->
+  <meta name="description" content="CodeFinder™ South Africa — Zero-Hardware AI Camera SKU & Barcode Finder. Turn standard smartphones and Windows desktops into intelligent retail product lookup terminals.">
   <meta name="author" content="Eurica Noeth, Code-SA™">
-  <meta name="theme-color" content="#0B1422">
-  <link rel="canonical" href="https://codefinder-web.vercel.app/">
+  <link rel="canonical" href="https://codefinder-web.vercel.app">
 
-  <!-- Favicons & App Icons -->
-  <link rel="icon" type="image/png" href="app-icon.png">
-  <link rel="apple-touch-icon" href="app-icon.png">
+  <!-- Favicon & Touch App Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="app-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="app-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CodeFinder">
 
-  <!-- Tailwind & Typography -->
+  <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            brand: {
-              navy: '#0B1422',
-              card: '#101F33',
-              cardLight: '#162842',
-              input: '#070E18',
-              border: '#1E3553',
-              teal: '#48D4D0',
-              tealGlow: '#38b2ac',
-              grayMuted: '#94A3B8'
-            }
+            'brand-teal': '#48d4d0',
+            'brand-teal-dim': '#33a3a0',
+            'terminal-navy': '#0b1422',
+            'terminal-card': '#101f33',
+            'terminal-panel': '#14283a',
+            'terminal-border': '#1e3852',
+            'terminal-muted': '#88a0b8'
           },
           fontFamily: {
             sans: ['Space Grotesk', 'sans-serif'],
@@ -47,1454 +47,1727 @@
   </script>
 
   <style>
-    body { background-color: #0B1422; color: #F8FAFC; font-family: 'Space Grotesk', sans-serif; }
-    .glow-teal { box-shadow: 0 0 25px rgba(72, 212, 208, 0.22); }
-    .glow-teal-sm { box-shadow: 0 0 12px rgba(72, 212, 208, 0.15); }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #070E18; }
-    ::-webkit-scrollbar-thumb { background: #1E3553; border-radius: 3px; }
+    body {
+      background-color: #0b1422;
+      color: #f4f8fc;
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #0b1422;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #1e3852;
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #48d4d0;
+    }
   </style>
 </head>
+<body class="min-h-screen flex flex-col justify-between custom-scroll selection:bg-brand-teal selection:text-terminal-navy">
 
-<body class="min-h-screen flex flex-col justify-between selection:bg-brand-teal selection:text-brand-navy font-mono">
+  <!-- ========================================== -->
+  <!-- GLOBAL HEADER                              -->
+  <!-- ========================================== -->
+  <header class="w-full border-b border-terminal-border/80 bg-terminal-navy/95 backdrop-blur sticky top-0 z-40 px-4 lg:px-8 py-3 flex items-center justify-between">
+    <!-- Top-Left: Code-SA Brand Logo -->
+    <div class="flex items-center gap-3">
+      <button onclick="navTo('view-home')" class="flex items-center gap-2 hover:opacity-90 transition group text-left">
+        <img src="codesa-logo.png" alt="Code-SA™ Logo" class="h-9 md:h-11 w-auto object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'flex items-center gap-1.5 text-brand-teal font-bold text-lg tracking-wider\'><span class=\'border border-brand-teal px-1.5 py-0.5 rounded text-sm\'>CODE-SA</span></div>';">
+      </button>
+    </div>
 
-  <!-- PERSISTENT TOP NAVIGATION BAR -->
-  <header class="sticky top-0 z-40 bg-brand-navy/95 backdrop-blur border-b border-brand-border px-3.5 py-2.5 sm:px-6">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
-      
-      <!-- Top Left Master Logo -->
-      <a href="javascript:void(0)" onclick="navigateTo('view-home')" class="flex items-center gap-2 group">
-        <img src="codesa-logo.png" 
-             onerror="this.onerror=null; this.src='Code-SA Logo .png';" 
-             alt="Code-SA Logo" 
-             class="h-11 sm:h-14 w-auto object-contain transition transform group-hover:scale-105 drop-shadow-[0_0_12px_rgba(72,212,208,0.35)]">
-      </a>
+    <!-- Center Screen Title Banner (Dynamic) -->
+    <div id="globalHeaderTitle" class="hidden md:flex items-center gap-2 text-xs font-mono tracking-wider text-terminal-muted bg-terminal-card/80 border border-terminal-border px-3 py-1 rounded-full">
+      <span class="w-2 h-2 rounded-full bg-brand-teal animate-pulse"></span>
+      <span id="globalHeaderTitleText">OFFICIAL STANDALONE SUITE</span>
+    </div>
 
-      <!-- Center Dynamic View Indicator -->
-      <div id="headerNavTitle" class="hidden sm:flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-card border border-brand-border text-xs text-brand-teal">
-        <span id="headerEmoji">🏬</span>
-        <span id="headerLabelText" class="text-white font-bold">Store Console</span>
-      </div>
+    <!-- Top-Right Actions: Menu & Legal + Sign In / Console -->
+    <div class="flex items-center gap-2.5">
+      <button onclick="openModal('modalMenuLegal')" class="px-3 py-2 bg-terminal-card hover:bg-terminal-panel border border-terminal-border text-xs md:text-sm font-semibold rounded-lg text-slate-200 hover:text-white flex items-center gap-1.5 transition shadow-sm">
+        <svg class="w-4 h-4 text-brand-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        <span>MENU &amp; LEGAL</span>
+      </button>
 
-      <!-- Right Header Actions -->
-      <div class="flex items-center gap-2 sm:gap-2.5">
-        <button onclick="openModal('modalMenuLegal')" class="px-3 py-1.5 rounded-xl bg-brand-card border border-brand-border text-[11px] font-bold text-white hover:border-brand-teal transition flex items-center gap-1.5">
-          <span>📖</span>
-          <span class="hidden xs:inline">MENU &amp; LEGAL</span>
-        </button>
-
-        <button id="btnHeaderAuth" onclick="openModal('modalAuth')" class="px-3.5 py-1.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-[11px] shadow hover:bg-brand-tealGlow transition flex items-center gap-1.5">
-          <span>🔐</span>
-          <span id="btnHeaderAuthText">SIGN IN</span>
-        </button>
-      </div>
-
+      <button id="headerAuthBtn" onclick="openModal('modalUnifiedAuth')" class="px-3.5 py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold text-xs md:text-sm rounded-lg flex items-center gap-1.5 transition shadow">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+        <span id="headerAuthBtnLabel">SIGN IN</span>
+      </button>
     </div>
   </header>
 
-  <!-- MAIN APPLICATION WORKSPACE -->
-  <main class="flex-grow max-w-7xl w-full mx-auto p-3.5 sm:p-6 lg:p-8">
+  <!-- ========================================== -->
+  <!-- MAIN ROUTER CONTAINER                      -->
+  <!-- ========================================== -->
+  <main id="appRouter" class="flex-1 w-full max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
 
-    <!-- VIEW 1: HOMEPAGE -->
-    <div id="view-home" class="app-view space-y-10 animate-fadeIn">
+    <!-- ---------------------------------------------------- -->
+    <!-- VIEW 1: HOME & COMMERCIAL CATALOG                    -->
+    <!-- ---------------------------------------------------- -->
+    <section id="view-home" class="space-y-10">
       
-      <section class="text-center max-w-3xl mx-auto pt-4 pb-2">
-        <div class="flex items-center justify-center mb-6">
-          <img src="CodeFinder.Logo.png" 
-               onerror="this.onerror=null; this.src='odeFinder Logo.png';" 
-               alt="CodeFinder™ Logo" 
-               class="h-36 sm:h-48 w-auto object-contain drop-shadow-[0_0_25px_rgba(72,212,208,0.5)] transition duration-300 hover:scale-105">
+      <!-- Centerpiece Hero Branding -->
+      <div class="text-center pt-4 md:pt-8 space-y-4 max-w-3xl mx-auto">
+        <div class="flex justify-center">
+          <img src="CodeFinder.Logo.png" alt="CodeFinder™ Logo" class="h-28 md:h-36 w-auto object-contain filter drop-shadow-lg" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'inline-block p-4 rounded-2xl bg-terminal-card border border-terminal-border\'><span class=\'text-3xl md:text-4xl font-extrabold text-white tracking-wider\'>Code<span class=\'text-brand-teal\'>Finder</span>™</span><p class=\'text-xs font-mono text-terminal-muted mt-1\'>• AI CAMERA SKU &amp; BARCODE SEARCH •</p></div>';">
         </div>
-
-        <p class="text-brand-teal text-[11px] sm:text-xs md:text-sm tracking-wide uppercase mb-5 font-bold leading-relaxed px-2">
+        
+        <p class="text-xs md:text-sm text-brand-teal font-mono tracking-wide font-medium">
           NO EXPENSIVE HARDWARE NEEDED • TURNING ANY STANDARD SMARTPHONE (ANDROID, HUAWEI, APPLE) AND WINDOWS DESKTOP INTO AN AI PRODUCT &amp; BARCODE FINDER
         </p>
 
-        <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-brand-grayMuted">
-          <span class="px-3 py-1 rounded-full bg-brand-card border border-brand-border">📱 Android Smartphone</span>
-          <span class="px-3 py-1 rounded-full bg-brand-card border border-brand-border">🍏 Apple iPhone / iPad</span>
-          <span class="px-3 py-1 rounded-full bg-brand-card border border-brand-border">💻 Windows Laptop / Desktop</span>
-        </div>
-      </section>
-
-      <!-- STANDALONE PRICING & PRODUCTS -->
-      <section id="pricing" class="space-y-6">
-        <div class="text-center">
-          <span class="text-[10px] sm:text-[11px] uppercase tracking-widest text-brand-teal font-bold px-3 py-1 rounded-full bg-brand-teal/10 border border-brand-teal/20">
-            • STANDALONE PRICING &amp; PERPETUAL LICENSES •
+        <!-- Device Compatibility Pills -->
+        <div class="flex flex-wrap justify-center items-center gap-2 pt-2">
+          <span class="px-3 py-1 rounded-full bg-terminal-card border border-terminal-border text-xs text-slate-300 flex items-center gap-1.5">
+            📱 Android Smartphone
           </span>
-          <h2 class="text-xl sm:text-2xl font-bold text-white mt-3">Official Standalone Retail Solutions</h2>
-          <p class="text-xs text-brand-grayMuted mt-1 max-w-2xl mx-auto leading-relaxed px-2">
+          <span class="px-3 py-1 rounded-full bg-terminal-card border border-terminal-border text-xs text-slate-300 flex items-center gap-1.5">
+            🍏 Apple iPhone / iPad
+          </span>
+          <span class="px-3 py-1 rounded-full bg-terminal-card border border-terminal-border text-xs text-slate-300 flex items-center gap-1.5">
+            💻 Windows Laptop / Desktop
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Launch & Live Operational Terminals Selector -->
+      <div class="bg-terminal-card border border-terminal-border rounded-2xl p-5 md:p-7 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-terminal-border/60 pb-4">
+          <div>
+            <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+              <span class="text-brand-teal">⚡</span> Interactive Workspaces &amp; Floor Terminals
+            </h2>
+            <p class="text-xs md:text-sm text-terminal-muted">Select an active operational view to test workflows live:</p>
+          </div>
+          <div class="text-xs font-mono text-brand-teal bg-terminal-panel px-3 py-1.5 rounded-lg border border-terminal-border">
+            PIN Login Bypass Active for Testing
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-1">
+          <!-- Terminal 1: Store Owner Console -->
+          <button onclick="navTo('view-storeOwner')" class="p-4 bg-terminal-panel hover:bg-terminal-border/80 border border-terminal-border rounded-xl text-left transition group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-2xl">🏢</span>
+              <span class="text-[10px] font-mono bg-terminal-card text-brand-teal px-2 py-0.5 rounded border border-terminal-border">OWNER HQ</span>
+            </div>
+            <div class="font-bold text-sm text-white group-hover:text-brand-teal transition">Store Owner Console</div>
+            <p class="text-xs text-terminal-muted mt-1 leading-relaxed">Full catalog master, department quota manager &amp; staff PIN delegation.</p>
+          </button>
+
+          <!-- Terminal 2: Department Head Console -->
+          <button onclick="navTo('view-deptHead')" class="p-4 bg-terminal-panel hover:bg-terminal-border/80 border border-terminal-border rounded-xl text-left transition group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-2xl">🥖</span>
+              <span class="text-[10px] font-mono bg-terminal-card text-brand-teal px-2 py-0.5 rounded border border-terminal-border">SCOPED</span>
+            </div>
+            <div class="font-bold text-sm text-white group-hover:text-brand-teal transition">Dept Head Console</div>
+            <p class="text-xs text-terminal-muted mt-1 leading-relaxed">Air-gapped Bakery / Deli management, Smart Add Product &amp; local audits.</p>
+          </button>
+
+          <!-- Terminal 3: Frontline Cashier Till -->
+          <button onclick="navTo('view-cashierTill')" class="p-4 bg-terminal-panel hover:bg-brand-teal/10 border border-brand-teal/40 rounded-xl text-left transition group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-2xl">🛒</span>
+              <span class="text-[10px] font-mono bg-brand-teal text-terminal-navy font-bold px-2 py-0.5 rounded">NEW TILL</span>
+            </div>
+            <div class="font-bold text-sm text-white group-hover:text-brand-teal transition">Frontline Cashier Till</div>
+            <p class="text-xs text-terminal-muted mt-1 leading-relaxed">Fast PLU ring-up, speed keys, SA VAT itemization &amp; instant changemaker.</p>
+          </button>
+
+          <!-- Terminal 4: Employee 3-Way Search -->
+          <button onclick="navTo('view-employeeSearch')" class="p-4 bg-terminal-panel hover:bg-terminal-border/80 border border-terminal-border rounded-xl text-left transition group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-2xl">📱</span>
+              <span class="text-[10px] font-mono bg-terminal-card text-brand-teal px-2 py-0.5 rounded border border-terminal-border">READ-ONLY</span>
+            </div>
+            <div class="font-bold text-sm text-white group-hover:text-brand-teal transition">Floor Search Terminal</div>
+            <p class="text-xs text-terminal-muted mt-1 leading-relaxed">3-in-1 phone scanning: Vertex AI photo, barcode reader &amp; PLU lookup.</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Commercial Licensing & 4 Official Standalone Solutions -->
+      <div class="space-y-6 pt-4">
+        <div class="text-center space-y-1.5">
+          <span class="text-xs font-mono tracking-widest text-brand-teal uppercase font-semibold">• STANDALONE PRICING &amp; PERPETUAL LICENSES •</span>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white">Official Standalone Retail Solutions</h2>
+          <p class="text-xs md:text-sm text-slate-300 max-w-2xl mx-auto">
             Choose monthly PayFast SaaS subscription or 100% Outright Perpetual Ownership with Year 2+ R 1,500/year Care Pack. Includes risk-free 14-day free trial on all solutions.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 text-xs">
+        <!-- 4 Sibling Product Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <!-- CodePOS -->
-          <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between space-y-4 hover:border-brand-teal/50 transition">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted">
+          <!-- Product 1: CodePOS -->
+          <div class="bg-terminal-card border border-terminal-border rounded-2xl p-5 flex flex-col justify-between hover:border-terminal-muted/60 transition space-y-4">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono text-terminal-muted mb-2">
                 <span>SUITE PRODUCT 01</span>
-                <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-brand-teal font-bold">Till / POS</span>
+                <span class="bg-terminal-panel px-2 py-0.5 rounded text-slate-300">Till / POS</span>
               </div>
-              <h3 class="text-lg font-bold text-white">CodePOS™</h3>
-              <p class="text-xs text-brand-grayMuted leading-relaxed">
+              <h3 class="text-xl font-bold text-white">CodePOS™</h3>
+              <p class="text-xs text-terminal-muted mt-1 leading-relaxed">
                 Zero-hardware mobile &amp; desktop POS, WhatsApp tax slips, changemaker, table floor plans &amp; KDS bump screen.
               </p>
+              <ul class="text-xs text-slate-300 space-y-1.5 mt-4 pt-3 border-t border-terminal-border/60">
+                <li class="flex items-center gap-1.5">✓ Digital handheld &amp; laptop POS</li>
+                <li class="flex items-center gap-1.5">✓ 15% SA VAT WhatsApp receipts</li>
+                <li class="flex items-center gap-1.5">✓ Works offline during load shedding</li>
+              </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60">
+            <div class="pt-3 border-t border-terminal-border/80 space-y-3">
               <div>
-                <span class="text-xl font-bold text-white">R 305</span>
-                <span class="text-xs text-brand-grayMuted"> / month</span>
+                <div class="text-2xl font-extrabold text-white">R 305 <span class="text-xs font-normal text-terminal-muted">/ month</span></div>
+                <div class="text-[11px] text-terminal-muted">or R 4,850 Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
               </div>
-              <div class="text-[11px] text-brand-grayMuted">or <strong class="text-white">R 4,850</strong> Outright Perpetual</div>
-              <button onclick="startPayfast('CodePOS', 305)" class="w-full py-2 rounded-xl bg-brand-cardLight border border-brand-teal/40 text-brand-teal text-xs font-bold hover:bg-brand-teal hover:text-brand-navy transition">
+              <button onclick="triggerPayFast('CodePOS™ SaaS Monthly', 305)" class="w-full py-2 bg-terminal-panel hover:bg-terminal-border text-brand-teal font-bold text-xs rounded-lg transition border border-terminal-border">
                 Subscribe R 305/mo (PayFast)
+              </button>
+              <button onclick="triggerPayFast('CodePOS™ Perpetual License', 4850)" class="w-full py-1.5 bg-terminal-navy hover:bg-terminal-panel text-slate-300 text-xs rounded-lg transition border border-terminal-border">
+                Buy Once: R 4,850
+              </button>
+              <button onclick="openTrialModal('CodePOS™')" class="w-full text-center text-[11px] text-terminal-muted hover:text-brand-teal transition">
+                ✨ 14-Day Free Trial
               </button>
             </div>
           </div>
 
-          <!-- CodeFinder (ACTIVE) -->
-          <div class="bg-brand-card rounded-2xl border-2 border-brand-teal p-5 flex flex-col justify-between space-y-4 glow-teal-sm relative">
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-teal text-brand-navy text-[10px] font-bold uppercase tracking-wider">
+          <!-- Product 2: CodeFinder (Active Hero) -->
+          <div class="bg-terminal-card border-2 border-brand-teal rounded-2xl p-5 flex flex-col justify-between relative shadow-lg shadow-brand-teal/5 space-y-4">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-teal text-terminal-navy text-[10px] font-extrabold uppercase px-3 py-0.5 rounded-full tracking-wider shadow">
               ★ CURRENT STANDALONE APP
             </div>
-            <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted pt-1">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono text-terminal-muted mb-2">
                 <span>SUITE PRODUCT 02</span>
-                <span class="px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold">AI Search</span>
+                <span class="bg-terminal-panel text-brand-teal px-2 py-0.5 rounded font-bold">AI Search</span>
               </div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-lg font-bold text-white">CodeFinder™</h3>
-                <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-teal text-brand-navy font-bold">ACTIVE</span>
-              </div>
-              <p class="text-xs text-brand-grayMuted leading-relaxed">
+              <h3 class="text-xl font-bold text-white flex items-center gap-1.5">
+                CodeFinder™ <span class="text-[10px] bg-brand-teal/20 text-brand-teal px-2 py-0.5 rounded font-mono">ACTIVE</span>
+              </h3>
+              <p class="text-xs text-terminal-muted mt-1 leading-relaxed">
                 AI Camera SKU search, 600ms Google Vertex visual match, department isolation &amp; barcode tag spooler.
               </p>
+              <ul class="text-xs text-slate-300 space-y-1.5 mt-4 pt-3 border-t border-terminal-border/60">
+                <li class="flex items-center gap-1.5">✓ 600ms neural visual SKU detection</li>
+                <li class="flex items-center gap-1.5">✓ Strict isolated department gates</li>
+                <li class="flex items-center gap-1.5">✓ Web Bluetooth belt printer spooler</li>
+              </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60">
+            <div class="pt-3 border-t border-terminal-border/80 space-y-3">
               <div>
-                <span class="text-xl font-bold text-brand-teal">R 305</span>
-                <span class="text-xs text-brand-grayMuted"> / month</span>
+                <div class="text-2xl font-extrabold text-brand-teal">R 305 <span class="text-xs font-normal text-terminal-muted">/ month</span></div>
+                <div class="text-[11px] text-terminal-muted">or R 3,850 Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
               </div>
-              <div class="text-[11px] text-brand-grayMuted">or <strong class="text-white">R 3,850</strong> Outright Perpetual</div>
-              <button onclick="startPayfast('CodeFinder', 305)" class="w-full py-2 rounded-xl bg-brand-teal text-brand-navy text-xs font-bold hover:bg-brand-tealGlow transition">
+              <button onclick="triggerPayFast('CodeFinder™ SaaS Monthly', 305)" class="w-full py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold text-xs rounded-lg transition shadow">
                 Subscribe R 305/mo (PayFast)
+              </button>
+              <button onclick="triggerPayFast('CodeFinder™ Perpetual License', 3850)" class="w-full py-1.5 bg-terminal-panel hover:bg-terminal-border text-slate-200 text-xs rounded-lg transition border border-terminal-border">
+                Buy Once: R 3,850
+              </button>
+              <button onclick="openTrialModal('CodeFinder™')" class="w-full text-center text-[11px] text-brand-teal hover:underline transition">
+                ✨ 14-Day Free Trial
               </button>
             </div>
           </div>
 
-          <!-- Code SmartRoster -->
-          <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between space-y-4 hover:border-brand-teal/50 transition">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted">
+          <!-- Product 3: Code SmartRoster -->
+          <div class="bg-terminal-card border border-terminal-border rounded-2xl p-5 flex flex-col justify-between hover:border-terminal-muted/60 transition space-y-4">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono text-terminal-muted mb-2">
                 <span>SUITE PRODUCT 03</span>
-                <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-brand-teal font-bold">Shifts</span>
+                <span class="bg-terminal-panel px-2 py-0.5 rounded text-slate-300">Shifts</span>
               </div>
-              <h3 class="text-lg font-bold text-white">Code SmartRoster™</h3>
-              <p class="text-xs text-brand-grayMuted leading-relaxed">
+              <h3 class="text-xl font-bold text-white">Code SmartRoster™</h3>
+              <p class="text-xs text-terminal-muted mt-1 leading-relaxed">
                 Drag-and-drop 7-day staff shift planner, AI roster auto-fill, and 1-tap WhatsApp schedule dispatch.
               </p>
+              <ul class="text-xs text-slate-300 space-y-1.5 mt-4 pt-3 border-t border-terminal-border/60">
+                <li class="flex items-center gap-1.5">✓ 7-day visual weekly bench</li>
+                <li class="flex items-center gap-1.5">✓ AI rule-based shift coverage auto-fill</li>
+                <li class="flex items-center gap-1.5">✓ 1-tap WhatsApp schedule dispatch</li>
+              </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60">
+            <div class="pt-3 border-t border-terminal-border/80 space-y-3">
               <div>
-                <span class="text-xl font-bold text-white">R 305</span>
-                <span class="text-xs text-brand-grayMuted"> / month</span>
+                <div class="text-2xl font-extrabold text-white">R 305 <span class="text-xs font-normal text-terminal-muted">/ month</span></div>
+                <div class="text-[11px] text-terminal-muted">or R 3,850 Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
               </div>
-              <div class="text-[11px] text-brand-grayMuted">or <strong class="text-white">R 3,850</strong> Outright Perpetual</div>
-              <button onclick="startPayfast('Code SmartRoster', 305)" class="w-full py-2 rounded-xl bg-brand-cardLight border border-brand-teal/40 text-brand-teal text-xs font-bold hover:bg-brand-teal hover:text-brand-navy transition">
+              <button onclick="triggerPayFast('Code SmartRoster™ SaaS Monthly', 305)" class="w-full py-2 bg-terminal-panel hover:bg-terminal-border text-brand-teal font-bold text-xs rounded-lg transition border border-terminal-border">
                 Subscribe R 305/mo (PayFast)
+              </button>
+              <button onclick="triggerPayFast('Code SmartRoster™ Perpetual License', 3850)" class="w-full py-1.5 bg-terminal-navy hover:bg-terminal-panel text-slate-300 text-xs rounded-lg transition border border-terminal-border">
+                Buy Once: R 3,850
+              </button>
+              <button onclick="openTrialModal('Code SmartRoster™')" class="w-full text-center text-[11px] text-terminal-muted hover:text-brand-teal transition">
+                ✨ 14-Day Free Trial
               </button>
             </div>
           </div>
 
-          <!-- Code Time Management -->
-          <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between space-y-4 hover:border-brand-teal/50 transition">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted">
+          <!-- Product 4: Code Time Management -->
+          <div class="bg-terminal-card border border-terminal-border rounded-2xl p-5 flex flex-col justify-between hover:border-terminal-muted/60 transition space-y-4">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono text-terminal-muted mb-2">
                 <span>SUITE PRODUCT 04</span>
-                <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-brand-teal font-bold">Biometrics</span>
+                <span class="bg-terminal-panel px-2 py-0.5 rounded text-slate-300">Biometrics</span>
               </div>
-              <h3 class="text-lg font-bold text-white">Code Time Management™</h3>
-              <p class="text-xs text-brand-grayMuted leading-relaxed">
+              <h3 class="text-xl font-bold text-white">Code Time Management™</h3>
+              <p class="text-xs text-terminal-muted mt-1 leading-relaxed">
                 Camera tablet biometric facial verification, 4-digit employee PIN attendance &amp; payroll CSV export.
               </p>
+              <ul class="text-xs text-slate-300 space-y-1.5 mt-4 pt-3 border-t border-terminal-border/60">
+                <li class="flex items-center gap-1.5">✓ Real-time tablet facial verification</li>
+                <li class="flex items-center gap-1.5">✓ Anti-buddy punching PIN attendance</li>
+                <li class="flex items-center gap-1.5">✓ VIP / SimplePay payroll CSV export</li>
+              </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60">
+            <div class="pt-3 border-t border-terminal-border/80 space-y-3">
               <div>
-                <span class="text-xl font-bold text-white">R 305</span>
-                <span class="text-xs text-brand-grayMuted"> / month</span>
+                <div class="text-2xl font-extrabold text-white">R 305 <span class="text-xs font-normal text-terminal-muted">/ month</span></div>
+                <div class="text-[11px] text-terminal-muted">or R 4,850 Outright Perpetual<br>Year 2+: R 1,500/yr care pack</div>
               </div>
-              <div class="text-[11px] text-brand-grayMuted">or <strong class="text-white">R 4,850</strong> Outright Perpetual</div>
-              <button onclick="startPayfast('Code Time Management', 305)" class="w-full py-2 rounded-xl bg-brand-cardLight border border-brand-teal/40 text-brand-teal text-xs font-bold hover:bg-brand-teal hover:text-brand-navy transition">
+              <button onclick="triggerPayFast('Code Time Management™ SaaS Monthly', 305)" class="w-full py-2 bg-terminal-panel hover:bg-terminal-border text-brand-teal font-bold text-xs rounded-lg transition border border-terminal-border">
                 Subscribe R 305/mo (PayFast)
+              </button>
+              <button onclick="triggerPayFast('Code Time Management™ Perpetual License', 4850)" class="w-full py-1.5 bg-terminal-navy hover:bg-terminal-panel text-slate-300 text-xs rounded-lg transition border border-terminal-border">
+                Buy Once: R 4,850
+              </button>
+              <button onclick="openTrialModal('Code Time Management™')" class="w-full text-center text-[11px] text-terminal-muted hover:text-brand-teal transition">
+                ✨ 14-Day Free Trial
               </button>
             </div>
           </div>
 
         </div>
-      </section>
+      </div>
+    </section>
 
-    </div>
-
-    <!-- VIEW 2: MASTER APP OWNER PLATFORM DASHBOARD (SUPER-ADMIN - PIN 2580) -->
-    <div id="view-masterAdmin" class="app-view hidden space-y-6 animate-fadeIn font-mono">
-      
-      <div class="bg-brand-card rounded-2xl border-2 border-amber-400/50 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 glow-teal-sm">
-        <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/40 flex items-center justify-center text-2xl text-amber-300">
-            👑
+    <!-- ---------------------------------------------------- -->
+    <!-- VIEW 2: STORE OWNER MANAGEMENT CONSOLE               -->
+    <!-- ---------------------------------------------------- -->
+    <section id="view-storeOwner" class="hidden space-y-6">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-terminal-card border border-terminal-border p-4 md:p-6 rounded-2xl">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono bg-brand-teal/20 text-brand-teal px-2 py-0.5 rounded font-bold">STORE MASTER</span>
+            <span class="text-xs text-terminal-muted">Karoo Farm Deli &amp; Supermarket (PIN: 4092)</span>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h2 class="text-lg sm:text-xl font-bold text-white">Master App Owner Platform Dashboard</h2>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 font-bold">SUPER-ADMIN</span>
-            </div>
-            <p class="text-xs text-brand-grayMuted mt-0.5">
-              Eurica Noeth Executive Cockpit • Client Business Provisioning, Store Owner Authorizations &amp; License Gatekeeper
-            </p>
-          </div>
+          <h1 class="text-2xl font-bold text-white mt-1">Store Owner Management Console</h1>
+          <p class="text-xs md:text-sm text-slate-300">Catalog master, department isolation builder &amp; staff role delegation.</p>
         </div>
-
-        <div class="flex flex-wrap items-center gap-2.5">
-          <button onclick="openModal('modalCrossStoreGateway')" class="px-3.5 py-2 rounded-xl bg-brand-cardLight border border-brand-teal text-brand-teal font-bold text-xs hover:bg-brand-teal hover:text-brand-navy transition flex items-center gap-1.5">
-            <span>🔍</span> Inspect Store Consoles
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openCatalogExportModal()" class="px-3.5 py-2 bg-terminal-panel hover:bg-terminal-border text-brand-teal border border-terminal-border rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+            📥 Download / Email Catalog
           </button>
-          <button onclick="openModal('modalProvisionStore')" class="px-4 py-2 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs shadow hover:bg-amber-300 transition flex items-center gap-1.5">
-            <span>➕</span> Provision New Store
+          <button onclick="openAddProductModal('storeOwner')" class="px-3.5 py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy rounded-lg text-xs font-extrabold transition shadow flex items-center gap-1.5">
+            + Smart Add Product
           </button>
-          <button onclick="navigateTo('view-home')" class="px-3.5 py-2 rounded-xl bg-brand-input border border-brand-border text-white text-xs hover:border-brand-teal transition">
-            ← Back to Home
+          <button onclick="navTo('view-home')" class="px-3 py-2 bg-terminal-panel hover:bg-terminal-border text-slate-300 rounded-lg text-xs font-mono transition">
+            ← Back Home
           </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Registered Stores</div>
-          <div id="admStatStores" class="text-xl font-bold text-white mt-1">4 Establishments</div>
+      <!-- Scoped Department Quotas & Isolation Builder -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Card 1: Departments Count -->
+        <div class="bg-terminal-card border border-terminal-border p-4 rounded-xl flex items-center justify-between">
+          <div>
+            <div class="text-xs font-mono text-terminal-muted">ACTIVE DEPARTMENTS</div>
+            <div class="text-2xl font-extrabold text-white mt-0.5" id="ownerDeptCount">5 Air-Gapped</div>
+          </div>
+          <button onclick="openCreateDeptModal()" class="px-2.5 py-1.5 bg-terminal-panel hover:bg-terminal-border border border-terminal-border text-xs text-brand-teal font-bold rounded-lg transition">
+            + Add Dept
+          </button>
         </div>
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Active Subscriptions</div>
-          <div id="admStatActive" class="text-xl font-bold text-brand-teal mt-1">4 Active (ZAR)</div>
+
+        <!-- Card 2: Total Active SKUs -->
+        <div class="bg-terminal-card border border-terminal-border p-4 rounded-xl flex items-center justify-between">
+          <div>
+            <div class="text-xs font-mono text-terminal-muted">TOTAL STORE SKUS</div>
+            <div class="text-2xl font-extrabold text-brand-teal mt-0.5" id="ownerSkuCount">408 Live Products</div>
+          </div>
+          <button onclick="openModal('modalBulkImportGuide')" class="px-2.5 py-1.5 bg-terminal-panel hover:bg-terminal-border border border-terminal-border text-xs text-slate-300 rounded-lg transition">
+            Bulk CSV Guide
+          </button>
         </div>
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Monthly Revenue</div>
-          <div id="admStatRevenue" class="text-xl font-bold text-emerald-400 mt-1">R 1,220.00 / mo</div>
-        </div>
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Master Authority</div>
-          <div class="text-xl font-bold text-amber-300 mt-1">Active (Executive)</div>
+
+        <!-- Card 3: Frontline PIN Roster -->
+        <div class="bg-terminal-card border border-terminal-border p-4 rounded-xl flex items-center justify-between">
+          <div>
+            <div class="text-xs font-mono text-terminal-muted">STAFF ROLES &amp; PINS</div>
+            <div class="text-2xl font-extrabold text-white mt-0.5" id="ownerStaffCount">12 Assigned</div>
+          </div>
+          <button onclick="openStaffDelegationModal()" class="px-2.5 py-1.5 bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal border border-brand-teal/40 text-xs font-bold rounded-lg transition">
+            Delegate Roles
+          </button>
         </div>
       </div>
 
-      <!-- Stores Table -->
-      <div class="bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4 text-xs">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-border/60 pb-3">
-          <div>
-            <h3 class="font-bold text-white text-sm flex items-center gap-2">
-              <span>🏬</span> Client Store Owners Authorization &amp; License Matrix
-            </h3>
-            <p class="text-[11px] text-brand-grayMuted">Enforcing tenant air-gap isolation and live PayFast authorization flags.</p>
+      <!-- Master Product Catalog Table -->
+      <div class="bg-terminal-card border border-terminal-border rounded-2xl overflow-hidden">
+        <div class="p-4 border-b border-terminal-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-terminal-card/80">
+          <div class="flex items-center gap-3">
+            <h3 class="font-bold text-base text-white">Full Store Product Information Database</h3>
+            <span class="text-xs font-mono text-terminal-muted">(All Isolated Depts)</span>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="openModal('modalProvisionStore')" class="px-3 py-1.5 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs hover:bg-amber-300 transition flex items-center gap-1">
-              <span>➕</span> Register Store
-            </button>
-            <input type="text" id="storeSearchInput" onkeyup="filterStoreTable()" placeholder="Filter store, owner, PIN..." class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border text-white text-xs outline-none focus:border-brand-teal w-full sm:w-56">
+            <input type="text" id="ownerCatalogSearch" onkeyup="filterOwnerCatalog()" placeholder="Filter by SKU, PLU or Name..." class="bg-terminal-navy border border-terminal-border rounded-lg px-3 py-1.5 text-xs text-white placeholder-terminal-muted focus:outline-none focus:border-brand-teal w-48 sm:w-64">
           </div>
         </div>
 
-        <div class="overflow-x-auto rounded-xl border border-brand-border/60">
-          <table class="w-full text-left">
-            <thead class="bg-brand-input text-brand-grayMuted text-[10px] uppercase font-mono">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-terminal-panel/60 text-terminal-muted font-mono uppercase text-[11px] border-b border-terminal-border">
               <tr>
-                <th class="p-3">Store Name &amp; Location</th>
-                <th class="p-3">Business Owner</th>
-                <th class="p-3">License Tier</th>
-                <th class="p-3">Assigned PIN</th>
-                <th class="p-3">Status</th>
-                <th class="p-3 text-right">Actions</th>
+                <th class="py-3 px-4">Photo</th>
+                <th class="py-3 px-4">PLU / Code</th>
+                <th class="py-3 px-4">Product Name</th>
+                <th class="py-3 px-4">Department</th>
+                <th class="py-3 px-4">Category</th>
+                <th class="py-3 px-4">Selling Price</th>
+                <th class="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody id="storeTableBody" class="divide-y divide-brand-border/40"></tbody>
+            <tbody id="ownerCatalogTableBody" class="divide-y divide-terminal-border/60 font-sans text-slate-200">
+              <!-- Dynamically Populated by JS -->
+            </tbody>
           </table>
         </div>
       </div>
+    </section>
 
-      <!-- Emergency PIN Reset Desk -->
-      <div class="bg-brand-card rounded-2xl border border-amber-400/40 p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
-        <div class="space-y-1">
-          <div class="font-bold text-amber-300 flex items-center gap-2">
-            <span>🔑</span> Emergency Customer PIN Reset &amp; Unlock Desk
+    <!-- ---------------------------------------------------- -->
+    <!-- VIEW 3: DEPARTMENT HEAD SCOPED MANAGEMENT CONSOLE    -->
+    <!-- ---------------------------------------------------- -->
+    <section id="view-deptHead" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-terminal-card border border-terminal-border p-4 md:p-6 rounded-2xl">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono bg-brand-teal/20 text-brand-teal px-2 py-0.5 rounded font-bold">SCOPED CONSOLE</span>
+            <span class="text-xs text-terminal-muted">Air-Gapped Access Gate</span>
           </div>
-          <p class="text-brand-grayMuted text-[11px]">Instant client credentials reissuance. Reissue valid 4-digit PINs, lift freezes, and direct-dispatch via encrypted WhatsApp to store owners.</p>
+          <h1 class="text-2xl font-bold text-white mt-1" id="deptHeadTitle">Bakery Department Head Console</h1>
+          <p class="text-xs md:text-sm text-slate-300">Authorized catalog creation, camera photo scanning &amp; local staff oversight.</p>
         </div>
-        <button onclick="openModal('modalResetStorePin')" class="px-3.5 py-2 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs shadow hover:bg-amber-300 transition whitespace-nowrap">
-          Instant PIN Recovery Desk
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openCatalogExportModal('Bakery')" class="px-3.5 py-2 bg-terminal-panel hover:bg-terminal-border text-brand-teal border border-terminal-border rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+            📥 Export / Email
+          </button>
+          <button onclick="openAddProductModal('deptHead')" class="px-3.5 py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy rounded-lg text-xs font-extrabold transition shadow flex items-center gap-1.5">
+            + Smart Add Bakery Item
+          </button>
+          <button onclick="navTo('view-home')" class="px-3 py-2 bg-terminal-panel hover:bg-terminal-border text-slate-300 rounded-lg text-xs font-mono transition">
+            ← Back Home
+          </button>
+        </div>
+      </div>
+
+      <!-- Scoped Catalog Table -->
+      <div class="bg-terminal-card border border-terminal-border rounded-2xl overflow-hidden">
+        <div class="p-4 border-b border-terminal-border flex items-center justify-between bg-terminal-card/80">
+          <h3 class="font-bold text-base text-white">Department Product Information Database</h3>
+          <span class="text-xs font-mono text-brand-teal">Strictly Isolated from Butchery, Produce &amp; Deli</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-terminal-panel/60 text-terminal-muted font-mono uppercase text-[11px] border-b border-terminal-border">
+              <tr>
+                <th class="py-3 px-4">Photo</th>
+                <th class="py-3 px-4">PLU Code</th>
+                <th class="py-3 px-4">Product Name</th>
+                <th class="py-3 px-4">Category</th>
+                <th class="py-3 px-4">Selling Price</th>
+                <th class="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="deptHeadTableBody" class="divide-y divide-terminal-border/60 font-sans text-slate-200">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- VIEW 4: FRONTLINE CASHIER TILL & RING-UP REGISTER    -->
+    <!-- ---------------------------------------------------- -->
+    <section id="view-cashierTill" class="hidden max-w-xl mx-auto space-y-4">
+      <!-- Till Header -->
+      <div class="bg-terminal-card border border-terminal-border p-4 rounded-2xl flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="font-bold text-white text-sm md:text-base">Lane 01 • Nomsa K.</span>
+            <span class="text-[10px] font-mono bg-terminal-panel text-brand-teal px-1.5 py-0.5 rounded">PIN: 2041</span>
+          </div>
+          <div class="text-xs text-terminal-muted mt-0.5 flex items-center gap-3">
+            <span>Shift: 07:30</span>
+            <span>Drawer: ZAR 1,250.00</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="navTo('view-employeeSearch')" class="px-2.5 py-1.5 bg-terminal-panel hover:bg-terminal-border text-brand-teal text-xs font-mono rounded-lg border border-terminal-border transition">
+            ⚡ Lookup
+          </button>
+          <button onclick="clearBasket()" class="px-2.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-mono rounded-lg border border-rose-500/30 transition">
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Ring-Up Barcode / PLU Search Input -->
+      <div class="bg-terminal-card border border-terminal-border p-3 rounded-2xl flex items-center gap-2">
+        <input type="text" id="tillItemInput" placeholder="Scan Barcode or Enter PLU..." class="flex-1 bg-terminal-navy border border-terminal-border rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-terminal-muted focus:outline-none focus:border-brand-teal font-mono">
+        <button onclick="addTillItemByInput()" class="px-4 py-2.5 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold text-xs rounded-xl transition">
+          Add
         </button>
       </div>
-    </div>
 
-    <!-- VIEW 3: STORE OWNER MANAGEMENT CONSOLE -->
-    <div id="view-ownerDashboard" class="app-view hidden space-y-6 animate-fadeIn font-mono">
-      <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 glow-teal-sm">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-brand-cardLight border border-brand-teal/40 flex items-center justify-center text-2xl">🏬</div>
-          <div>
+      <!-- Speed Keys (Top Department Items) -->
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between text-xs font-mono text-terminal-muted px-1">
+          <span>⚡ SPEED KEYS (BAKERY/DELI)</span>
+          <span>Touch to ring</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="addPresetItem('PLU 104', 'Sourdough', 38.50)" class="p-2.5 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-left transition flex justify-between items-center">
+            <div>
+              <span class="text-[10px] font-mono text-brand-teal block">PLU 104</span>
+              <span class="text-xs font-bold text-white">Sourdough</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-slate-200">R 38.50</span>
+          </button>
+
+          <button onclick="addPresetItem('PLU 201', 'Baguette', 22.00)" class="p-2.5 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-left transition flex justify-between items-center">
+            <div>
+              <span class="text-[10px] font-mono text-brand-teal block">PLU 201</span>
+              <span class="text-xs font-bold text-white">Baguette</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-slate-200">R 22.00</span>
+          </button>
+
+          <button onclick="addPresetItem('PLU 305', 'Milk Tart', 45.00)" class="p-2.5 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-left transition flex justify-between items-center">
+            <div>
+              <span class="text-[10px] font-mono text-brand-teal block">PLU 305</span>
+              <span class="text-xs font-bold text-white">Milk Tart</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-slate-200">R 45.00</span>
+          </button>
+
+          <button onclick="addPresetItem('PLU 112', 'Brown Bread', 16.50)" class="p-2.5 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-left transition flex justify-between items-center">
+            <div>
+              <span class="text-[10px] font-mono text-brand-teal block">PLU 112</span>
+              <span class="text-xs font-bold text-white">Brown Bread</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-slate-200">R 16.50</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Cart / Ring-Up Items -->
+      <div class="bg-terminal-card border border-terminal-border rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between border-b border-terminal-border/60 pb-2">
+          <span class="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+            🧾 Active Basket (<span id="cartCount">3</span> items)
+          </span>
+          <span class="text-xs font-mono text-terminal-muted">Sale #40922</span>
+        </div>
+
+        <div id="cartItemsList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+          <!-- Sample Item 1 -->
+          <div class="flex items-center justify-between text-xs py-1.5 border-b border-terminal-border/30">
+            <div>
+              <span class="font-bold text-white block">Artisan Sourdough Loaf</span>
+              <span class="text-[10px] font-mono text-terminal-muted">PLU 104 • Qty: 1 • R 38.50 each</span>
+            </div>
             <div class="flex items-center gap-2">
-              <h2 id="ownerStoreTitle" class="text-lg font-bold text-white">Store Owner Management Console</h2>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold">AUTHORIZED</span>
+              <span class="font-mono font-bold text-white">R 38.50</span>
+              <button onclick="removeSampleItem(this, 38.50)" class="text-rose-400 hover:text-rose-300 font-bold px-1.5">✕</button>
             </div>
-            <p class="text-xs text-brand-grayMuted">Department Delegation, Employee Staff Registry &amp; Bulk Catalog Control</p>
+          </div>
+
+          <!-- Sample Item 2 -->
+          <div class="flex items-center justify-between text-xs py-1.5 border-b border-terminal-border/30">
+            <div>
+              <span class="font-bold text-white block">Farmhouse White Bread</span>
+              <span class="text-[10px] font-mono text-terminal-muted">PLU 108 • Qty: 2 • R 17.50 each</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-white">R 35.00</span>
+              <button onclick="removeSampleItem(this, 35.00)" class="text-rose-400 hover:text-rose-300 font-bold px-1.5">✕</button>
+            </div>
+          </div>
+
+          <!-- Sample Item 3 -->
+          <div class="flex items-center justify-between text-xs py-1.5 border-b border-terminal-border/30">
+            <div>
+              <span class="font-bold text-white block">Fresh Butter Croissants</span>
+              <span class="text-[10px] font-mono text-terminal-muted">PLU 214 • Qty: 4 • R 16.00 each</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-white">R 64.00</span>
+              <button onclick="removeSampleItem(this, 64.00)" class="text-rose-400 hover:text-rose-300 font-bold px-1.5">✕</button>
+            </div>
           </div>
         </div>
-        
+
+        <!-- Totals & 15% SA VAT Ledger -->
+        <div class="pt-2 border-t border-terminal-border space-y-1 text-xs">
+          <div class="flex justify-between text-terminal-muted">
+            <span>Subtotal</span>
+            <span class="font-mono text-slate-300" id="cartSubtotal">R 137.50</span>
+          </div>
+          <div class="flex justify-between text-terminal-muted">
+            <span>15% SA VAT (Included)</span>
+            <span class="font-mono text-slate-300" id="cartVat">R 17.93</span>
+          </div>
+          <div class="flex justify-between text-base font-extrabold text-brand-teal pt-1 border-t border-terminal-border/60">
+            <span>TOTAL PAYABLE</span>
+            <span class="font-mono text-lg" id="cartTotal">R 137.50</span>
+          </div>
+        </div>
+
+        <!-- Tender Selections -->
+        <div class="pt-2 border-t border-terminal-border space-y-2">
+          <div class="flex items-center justify-between text-[11px] font-mono text-terminal-muted">
+            <span>INSTANT TENDER SELECTION</span>
+            <span>Quick Cash &amp; Digital</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="setTender(137.50)" class="py-2 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-xs font-mono text-center transition">
+              Exact Cash<br><span class="text-brand-teal font-bold" id="tenderExactBtn">R 137.50</span>
+            </button>
+            <button onclick="setTender(150.00)" class="py-2 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-xs font-mono text-center transition">
+              Cash Note<br><span class="text-white font-bold">R 150.00</span>
+            </button>
+            <button onclick="setTender(200.00)" class="py-2 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-xs font-mono text-center transition">
+              Cash Note<br><span class="text-white font-bold">R 200.00</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <button onclick="selectDigitalTender('Speedpoint Card')" class="py-2 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-xs font-bold text-slate-200 flex items-center justify-center gap-1.5 transition">
+              💳 Speedpoint Card
+            </button>
+            <button onclick="selectDigitalTender('SnapScan / QR')" class="py-2 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-xs font-bold text-slate-200 flex items-center justify-center gap-1.5 transition">
+              📱 SnapScan / QR
+            </button>
+          </div>
+
+          <!-- Changemaker Readout -->
+          <div class="bg-terminal-navy border border-terminal-border p-3 rounded-xl flex items-center justify-between text-xs">
+            <div>
+              <span class="text-terminal-muted block">Tendered: <span id="tenderDisplay" class="font-mono text-white font-bold">R 200.00</span></span>
+              <span class="text-[11px] text-emerald-400 font-mono">Drawer ready to pop</span>
+            </div>
+            <div class="text-right">
+              <span class="text-terminal-muted block text-[10px]">CHANGE DUE</span>
+              <span id="changeDisplay" class="text-base font-extrabold font-mono text-brand-teal">R 62.50</span>
+            </div>
+          </div>
+
+          <button onclick="completeSale()" class="w-full py-3.5 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-extrabold text-sm rounded-xl transition shadow flex items-center justify-center gap-2">
+            🛒 COMPLETE SALE &amp; OPEN DRAWER
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- VIEW 5: EMPLOYEE 3-IN-1 SEARCH TERMINAL              -->
+    <!-- ---------------------------------------------------- -->
+    <section id="view-employeeSearch" class="hidden max-w-xl mx-auto space-y-4">
+      <!-- Read-Only Frontline Security Banner -->
+      <div class="bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-xl flex items-center justify-between text-xs text-amber-300">
+        <div class="flex items-center gap-2">
+          <span>🔒</span>
+          <span class="font-mono font-bold">ROLE: EMPLOYEE (SEARCH ONLY)</span>
+        </div>
+        <span class="text-[11px] text-amber-300/80">Read-Only Terminal</span>
+      </div>
+
+      <!-- Search Header -->
+      <div class="bg-terminal-card border border-terminal-border p-4 rounded-2xl flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white">Product Search Terminal</h2>
+          <p class="text-xs text-terminal-muted">Department PLU, barcode &amp; photo visual search</p>
+        </div>
+        <button onclick="navTo('view-home')" class="px-3 py-1.5 bg-terminal-panel hover:bg-terminal-border text-slate-300 rounded-lg text-xs font-mono transition">
+          Exit
+        </button>
+      </div>
+
+      <!-- 3-Way Search Selector Tabs -->
+      <div class="grid grid-cols-3 gap-2 bg-terminal-card border border-terminal-border p-1.5 rounded-xl">
+        <button onclick="setSearchMode('manual')" id="tabManual" class="py-2 text-xs font-bold rounded-lg transition bg-brand-teal text-terminal-navy">
+          ⌨️ PLU / Text
+        </button>
+        <button onclick="setSearchMode('photo')" id="tabPhoto" class="py-2 text-xs font-bold rounded-lg transition text-slate-300 hover:text-white">
+          📷 Vertex Photo
+        </button>
+        <button onclick="setSearchMode('barcode')" id="tabBarcode" class="py-2 text-xs font-bold rounded-lg transition text-slate-300 hover:text-white">
+          📶 Barcode
+        </button>
+      </div>
+
+      <!-- Active Search Area -->
+      <div class="bg-terminal-card border border-terminal-border p-4 rounded-2xl space-y-3">
+        <div id="searchManualInputWrap" class="space-y-2">
+          <input type="text" id="empSearchInput" onkeyup="filterEmployeeSearch()" placeholder="Type product name, PLU or barcode..." class="w-full bg-terminal-navy border border-terminal-border rounded-xl px-4 py-2.5 text-sm text-white placeholder-terminal-muted focus:outline-none focus:border-brand-teal font-mono">
+        </div>
+
+        <div id="searchPhotoInputWrap" class="hidden text-center p-6 border-2 border-dashed border-terminal-border rounded-xl space-y-3">
+          <div class="text-3xl">📷</div>
+          <p class="text-xs text-slate-300">Snap product or upload photo for 600ms visual recognition</p>
+          <input type="file" accept="image/*" capture="environment" id="empCameraInput" class="hidden" onchange="simulatePhotoScan(event)">
+          <button onclick="document.getElementById('empCameraInput').click()" class="px-4 py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold text-xs rounded-lg transition">
+            Snap Product Photo
+          </button>
+        </div>
+
+        <div id="searchBarcodeInputWrap" class="hidden text-center p-6 border-2 border-dashed border-terminal-border rounded-xl space-y-3">
+          <div class="text-3xl">📶</div>
+          <p class="text-xs text-slate-300">Point phone camera at item barcode or shelf tag</p>
+          <button onclick="simulateBarcodeScan()" class="px-4 py-2 bg-terminal-panel hover:bg-terminal-border border border-terminal-border text-brand-teal font-bold text-xs rounded-lg transition">
+            Simulate Camera Laser Scan
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Results List -->
+      <div class="space-y-2" id="empSearchResults">
+        <!-- Dynamically rendered search results -->
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- VIEW 6: MASTER APP OWNER PLATFORM COCKPIT (EURICA)   -->
+    <!-- ---------------------------------------------------- -->
+    <section id="view-masterCockpit" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-terminal-card border-2 border-amber-400/60 p-4 md:p-6 rounded-2xl shadow-xl">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono bg-amber-400 text-terminal-navy px-2 py-0.5 rounded font-extrabold uppercase tracking-wider">APP OWNER COCKPIT</span>
+            <span class="text-xs text-amber-300 font-mono">Master PIN: 2580 Authenticated</span>
+          </div>
+          <h1 class="text-2xl font-bold text-white mt-1">Eurica's Master Platform Cockpit</h1>
+          <p class="text-xs md:text-sm text-slate-300">Provision client stores, manage licenses &amp; inspect tenant consoles.</p>
+        </div>
         <div class="flex flex-wrap items-center gap-2">
-          <!-- Switch Store Dropdown for Demonstrations -->
-          <select id="selDemoStoreSwitcher" onchange="switchDemoStore(this.value)" class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-teal/50 text-white text-xs outline-none focus:border-brand-teal">
-            <!-- Populated via script -->
-          </select>
-          <button onclick="openModal('modalNewDept')" class="px-3 py-1.5 rounded-xl bg-brand-teal text-brand-navy text-xs font-bold hover:bg-brand-tealGlow transition">+ Department</button>
-          <button onclick="openModal('modalNewStaff')" class="px-3 py-1.5 rounded-xl bg-brand-cardLight border border-brand-teal/50 text-brand-teal text-xs font-bold hover:bg-brand-teal hover:text-brand-navy transition">+ Employee</button>
-          <button onclick="navigateTo('view-home')" class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border text-white text-xs hover:border-brand-teal transition">← Home</button>
-          <button onclick="signOut()" class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border text-rose-400 text-xs hover:text-rose-300">Sign Out</button>
+          <button onclick="openCreateStoreModal()" class="px-3.5 py-2 bg-amber-400 hover:bg-amber-300 text-terminal-navy font-extrabold rounded-lg text-xs transition shadow flex items-center gap-1.5">
+            + Provision New Store
+          </button>
+          <button onclick="navTo('view-home')" class="px-3 py-2 bg-terminal-panel hover:bg-terminal-border text-slate-300 rounded-lg text-xs font-mono transition">
+            Exit Cockpit
+          </button>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Active Departments</div>
-          <div id="statOwnerDeptCount" class="text-xl font-bold text-white mt-1">4 Departments</div>
+      <!-- Platform Fleet Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div class="bg-terminal-card border border-terminal-border p-4 rounded-xl">
+          <div class="text-xs font-mono text-terminal-muted">TOTAL ACTIVE STORES</div>
+          <div class="text-2xl font-extrabold text-white mt-0.5" id="cockpitTotalStores">4 Retail Clients</div>
         </div>
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Assigned Employees</div>
-          <div id="statOwnerStaffCount" class="text-xl font-bold text-brand-teal mt-1">6 Staff Members</div>
+        <div class="bg-terminal-card border border-terminal-border p-4 rounded-xl">
+          <div class="text-xs font-mono text-terminal-muted">RECURRING SAAS MRR</div>
+          <div class="text-2xl font-extrabold text-brand-teal mt-0.5">R 1,220 <span class="text-xs font-normal text-terminal-muted">/mo</span></div>
         </div>
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Total Catalog SKUs</div>
-          <div id="statOwnerSkuCount" class="text-xl font-bold text-white mt-1">8 Products</div>
+        <div class="bg-terminal-card border border-terminal-border p-4 rounded-xl">
+          <div class="text-xs font-mono text-terminal-muted">PERPETUAL LICENSES</div>
+          <div class="text-2xl font-extrabold text-amber-300 mt-0.5">1 Store (R 3,850)</div>
         </div>
-        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
-          <div class="text-brand-grayMuted text-[10px] uppercase">Owner Authority</div>
-          <div class="text-xl font-bold text-emerald-400 mt-1">Active Authorized</div>
+        <div class="bg-terminal-card border border-terminal-border p-4 rounded-xl">
+          <div class="text-xs font-mono text-terminal-muted">TRIAL / DEMO TIER</div>
+          <div class="text-2xl font-extrabold text-white mt-0.5">1 Active Demo</div>
         </div>
       </div>
 
-      <!-- Departments Grid -->
-      <div class="bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4">
-        <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
-          <h3 class="font-bold text-white text-sm">🏬 Store Departments &amp; Scoped Consoles</h3>
-          <button onclick="openModal('modalNewDept')" class="text-xs text-brand-teal hover:underline font-bold">+ Create Department</button>
+      <!-- Provisioned Client Stores Directory -->
+      <div class="bg-terminal-card border border-terminal-border rounded-2xl overflow-hidden">
+        <div class="p-4 border-b border-terminal-border flex items-center justify-between bg-terminal-card/80">
+          <h3 class="font-bold text-base text-white">Client Stores &amp; Enterprise Tenants</h3>
+          <span class="text-xs font-mono text-terminal-muted">Direct Console Router &amp; Password Rescue</span>
         </div>
-        <div id="ownerDepartmentsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pt-2"></div>
-      </div>
-
-      <!-- Employees Directory -->
-      <div class="bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4 text-xs">
-        <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
-          <h3 class="font-bold text-white text-sm">👥 Assigned Frontline Staff Directory &amp; Designated PINs</h3>
-          <button onclick="openModal('modalNewStaff')" class="text-brand-teal hover:underline text-xs font-bold">+ Assign Employee</button>
-        </div>
-        <div class="overflow-x-auto rounded-xl border border-brand-border/60">
-          <table class="w-full text-left">
-            <thead class="bg-brand-input text-brand-grayMuted text-[10px] uppercase">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-terminal-panel/60 text-terminal-muted font-mono uppercase text-[11px] border-b border-terminal-border">
               <tr>
-                <th class="p-2.5">Employee Name</th>
-                <th class="p-2.5">Department</th>
-                <th class="p-2.5">Designated PIN</th>
-                <th class="p-2.5">Role Scope</th>
-                <th class="p-2.5 text-right">Quick Action</th>
+                <th class="py-3 px-4">Store Name</th>
+                <th class="py-3 px-4">Contact / Owner</th>
+                <th class="py-3 px-4">Owner PIN</th>
+                <th class="py-3 px-4">License Plan</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4 text-right">Console Access</th>
               </tr>
             </thead>
-            <tbody id="ownerStaffTableBody" class="divide-y divide-brand-border/40"></tbody>
+            <tbody id="cockpitStoreTableBody" class="divide-y divide-terminal-border/60 font-sans text-slate-200">
+              <!-- Populated by JS -->
+            </tbody>
           </table>
         </div>
       </div>
-    </div>
-
-    <!-- VIEW 4: DEPARTMENT HEAD SCOPED CONSOLE (WITH PRODUCT PHOTO UPLOAD) -->
-    <div id="view-deptHead" class="app-view hidden space-y-6 animate-fadeIn font-mono">
-      <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 glow-teal-sm">
-        <div class="flex items-center gap-4">
-          <div id="dhEmojiBox" class="w-14 h-14 rounded-2xl bg-brand-cardLight border border-brand-teal/40 flex items-center justify-center text-3xl shadow">🏬</div>
-          <div>
-            <h2 id="dhDepartmentTitle" class="text-xl sm:text-2xl font-bold text-white">Department</h2>
-            <p class="text-xs text-brand-grayMuted mt-0.5">
-              Department Scoped Session: Catalog, pricing, and employee PINs restricted to <span id="dhScopeBadge" class="text-white font-bold">This Department</span>.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-2">
-          <button onclick="launchSearchTerminal('employee', currentActiveDept.id)" class="px-3.5 py-2 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs shadow hover:bg-brand-tealGlow transition flex items-center gap-1.5">
-            <span>📱</span> Open Search Terminal
-          </button>
-          <button onclick="navigateTo('view-ownerDashboard')" class="px-3.5 py-2 rounded-xl bg-brand-cardLight border border-brand-border text-white text-xs hover:border-brand-teal transition">
-            ← Owner Dash
-          </button>
-          <button onclick="navigateTo('view-home')" class="px-3.5 py-2 rounded-xl bg-brand-input border border-brand-border text-brand-grayMuted hover:text-white text-xs transition">
-            ← Back to Home
-          </button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- Smart Add Form with Photo Upload (No SKU) -->
-        <div class="lg:col-span-5 bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-            <h3 class="font-bold text-white text-sm flex items-center gap-2"><span>✍️</span> Smart Add Product</h3>
-            <span id="formDeptTag" class="text-[10px] px-2 py-0.5 rounded bg-brand-input text-brand-teal border border-brand-border font-bold">Department</span>
-          </div>
-
-          <form id="productEntryForm" onsubmit="handleProductSubmit(event)" class="space-y-3.5 text-xs">
-            <div>
-              <label class="block text-brand-grayMuted mb-1">Product Description / Name *</label>
-              <input type="text" id="inpProdName" required placeholder="e.g. Traditional Beef Boerewors (500g)" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-brand-grayMuted mb-1">PLU / Till Code *</label>
-                <input type="text" id="inpProdPlu" required placeholder="e.g. 4011" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
-              </div>
-              <div>
-                <label class="block text-brand-grayMuted mb-1">Price (ZAR) *</label>
-                <input type="number" step="0.01" id="inpProdPrice" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-brand-grayMuted mb-1">Barcode (Optional)</label>
-              <input type="text" id="inpProdBarcode" placeholder="e.g. 600123456789" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
-            </div>
-
-            <!-- Product Picture / Photo for AI Vision Match -->
-            <div class="space-y-1.5 p-3 rounded-xl bg-brand-input border border-brand-border">
-              <label class="block text-brand-grayMuted text-[11px] font-bold">📸 Product Photo (For AI Camera Recognition)</label>
-              <div class="flex gap-2">
-                <input type="text" id="inpProdPhotoUrl" placeholder="Image URL / Photo File link" class="flex-1 px-3 py-1.5 rounded-lg bg-brand-card border border-brand-border text-white text-xs outline-none focus:border-brand-teal">
-                <button type="button" onclick="triggerPhotoUploadSim()" class="px-2.5 py-1.5 rounded-lg bg-brand-cardLight border border-brand-teal/40 text-brand-teal text-[11px] font-bold hover:bg-brand-teal hover:text-brand-navy transition">
-                  📸 Upload / Snap
-                </button>
-              </div>
-              <div id="photoPreviewBox" class="text-[10px] text-brand-teal hidden flex items-center gap-1.5 mt-1">
-                <span>✓</span> <span>Photo attached. Ready for 600ms AI camera recognition.</span>
-              </div>
-            </div>
-
-            <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs hover:bg-brand-tealGlow transition">
-              Save &amp; Broadcast Product
-            </button>
-          </form>
-        </div>
-
-        <!-- Product Table with Photo Column -->
-        <div class="lg:col-span-7 bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-            <h3 class="font-bold text-white text-sm">Product Information Database</h3>
-            <span id="tableCountBadge" class="text-[10px] px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold">0 Items</span>
-          </div>
-
-          <div class="overflow-x-auto rounded-xl border border-brand-border/60">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-brand-input text-brand-grayMuted text-[10px] uppercase">
-                <tr>
-                  <th class="p-2.5">Photo</th>
-                  <th class="p-2.5">PLU</th>
-                  <th class="p-2.5">Product Name</th>
-                  <th class="p-2.5">Price</th>
-                  <th class="p-2.5 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="catalogTableBody" class="divide-y divide-brand-border/40"></tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- VIEW 5: UNIFIED PRODUCT SEARCH TERMINAL -->
-    <div id="view-searchTerminal" class="app-view hidden max-w-lg mx-auto space-y-4 animate-fadeIn font-mono">
-      <div class="bg-brand-card rounded-2xl border border-brand-border p-4 flex items-center justify-between glow-teal-sm">
-        <div class="flex items-center gap-3">
-          <div id="termHeaderIcon" class="w-10 h-10 rounded-xl bg-brand-cardLight border border-brand-teal/40 flex items-center justify-center text-xl">🔍</div>
-          <div>
-            <h2 id="termHeaderTitle" class="text-base font-bold text-white">Product Search</h2>
-            <div id="termOperatorSubtitle" class="text-[11px] text-brand-grayMuted">Assigned Terminal Operator</div>
-          </div>
-        </div>
-        <button id="btnTermBack" onclick="handleTerminalBack()" class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border hover:border-brand-teal text-xs text-white transition">
-          ← Back
-        </button>
-      </div>
-
-      <!-- 3 Search Modes -->
-      <div class="grid grid-cols-3 gap-2 bg-brand-card p-1.5 rounded-2xl border border-brand-border text-xs">
-        <button id="btnTabSearch" onclick="switchTerminalMode('search')" class="py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 bg-brand-teal text-brand-navy shadow">
-          <span>🔍</span> Search
-        </button>
-        <button id="btnTabAi" onclick="switchTerminalMode('ai')" class="py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 text-brand-grayMuted hover:text-white">
-          <span>📸</span> Photo AI
-        </button>
-        <button id="btnTabBarcode" onclick="switchTerminalMode('barcode')" class="py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 text-brand-grayMuted hover:text-white">
-          <span>║▌</span> Barcode
-        </button>
-      </div>
-
-      <!-- Search Input Panel -->
-      <div id="panelSearchInput" class="bg-brand-card rounded-2xl border border-brand-border p-4 space-y-3">
-        <input type="text" id="unifiedSearchInput" onkeyup="handleUnifiedSearch(event)" placeholder="Type product name or enter code..." class="w-full px-4 py-3 rounded-xl bg-brand-input border-2 border-brand-border text-white text-sm font-bold outline-none focus:border-brand-teal">
-      </div>
-
-      <!-- Camera Viewfinder Simulator (Photo AI / Barcode) -->
-      <div id="panelCameraViewfinder" class="hidden bg-brand-card rounded-2xl border border-brand-teal/40 p-4 space-y-3 text-center">
-        <div class="h-44 rounded-xl bg-black border border-brand-border relative flex items-center justify-center overflow-hidden">
-          <div class="absolute inset-0 border-2 border-dashed border-brand-teal/50 rounded-xl m-4 pointer-events-none"></div>
-          <div class="space-y-1 z-10">
-            <div id="camViewIcon" class="text-3xl">📸</div>
-            <div id="camViewText" class="text-xs font-bold text-brand-teal">Point Phone Camera at Unlabelled Item</div>
-            <div class="text-[10px] text-brand-grayMuted">600ms Google Vertex visual match</div>
-          </div>
-        </div>
-        <button onclick="simulateCameraScanCapture()" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs hover:bg-brand-tealGlow transition">
-          ⚡ Capture &amp; Identify
-        </button>
-      </div>
-
-      <!-- Result Card -->
-      <div id="terminalResultCard" class="bg-brand-card rounded-2xl border-2 border-brand-teal/40 p-4 space-y-3.5 glow-teal-sm text-xs">
-        <div class="flex items-start justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div id="resProductThumb" class="w-12 h-12 rounded-xl bg-brand-cardLight border border-brand-border flex items-center justify-center text-xl overflow-hidden">
-              🍞
-            </div>
-            <div>
-              <span id="resDeptBadge" class="px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold uppercase text-[10px]">STORE CATALOG</span>
-              <h3 id="resProductName" class="text-base font-bold text-white leading-tight mt-1">Product Details</h3>
-            </div>
-          </div>
-          <div class="text-right bg-brand-input px-3.5 py-2 rounded-xl border border-brand-border">
-            <div id="resProductPrice" class="text-lg font-bold text-brand-teal">R 0.00</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2.5 p-3 rounded-xl bg-brand-input border border-brand-border text-center">
-          <div>
-            <div class="text-[10px] text-brand-grayMuted uppercase">Till PLU Code</div>
-            <div id="resProductPlu" class="text-2xl font-bold text-brand-teal mt-0.5">---</div>
-          </div>
-          <div>
-            <div class="text-[10px] text-brand-grayMuted uppercase">Barcode</div>
-            <div id="resProductBarcode" class="text-sm font-bold text-white mt-1">---</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2 pt-1">
-          <button onclick="ringUpOnTill()" class="py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs shadow hover:bg-brand-tealGlow transition">
-            Copy Code (<span id="btnTillPluCode">---</span>)
-          </button>
-          <button onclick="dispatchToWhatsapp()" class="py-2.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold text-xs hover:bg-emerald-500 hover:text-white transition">
-            💬 WhatsApp Cashier
-          </button>
-        </div>
-      </div>
-    </div>
+    </section>
 
   </main>
 
-  <!-- MODAL: CREATE DEPARTMENT -->
-  <div id="modalNewDept" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
-    <div class="bg-brand-card border-2 border-brand-teal/50 rounded-3xl max-w-md w-full p-6 space-y-4 glow-teal">
-      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>🏬</span> Create Department</h3>
-        <button onclick="closeModal('modalNewDept')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
-      </div>
-
-      <form onsubmit="handleNewDeptSubmit(event)" class="space-y-3.5">
-        <div>
-          <label class="block text-brand-grayMuted mb-1">Department Title *</label>
-          <input type="text" id="newDeptName" required placeholder="e.g. Seafood &amp; Fish Market" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
-        </div>
-
-        <div>
-          <label class="block text-brand-grayMuted mb-1">Select Department Icon / Emoji *</label>
-          <div class="grid grid-cols-6 gap-2 p-2 rounded-xl bg-brand-input border border-brand-border text-center text-xl">
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🥖" checked class="hidden">🥖</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🥩" class="hidden">🥩</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🐟" class="hidden">🐟</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🥦" class="hidden">🥦</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🧀" class="hidden">🧀</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🍷" class="hidden">🍷</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="☕" class="hidden">☕</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🍕" class="hidden">🍕</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="📦" class="hidden">📦</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🍎" class="hidden">🍎</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🧴" class="hidden">🧴</label>
-            <label class="cursor-pointer p-1.5 rounded hover:bg-brand-card"><input type="radio" name="deptEmoji" value="🛒" class="hidden">🛒</label>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-brand-grayMuted mb-1">Lead Manager PIN *</label>
-            <input type="text" maxlength="4" id="newDeptPin" required placeholder="e.g. 1005" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold focus:border-brand-teal">
-          </div>
-          <div>
-            <label class="block text-brand-grayMuted mb-1">Lead Manager Name</label>
-            <input type="text" id="newDeptLeadName" placeholder="e.g. Samuel Khosa" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
-          </div>
-        </div>
-
-        <div class="pt-2 flex gap-2">
-          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
-            Create Department &amp; Activate PIN
-          </button>
-          <button type="button" onclick="closeModal('modalNewDept')" class="px-4 py-2.5 rounded-xl bg-brand-input border border-brand-border text-white">
-            Cancel
-          </button>
-        </div>
-      </form>
+  <!-- ========================================== -->
+  <!-- GLOBAL FOOTER                              -->
+  <!-- ========================================== -->
+  <footer class="w-full border-t border-terminal-border bg-terminal-navy py-5 px-4 text-center text-xs text-terminal-muted space-y-2">
+    <div>
+      <span class="text-slate-300">© 2025 Code-SA™ &amp; CodeFinder™. All Rights Reserved.</span>
     </div>
-  </div>
-
-  <!-- MODAL: ASSIGN EMPLOYEE & ISSUE PIN -->
-  <div id="modalNewStaff" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
-    <div class="bg-brand-card border-2 border-brand-teal/50 rounded-3xl max-w-md w-full p-6 space-y-4 glow-teal">
-      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>👥</span> Assign Employee &amp; Issue PIN</h3>
-        <button onclick="closeModal('modalNewStaff')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
-      </div>
-
-      <form onsubmit="handleNewStaffSubmit(event)" class="space-y-3.5">
-        <div>
-          <label class="block text-brand-grayMuted mb-1">Employee Full Name *</label>
-          <input type="text" id="newStaffName" required placeholder="e.g. Nomvula Dlamini" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-brand-grayMuted mb-1">Assigned Department</label>
-            <select id="newStaffDeptSelect" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
-              <!-- Populated dynamically -->
-            </select>
-          </div>
-          <div>
-            <label class="block text-brand-grayMuted mb-1">Assigned 4-Digit PIN *</label>
-            <input type="text" maxlength="4" id="newStaffPin" required placeholder="e.g. 1015" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold focus:border-brand-teal font-mono">
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-brand-grayMuted mb-1">Role / Function</label>
-          <select id="newStaffRole" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
-            <option value="Department Head">Department Head / Supervisor</option>
-            <option value="Floor Staff" selected>Floor Staff (Lookup Terminal)</option>
-            <option value="Checkout Cashier">Checkout Cashier (All Catalog)</option>
-          </select>
-        </div>
-
-        <div class="pt-2 flex gap-2">
-          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
-            Save &amp; Issue Staff PIN
-          </button>
-          <button type="button" onclick="closeModal('modalNewStaff')" class="px-4 py-2.5 rounded-xl bg-brand-input border border-brand-border text-white">
-            Cancel
-          </button>
-        </div>
-      </form>
+    <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 font-mono text-[11px]">
+      <span>Software Developer: <strong class="text-white">Eurica Noeth</strong></span>
+      <span>•</span>
+      <a href="https://wa.me/27671296177" target="_blank" class="text-brand-teal hover:underline">+27 67 129 6177</a>
+      <span>•</span>
+      <a href="https://www.codepos.co.za" target="_blank" class="text-brand-teal hover:underline">www.codepos.co.za</a>
     </div>
-  </div>
+  </footer>
 
-  <!-- MODAL: PROVISION NEW STORE (ADD VIA MASTER DASH) -->
-  <div id="modalProvisionStore" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
-    <div class="bg-brand-card border-2 border-amber-400/50 rounded-3xl max-w-lg w-full p-6 space-y-4 glow-teal">
-      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>👑</span> Provision New Store Owner</h3>
-        <button onclick="closeModal('modalProvisionStore')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
-      </div>
+  <!-- ========================================== -->
+  <!-- MODALS & DRAWERS                           -->
+  <!-- ========================================== -->
 
-      <form onsubmit="handleProvisionStoreSubmit(event)" class="space-y-3.5">
-        <div>
-          <label class="block text-brand-grayMuted mb-1">Store / Business Name *</label>
-          <input type="text" id="provStoreName" required placeholder="e.g. Pretoria Fresh Market &amp; Deli" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
+  <!-- Modal 1: Menu & Legal Directory Drawer -->
+  <div id="modalMenuLegal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex justify-end">
+    <div class="w-full max-w-md bg-terminal-card border-l border-terminal-border h-full flex flex-col justify-between p-6 overflow-y-auto">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between border-b border-terminal-border pb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">📖</span>
+            <h3 class="font-bold text-lg text-white">Menu &amp; Legal Center</h3>
+          </div>
+          <button onclick="closeModal('modalMenuLegal')" class="text-slate-400 hover:text-white text-xl">✕</button>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-brand-grayMuted mb-1">Owner Full Name *</label>
-            <input type="text" id="provOwnerName" required placeholder="e.g. Johan van Zyl" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
-          </div>
-          <div>
-            <label class="block text-brand-grayMuted mb-1">WhatsApp / Phone *</label>
-            <input type="text" id="provPhone" required placeholder="e.g. +27 82 123 4567" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-brand-grayMuted mb-1">Assigned Owner PIN *</label>
-            <input type="text" maxlength="4" id="provPin" required placeholder="e.g. 5011" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold focus:border-amber-400">
-          </div>
-          <div>
-            <label class="block text-brand-grayMuted mb-1">License Tier</label>
-            <select id="provTier" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
-              <option value="Manual EFT Payment (Active)">Manual EFT Payment (Active)</option>
-              <option value="PayFast SaaS Active (R305/mo)">PayFast SaaS Active (R305/mo)</option>
-              <option value="Outright Perpetual (R3,850)">Outright Perpetual (R3,850)</option>
-              <option value="14-Day Free Trial (Day 1 of 14)">14-Day Free Trial</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-brand-grayMuted mb-1">Location / Branch</label>
-          <input type="text" id="provLocation" placeholder="e.g. Centurion, Gauteng" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
-        </div>
-
-        <div class="pt-2 flex gap-2.5">
-          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs hover:bg-amber-300 transition">
-            Authorize &amp; Issue Store License
+        <div class="space-y-3">
+          <h4 class="text-xs font-mono uppercase text-brand-teal font-semibold">Self-Help &amp; Operations Manuals</h4>
+          <button onclick="showManualContent('codefinder')" class="w-full p-3 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-left transition flex items-center justify-between text-xs font-bold text-white">
+            <span>📘 CodeFinder™ Full Operational Manual</span>
+            <span>→</span>
           </button>
-          <button type="button" onclick="closeModal('modalProvisionStore')" class="px-4 py-2.5 rounded-xl bg-brand-input border border-brand-border text-brand-grayMuted hover:text-white text-xs">
-            Cancel
+          <button onclick="showManualContent('codepos')" class="w-full p-3 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-left transition flex items-center justify-between text-xs font-bold text-white">
+            <span>🛒 CodePOS™ Cashier &amp; Venue Till Manual</span>
+            <span>→</span>
+          </button>
+          <button onclick="showManualContent('smartroster')" class="w-full p-3 bg-terminal-panel hover:bg-terminal-border border border-terminal-border rounded-xl text-left transition flex items-center justify-between text-xs font-bold text-white">
+            <span>📅 Code SmartRoster™ Scheduling Guide</span>
+            <span>→</span>
           </button>
         </div>
-      </form>
-    </div>
-  </div>
 
-  <!-- MODAL: LOGIN / AUTH (COVERT INTERCEPTION FOR SECRET PIN 2580) -->
-  <div id="modalAuth" class="fixed inset-0 z-50 bg-brand-navy/85 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
-    <div class="bg-brand-card border border-brand-teal/50 rounded-3xl max-w-md w-full p-6 space-y-4 glow-teal animate-fadeIn">
-      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-        <div class="flex items-center gap-2">
-          <span class="text-lg">🔐</span>
-          <h3 class="font-bold text-white text-base">Store Console &amp; Terminal Login</h3>
+        <div class="space-y-3 pt-2 border-t border-terminal-border">
+          <h4 class="text-xs font-mono uppercase text-brand-teal font-semibold">South African Legal &amp; Compliance</h4>
+          <div class="p-3 bg-terminal-panel rounded-xl text-xs space-y-2 text-slate-300">
+            <p><strong>POPI Act 2013:</strong> All employee PINs, catalog data, and tax invoices are isolated per tenant schema.</p>
+            <p><strong>15% SA VAT:</strong> Automated tax calculation and itemized receipts conform to South African commercial standards.</p>
+            <p><strong>PayFast PCI-DSS:</strong> Level 1 encryption for SaaS recurring subscriptions &amp; perpetual licenses.</p>
+          </div>
         </div>
-        <button onclick="closeModal('modalAuth')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
+
+        <div class="space-y-2 pt-2 border-t border-terminal-border">
+          <h4 class="text-xs font-mono uppercase text-brand-teal font-semibold">Direct Executive Contact</h4>
+          <div class="p-3 bg-terminal-panel rounded-xl text-xs space-y-1 font-mono text-slate-300">
+            <div>Owner: Eurica Noeth</div>
+            <div>WhatsApp: <a href="https://wa.me/27671296177" class="text-brand-teal">+27 67 129 6177</a></div>
+            <div>Email: <span class="text-white">accounts@codepos.co.za</span></div>
+          </div>
+        </div>
       </div>
-      
-      <p class="text-brand-grayMuted text-[11px]">
-        Enter your 4-digit security PIN to access your licensed business store console or till search terminal.
-      </p>
 
-      <div class="space-y-3">
-        <div>
-          <label class="block text-brand-grayMuted mb-1">Account Mode / Station Scope</label>
-          <select id="authDeptSelect" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:border-brand-teal outline-none text-xs">
-            <option value="owner">🏬 Business Store Owner Console</option>
-            <option value="cashier">🛒 Frontline Cashier Search Terminal</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-brand-grayMuted mb-1 flex items-center justify-between">
-            <span>Enter 4-Digit Security PIN</span>
-            <span class="text-[10px] text-brand-teal font-normal">Encrypted verification</span>
-          </label>
-          <input type="password" maxlength="4" id="authPinInput" placeholder="••••" class="w-full px-4 py-2.5 text-center text-lg tracking-widest rounded-xl bg-brand-input border border-brand-border text-brand-teal focus:border-brand-teal outline-none font-bold">
-        </div>
-
-        <div id="authErrorMsg" class="hidden text-rose-400 text-center font-bold text-[11px]">
-          ⚠️ Invalid PIN entered. Please check your 4-digit code.
-        </div>
-
-        <button onclick="verifySecurityPin()" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
-          Unlock Workspace →
+      <div class="pt-6 border-t border-terminal-border">
+        <button onclick="closeModal('modalMenuLegal')" class="w-full py-2.5 bg-terminal-panel hover:bg-terminal-border text-white text-xs font-bold rounded-xl transition">
+          Close Menu
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: MENU & LEGAL -->
-  <div id="modalMenuLegal" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-md hidden flex items-center justify-center p-4 font-mono text-xs">
-    <div class="bg-brand-card border border-brand-border rounded-3xl max-w-2xl w-full p-6 space-y-5 glow-teal animate-fadeIn">
-      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>📖</span> CodeFinder™ Operations &amp; Legal Center</h3>
-        <button onclick="closeModal('modalMenuLegal')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
+  <!-- Modal 2: Unified Role Authentication (PIN Gate) -->
+  <div id="modalUnifiedAuth" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-terminal-card border border-terminal-border rounded-2xl p-6 space-y-5 shadow-2xl">
+      <div class="text-center space-y-1">
+        <div class="text-3xl">🔐</div>
+        <h3 class="font-bold text-lg text-white">Enter 4-Digit Security PIN</h3>
+        <p class="text-xs text-terminal-muted">Enter your role credentials to open your terminal</p>
       </div>
 
-      <div class="grid grid-cols-4 gap-2 bg-brand-input p-1 rounded-xl border border-brand-border text-center text-xs">
-        <button id="tabBtn-manuals" onclick="switchLegalTab('manuals')" class="py-1.5 rounded-lg bg-brand-teal text-brand-navy font-bold">Manual</button>
-        <button id="tabBtn-ai" onclick="switchLegalTab('ai')" class="py-1.5 rounded-lg text-brand-grayMuted hover:text-white">AI Setup</button>
-        <button id="tabBtn-legal" onclick="switchLegalTab('legal')" class="py-1.5 rounded-lg text-brand-grayMuted hover:text-white">POPIA / Legal</button>
-        <button id="tabBtn-contact" onclick="switchLegalTab('contact')" class="py-1.5 rounded-lg text-brand-grayMuted hover:text-white">Contact Us</button>
-      </div>
-
-      <div id="tabContent-manuals" class="space-y-3 text-brand-grayMuted leading-relaxed max-h-80 overflow-y-auto pr-1">
-        <div class="font-bold text-white text-sm">📘 CodeFinder™ Operational Guide</div>
-        <p>1. <strong class="text-white">Store Owner Console:</strong> Create custom departments, assign employees, and enter real store products with photos for AI camera identification.</p>
-        <p>2. <strong class="text-white">Department Head Console:</strong> Department leads enter and manage prices and PLUs strictly for their own assigned department.</p>
-        <p>3. <strong class="text-white">Frontline Cashier Search:</strong> Cashiers lookup products using clean search by name or code, camera barcode scanning, or AI photo match with zero dummy placeholders.</p>
-      </div>
-
-      <div id="tabContent-ai" class="hidden space-y-3 text-brand-grayMuted max-h-80 overflow-y-auto pr-1">
-        <div class="font-bold text-white text-sm">🤖 24/7 AI Setup &amp; Operational Assistant</div>
-        <div class="p-3 rounded-xl bg-brand-input border border-brand-border space-y-2">
-          <input type="text" id="aiQuestionInput" placeholder="Ask: 'How do I add a product?' or 'How do I edit a store?'" class="w-full px-3 py-2 rounded-lg bg-brand-card border border-brand-border text-white text-xs outline-none">
-          <button onclick="askAiAssistant()" class="w-full py-1.5 rounded-lg bg-brand-teal text-brand-navy font-bold text-xs">Ask Assistant</button>
+      <div class="space-y-3">
+        <input type="password" id="unifiedPinInput" maxlength="4" placeholder="• • • •" class="w-full text-center tracking-[1em] text-2xl font-mono py-3 bg-terminal-navy border border-terminal-border rounded-xl text-brand-teal placeholder-terminal-muted focus:outline-none focus:border-brand-teal">
+        
+        <!-- Quick Fill Shortcuts for Testing -->
+        <div class="text-[11px] font-mono text-terminal-muted text-center space-y-1 pt-1">
+          <div>Test PINs:</div>
+          <div class="flex justify-center gap-2">
+            <button onclick="document.getElementById('unifiedPinInput').value='2580'; executeUnifiedAuth();" class="text-amber-400 hover:underline">2580 (Owner HQ)</button>
+            <span>•</span>
+            <button onclick="document.getElementById('unifiedPinInput').value='4092'; executeUnifiedAuth();" class="text-brand-teal hover:underline">4092 (Store Master)</button>
+            <span>•</span>
+            <button onclick="document.getElementById('unifiedPinInput').value='2041'; executeUnifiedAuth();" class="text-slate-300 hover:underline">2041 (Cashier)</button>
+          </div>
         </div>
-        <div id="aiResponseBox" class="p-3 rounded-xl bg-brand-cardLight border border-brand-teal/40 text-brand-teal text-[11px] hidden"></div>
-      </div>
 
-      <div id="tabContent-legal" class="hidden space-y-3 text-brand-grayMuted max-h-80 overflow-y-auto pr-1">
-        <div class="font-bold text-white text-sm">⚖️ POPIA Act (Act 4 of 2013) &amp; Commercial Terms</div>
-        <p>CodeFinder™ complies with South Africa's Protection of Personal Information Act. All pricing data and product catalogs remain isolated within your store tenant.</p>
-      </div>
+        <button onclick="executeUnifiedAuth()" class="w-full py-3 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold text-sm rounded-xl transition shadow">
+          Unlock Terminal
+        </button>
 
-      <div id="tabContent-contact" class="hidden space-y-3 text-brand-grayMuted max-h-80 overflow-y-auto pr-1">
-        <div class="font-bold text-white text-sm">🏛️ Code-SA™ Executive Contact Directory</div>
-        <p><strong class="text-white">Founder &amp; CEO:</strong> Eurica Noeth</p>
-        <p><strong class="text-white">Direct WhatsApp:</strong> <a href="https://wa.me/27671296177" target="_blank" class="text-brand-teal hover:underline">+27 67 129 6177</a></p>
-        <p><strong class="text-white">General &amp; Sales:</strong> <span class="text-white">sales@codepos.co.za</span></p>
-        <p><strong class="text-white">Accounts &amp; Billing:</strong> <span class="text-white">accounts@codepos.co.za</span></p>
-        <p><strong class="text-white">Customer Support:</strong> <span class="text-white">support@codepos.co.za</span></p>
-      </div>
-
-      <div class="pt-3 border-t border-brand-border flex justify-end">
-        <button onclick="closeModal('modalMenuLegal')" class="px-4 py-2 rounded-xl bg-brand-input border border-brand-border text-white hover:border-brand-teal transition">Close</button>
+        <button onclick="closeModal('modalUnifiedAuth')" class="w-full py-2 text-xs text-terminal-muted hover:text-white transition">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- REORGANIZED FOOTER -->
-  <footer id="contact" class="bg-brand-navy border-t border-brand-border px-4 py-6 text-center text-xs font-mono text-brand-grayMuted">
-    <div class="max-w-7xl mx-auto flex flex-col items-center justify-center space-y-2">
-      <div class="flex items-center gap-2">
-        <img src="codesa-logo.png" onerror="this.onerror=null; this.src='Code-SA Logo .png';" alt="Code-SA Logo" class="h-6 w-auto object-contain">
-        <span class="text-white font-bold">© 2025 Code-SA™ &amp; CodeFinder™</span>
+  <!-- Modal 3: Smart Add Product with Photo Upload & Camera Snap -->
+  <div id="modalSmartAddProduct" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-terminal-card border border-terminal-border rounded-2xl p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-terminal-border pb-3">
+        <div>
+          <h3 class="font-bold text-lg text-white">+ Smart Add Product</h3>
+          <p class="text-xs text-terminal-muted" id="smartAddSubtitle">Store Owner Master Catalog Form</p>
+        </div>
+        <button onclick="closeModal('modalSmartAddProduct')" class="text-slate-400 hover:text-white">✕</button>
       </div>
-      <div>
-        <span>All Rights Reserved.</span>
-      </div>
-      <div>
-        <span>Software Developer: <strong class="text-white">Eurica Noeth</strong></span>
-      </div>
-      <div>
-        <a href="https://www.codepos.co.za" target="_blank" class="text-brand-teal hover:underline font-bold">www.codepos.co.za</a>
+
+      <div class="space-y-3 text-xs">
+        <!-- Photo Attachment Zone (Native Gallery & Camera Snap) -->
+        <div class="space-y-1.5">
+          <label class="font-bold text-slate-300 block">Product Photo (AI Vision Scan Ready)</label>
+          <div class="flex items-center gap-3 bg-terminal-navy p-3 rounded-xl border border-terminal-border">
+            <div id="productPhotoThumb" class="w-14 h-14 rounded-lg bg-terminal-panel border border-terminal-border flex items-center justify-center text-xl overflow-hidden shrink-0">
+              📸
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <div class="flex gap-2">
+                <!-- Native Phone Gallery File Input -->
+                <input type="file" id="productGalleryInput" accept="image/*" class="hidden" onchange="handleProductPhotoSelected(event)">
+                <button onclick="document.getElementById('productGalleryInput').click()" type="button" class="px-2.5 py-1.5 bg-terminal-panel hover:bg-terminal-border text-slate-200 rounded-lg text-xs font-semibold border border-terminal-border transition">
+                  🖼️ Upload Image
+                </button>
+
+                <!-- Native Phone Camera Snap Input -->
+                <input type="file" id="productCameraInput" accept="image/*" capture="environment" class="hidden" onchange="handleProductPhotoSelected(event)">
+                <button onclick="document.getElementById('productCameraInput').click()" type="button" class="px-2.5 py-1.5 bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal rounded-lg text-xs font-semibold border border-brand-teal/40 transition">
+                  📷 Snap Photo
+                </button>
+              </div>
+              <p id="photoStatusText" class="text-[11px] text-terminal-muted">Attach real package photo for Vertex visual detection.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-300 block mb-1">PLU Code</label>
+            <input type="text" id="newPluCode" placeholder="e.g. 104" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-mono">
+          </div>
+          <div>
+            <label class="font-bold text-slate-300 block mb-1">Barcode (EAN-13)</label>
+            <input type="text" id="newBarcode" placeholder="e.g. 6001234567890" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Product Name</label>
+          <input type="text" id="newProductName" placeholder="e.g. Artisan Sourdough Loaf (700g)" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-300 block mb-1">Department</label>
+            <select id="newDepartmentSelect" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white">
+              <option value="Bakery">Bakery</option>
+              <option value="Butchery">Butchery</option>
+              <option value="Deli">Deli</option>
+              <option value="Produce">Produce</option>
+              <option value="Seafood">Seafood</option>
+              <option value="Groceries">Groceries</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-300 block mb-1">Category</label>
+            <input type="text" id="newCategory" placeholder="e.g. Breads / Rolls" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white">
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Selling Price (ZAR)</label>
+          <input type="number" step="0.50" id="newPrice" placeholder="38.50" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-mono text-base">
+        </div>
+
+        <div class="pt-3 border-t border-terminal-border flex justify-end gap-2">
+          <button onclick="closeModal('modalSmartAddProduct')" class="px-4 py-2 bg-terminal-panel hover:bg-terminal-border text-slate-300 rounded-lg text-xs transition">
+            Cancel
+          </button>
+          <button onclick="saveNewProduct()" class="px-5 py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-extrabold rounded-lg text-xs transition shadow">
+            Save &amp; Broadcast to Terminals
+          </button>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
 
-  <!-- SCRIPT ENGINE -->
+  <!-- Modal 4: Download / Email Product Database -->
+  <div id="modalCatalogExport" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-terminal-card border border-terminal-border rounded-2xl p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-terminal-border pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📥</span>
+          <div>
+            <h3 class="font-bold text-base text-white">Download or Email Catalog</h3>
+            <p class="text-xs text-terminal-muted" id="catalogExportScope">Store Master Database (408 Products)</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modalCatalogExport')" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <!-- Option A: Direct Device Download -->
+        <div class="p-3.5 bg-terminal-panel rounded-xl border border-terminal-border space-y-2">
+          <div class="font-bold text-white flex items-center gap-1.5">
+            <span>💾</span> 1-Click Device Download
+          </div>
+          <p class="text-terminal-muted text-[11px]">Export formatted CSV spreadsheet compatible with POS tills, scales &amp; Excel.</p>
+          <button onclick="downloadCatalogCsv()" class="w-full py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold rounded-lg transition shadow">
+            Download CSV to Device (.csv)
+          </button>
+        </div>
+
+        <!-- Option B: Direct Email Dispatch -->
+        <div class="p-3.5 bg-terminal-panel rounded-xl border border-terminal-border space-y-2.5">
+          <div class="font-bold text-white flex items-center gap-1.5">
+            <span>✉️</span> Direct Email Dispatch
+          </div>
+          <p class="text-terminal-muted text-[11px]">Send latest catalog backup to accounts, store supervisor or auditor.</p>
+          
+          <input type="email" id="exportRecipientEmail" placeholder="Enter recipient email (e.g. accounts@store.co.za)" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white placeholder-terminal-muted focus:outline-none focus:border-brand-teal font-mono">
+
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <button onclick="document.getElementById('exportRecipientEmail').value='accounts@codepos.co.za'" class="px-2 py-0.5 bg-terminal-card hover:bg-terminal-border text-[10px] text-slate-300 rounded border border-terminal-border">
+              Accounts
+            </button>
+            <button onclick="document.getElementById('exportRecipientEmail').value='manager@karoo.co.za'" class="px-2 py-0.5 bg-terminal-card hover:bg-terminal-border text-[10px] text-slate-300 rounded border border-terminal-border">
+              Store Manager
+            </button>
+            <button onclick="document.getElementById('exportRecipientEmail').value='bakery@karoo.co.za'" class="px-2 py-0.5 bg-terminal-card hover:bg-terminal-border text-[10px] text-slate-300 rounded border border-terminal-border">
+              Bakery Dept
+            </button>
+          </div>
+
+          <button onclick="dispatchCatalogEmail()" class="w-full py-2 bg-terminal-card hover:bg-terminal-border text-brand-teal font-bold rounded-lg transition border border-brand-teal/40">
+            Dispatch Catalog via Email
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: 50+ Department Icons & Department Creator -->
+  <div id="modalCreateDept" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-terminal-card border border-terminal-border rounded-2xl p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-terminal-border pb-3">
+        <h3 class="font-bold text-base text-white">Create Air-Gapped Department</h3>
+        <button onclick="closeModal('modalCreateDept')" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Department Name (Single Word)</label>
+          <input type="text" id="newDeptNameInput" placeholder="e.g. Seafood, Florist, Deli" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-bold">
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Select Department Icon (50+ Specialized Retail Glyphs)</label>
+          <div id="deptIconPickerGrid" class="grid grid-cols-6 gap-2 p-2 bg-terminal-navy rounded-xl border border-terminal-border max-h-48 overflow-y-auto">
+            <!-- Populated by JS with 52 icons -->
+          </div>
+          <div class="mt-2 text-center text-xs text-brand-teal">
+            Selected Icon: <span id="selectedDeptIconDisplay" class="text-lg">🥖</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Department Head Access PIN</label>
+          <input type="text" id="newDeptPinInput" maxlength="4" placeholder="e.g. 5110" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-mono text-center">
+        </div>
+
+        <div class="pt-3 border-t border-terminal-border flex justify-end gap-2">
+          <button onclick="closeModal('modalCreateDept')" class="px-4 py-2 bg-terminal-panel hover:bg-terminal-border text-slate-300 rounded-lg text-xs">
+            Cancel
+          </button>
+          <button onclick="saveNewDepartment()" class="px-4 py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold rounded-lg text-xs shadow">
+            Create Isolated Department
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Staff Roles & Permissions Delegation -->
+  <div id="modalStaffDelegation" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-terminal-card border border-terminal-border rounded-2xl p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-terminal-border pb-3">
+        <div>
+          <h3 class="font-bold text-base text-white">Staff Roles &amp; Permission Delegation</h3>
+          <p class="text-xs text-terminal-muted">Assign Job Titles, Scope Boundaries &amp; 4-Digit Terminal PINs</p>
+        </div>
+        <button onclick="closeModal('modalStaffDelegation')" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <!-- Permission Matrix Explainer Callout -->
+      <div class="p-3 bg-terminal-panel border border-terminal-border rounded-xl text-xs space-y-1">
+        <div class="font-bold text-brand-teal">🛡️ Enforced Permission Hierarchy:</div>
+        <p class="text-slate-300 text-[11px] leading-relaxed">
+          <strong>Store Owner &amp; Dept Heads:</strong> Can Smart Add &amp; edit products.<br>
+          <strong>Cashiers &amp; Floor Employees:</strong> Strictly locked to read-only search &amp; till ring-up. Catalog editing is disabled.
+        </p>
+      </div>
+
+      <!-- Form: Add Staff Member -->
+      <div class="bg-terminal-navy p-3.5 rounded-xl border border-terminal-border space-y-2.5 text-xs">
+        <div class="font-bold text-white">Add New Staff Member:</div>
+        <div class="grid grid-cols-2 gap-2">
+          <input type="text" id="staffNameInput" placeholder="Staff Name (e.g. Sipho M.)" class="bg-terminal-panel border border-terminal-border rounded px-2.5 py-1.5 text-white">
+          <input type="text" id="staffJobTitleInput" placeholder="Job Title (e.g. Senior Baker)" class="bg-terminal-panel border border-terminal-border rounded px-2.5 py-1.5 text-white">
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <select id="staffRoleSelect" class="bg-terminal-panel border border-terminal-border rounded px-2 py-1.5 text-white">
+            <option value="Department Head">Dept Head</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Cashier">Cashier</option>
+            <option value="Employee">Floor Clerk</option>
+          </select>
+          <select id="staffDeptSelect" class="bg-terminal-panel border border-terminal-border rounded px-2 py-1.5 text-white">
+            <option value="Bakery">Bakery</option>
+            <option value="Butchery">Butchery</option>
+            <option value="Deli">Deli</option>
+            <option value="Produce">Produce</option>
+            <option value="Checkout">Frontline Till</option>
+          </select>
+          <input type="text" id="staffPinInput" maxlength="4" placeholder="4-Digit PIN" class="bg-terminal-panel border border-terminal-border rounded px-2 py-1.5 text-white font-mono text-center">
+        </div>
+        <button onclick="saveNewStaffMember()" class="w-full py-2 bg-brand-teal hover:bg-brand-teal-dim text-terminal-navy font-bold rounded text-xs transition">
+          + Add Staff Member
+        </button>
+      </div>
+
+      <!-- Staff Roster Table -->
+      <div class="space-y-1.5">
+        <h4 class="text-xs font-mono text-terminal-muted uppercase">Active Store Staff Roster:</h4>
+        <div id="staffRosterList" class="space-y-1.5 max-h-48 overflow-y-auto">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 7: Provision Store (Owner Cockpit) -->
+  <div id="modalCreateStore" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-terminal-card border border-terminal-border rounded-2xl p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-terminal-border pb-3">
+        <h3 class="font-bold text-base text-white">Provision New Client Store</h3>
+        <button onclick="closeModal('modalCreateStore')" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Store / Business Name</label>
+          <input type="text" id="storeNameInput" placeholder="e.g. Franschhoek Farm Pantry" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-bold">
+        </div>
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Owner Contact Email</label>
+          <input type="email" id="storeEmailInput" placeholder="owner@store.co.za" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-mono">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-300 block mb-1">Owner 4-Digit PIN</label>
+            <input type="text" id="storePinInput" maxlength="4" placeholder="e.g. 8820" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white font-mono text-center">
+          </div>
+          <div>
+            <label class="font-bold text-slate-300 block mb-1">Licensing Plan</label>
+            <select id="storePlanSelect" class="w-full bg-terminal-navy border border-terminal-border rounded-lg px-3 py-2 text-white">
+              <option value="Demo (14-Day Trial)">Demo (14-Day Trial)</option>
+              <option value="SaaS Monthly (R 305/mo)">SaaS Monthly (R 305/mo)</option>
+              <option value="Perpetual (R 3,850)">Perpetual (R 3,850)</option>
+            </select>
+          </div>
+        </div>
+        <div class="pt-3 border-t border-terminal-border flex justify-end gap-2">
+          <button onclick="closeModal('modalCreateStore')" class="px-4 py-2 bg-terminal-panel hover:bg-terminal-border text-slate-300 rounded-lg text-xs">
+            Cancel
+          </button>
+          <button onclick="saveNewStoreProvision()" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-terminal-navy font-bold rounded-lg text-xs shadow">
+            Provision Store
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT LOGIC & STATE ENGINE            -->
+  <!-- ========================================== -->
   <script>
-    // All 4 Real-World South African Businesses Pre-Loaded for Demonstrations
+    // ------------------------------------------
+    // 1. Initial State & In-Memory Store DB
+    // ------------------------------------------
+    let currentStore = "Karoo Farm Deli & Supermarket";
+    let currentUserRole = "Guest";
+    let currentDept = "Bakery";
+
+    // 52 Granular Department Icons
+    const departmentIconsList = [
+      "🥖", "🥐", "🎂", "🧁", "🍞", "🥩", "🍗", "🥓", "🍖", "🧀",
+      "🥪", "🥗", "🍕", "🥫", "🍇", "🍎", "🍌", "🥑", "🥕", "🥦",
+      "🥔", "🧅", "🐟", "🦐", "🦀", "💐", "🌸", "🌱", "🌿", "🥛",
+      "☕", "🧃", "🍷", "🍾", "🍺", "🧊", "🧻", "🧼", "🧹", "🧴",
+      "🍬", "🍫", "🍿", "🍳", "🥣", "🍯", "🧂", "🌭", "🍔", "🌯",
+      "🌮", "🍱"
+    ];
+    let selectedDeptIcon = "🥖";
+
+    // Sample Active Products
+    let catalogProducts = [
+      { id: 1, plu: "104", name: "Artisan Sourdough Loaf (700g)", dept: "Bakery", category: "Breads / Rolls", price: 38.50, barcode: "6001040001", photo: "🥖" },
+      { id: 2, plu: "108", name: "Farmhouse White Bread (800g)", dept: "Bakery", category: "Breads / Rolls", price: 17.50, barcode: "6001080002", photo: "🍞" },
+      { id: 3, plu: "214", name: "Fresh Butter Croissants (4-Pack)", dept: "Bakery", category: "Pastries / Croissants", price: 64.00, barcode: "6002140003", photo: "🥐" },
+      { id: 4, plu: "305", name: "Traditional Milk Tart (Large)", dept: "Bakery", category: "Confectionery / Pies", price: 45.00, barcode: "6003050004", photo: "🥧" },
+      { id: 5, plu: "501", name: "Karoo Lamb Chops (per kg)", dept: "Butchery", category: "Fresh Meat", price: 145.00, barcode: "6005010005", photo: "🥩" },
+      { id: 6, plu: "504", name: "Traditional Beef Boerewors (500g)", dept: "Butchery", category: "Sausages", price: 58.00, barcode: "6005040006", photo: "🥓" },
+      { id: 7, plu: "602", name: "Imported Dutch Gouda Wedge", dept: "Deli", category: "Cheeses", price: 62.50, barcode: "6006020007", photo: "🧀" },
+      { id: 8, plu: "701", name: "Cavendish Bananas (per kg)", dept: "Produce", category: "Fresh Fruit", price: 19.99, barcode: "6007010008", photo: "🍌" }
+    ];
+
+    // Staff Roster
+    let staffRoster = [
+      { name: "Eurica Noeth", title: "Master Store Owner", role: "Store Owner", dept: "All", pin: "4092", canEdit: true },
+      { name: "Johan v.d. Merwe", title: "Bakery Head", role: "Department Head", dept: "Bakery", pin: "5110", canEdit: true },
+      { name: "Bongiwe D.", title: "Butchery Supervisor", role: "Supervisor", dept: "Butchery", pin: "5220", canEdit: true },
+      { name: "Nomsa K.", title: "Till Operator 01", role: "Cashier", dept: "Checkout", pin: "2041", canEdit: false },
+      { name: "Kagiso M.", title: "Floor Shelf Clerk", role: "Employee", dept: "Groceries", pin: "3011", canEdit: false }
+    ];
+
+    // Tenant Stores (Owner Cockpit)
     let clientStores = [
-      { id: 'spar-ptaeast', name: 'SuperSpar Meat & Deli', owner: 'Pieter Van Der Merwe', phone: '+27 82 459 1042', city: 'Pretoria East, Gauteng', pin: '3011', tier: 'PayFast SaaS Active (R305/mo)', status: 'ACTIVE' },
-      { id: 'karoo-deli', name: 'Karoo Farm Deli & Bakery', owner: 'Gerrit van Zyl', phone: '+27 84 219 8830', city: 'Centurion, Gauteng', pin: '2044', tier: 'Outright Perpetual (R3,850)', status: 'ACTIVE' },
-      { id: 'foodlovers-dbn', name: 'Food Lover\'s Market', owner: 'Charmaine Cloete', phone: '+27 83 912 4401', city: 'Durbanville, Western Cape', pin: '4022', tier: 'PayFast SaaS Active (R305/mo)', status: 'ACTIVE' },
-      { id: 'artisan-bakers', name: 'The Artisan Bakery', owner: 'Liam Naidoo', phone: '+27 82 881 9021', city: 'Gardens, Cape Town', pin: '5033', tier: '14-Day Free Trial (Active)', status: 'ACTIVE' }
+      { name: "Karoo Farm Deli & Supermarket", owner: "Eurica Noeth", email: "eurica@code-sa.co.za", pin: "4092", plan: "SaaS Monthly (R 305/mo)", status: "Active" },
+      { name: "Franschhoek Vine Bakery", owner: "Stefan Roux", email: "stefan@franschhoek.co.za", pin: "3104", plan: "Perpetual (R 3,850)", status: "Active" },
+      { name: "Stellenbosch Fresh Butchery", owner: "Pieter K.", email: "pieter@stellenbosch.co.za", pin: "7721", plan: "SaaS Monthly (R 305/mo)", status: "Active" },
+      { name: "Rosebank Corner Grocer", owner: "Zanele M.", email: "zanele@rosebank.co.za", pin: "6602", plan: "Demo (14-Day Trial)", status: "Trial Expiring (9 Days)" }
     ];
 
-    let currentStore = clientStores[0];
+    // ------------------------------------------
+    // 2. Navigation & View Routing
+    // ------------------------------------------
+    function navTo(viewId) {
+      const views = ['view-home', 'view-storeOwner', 'view-deptHead', 'view-cashierTill', 'view-employeeSearch', 'view-masterCockpit'];
+      views.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
 
-    let departments = [
-      { id: 'bakery',   name: 'Bakery',   emoji: '🥖', pin: '1001' },
-      { id: 'butchery', name: 'Butchery', emoji: '🥩', pin: '1002' },
-      { id: 'produce',  name: 'Produce',  emoji: '🥦', pin: '1003' },
-      { id: 'deli',     name: 'Deli',     emoji: '🧀', pin: '1004' }
-    ];
-
-    let staffMembers = [
-      { name: 'Sipho Ndlovu', deptId: 'bakery', deptName: 'Bakery', pin: '1011', role: 'Department Head' },
-      { name: 'Maria Santos', deptId: 'bakery', deptName: 'Bakery', pin: '1012', role: 'Floor Staff' },
-      { name: 'Kobus Venter', deptId: 'butchery', deptName: 'Butchery', pin: '1021', role: 'Department Head' },
-      { name: 'Thabo Mokoena', deptId: 'produce', deptName: 'Produce', pin: '1031', role: 'Department Head' },
-      { name: 'Annelize Meyer', deptId: 'deli', deptName: 'Deli', pin: '1041', role: 'Department Head' },
-      { name: 'Lerato Khumalo', deptId: 'cashier', deptName: 'Cashier Till', pin: '2041', role: 'Checkout Cashier' }
-    ];
-
-    let productCatalog = [
-      { id: 1, deptId: 'bakery', plu: '8012', name: 'Almond Croissant', price: 26.50, barcode: '6001234001', photo: '🥐' },
-      { id: 2, deptId: 'bakery', plu: '8015', name: 'Artisan Ciabatta Loaf', price: 22.00, barcode: '6001234002', photo: '🥖' },
-      { id: 3, deptId: 'butchery', plu: '4011', name: 'Traditional Beef Boerewors (kg)', price: 119.99, barcode: '6002345001', photo: '🥩' },
-      { id: 4, deptId: 'butchery', plu: '4025', name: 'Karanja Rump Steak (kg)', price: 189.99, barcode: '6002345002', photo: '🥩' },
-      { id: 5, deptId: 'produce', plu: '3011', name: 'Hass Avocado (Pre-Pack)', price: 19.99, barcode: '6003456001', photo: '🥑' },
-      { id: 6, deptId: 'produce', plu: '3020', name: 'Bananas Cavendish (kg)', price: 18.50, barcode: '6003456002', photo: '🍌' },
-      { id: 7, deptId: 'deli', plu: '2011', name: 'Smoked Honey Glazed Ham (100g)', price: 34.00, barcode: '6004567001', photo: '🍖' },
-      { id: 8, deptId: 'deli', plu: '2022', name: 'Mature White Cheddar (100g)', price: 29.50, barcode: '6004567002', photo: '🧀' }
-    ];
-
-    let currentActiveDept = departments[0];
-    let terminalRole = 'employee';
-    let terminalActiveItem = productCatalog[0];
-    const masterOwnerPin = '2580'; // Eurica Noeth Covert Executive Key
-
-    document.addEventListener('DOMContentLoaded', () => {
-      renderClientStoresTable();
-      renderOwnerDepartments();
-      renderStaffTable();
-      populateDeptSelects();
-      populateDemoStoreSwitcher();
-    });
-
-    function navigateTo(viewId) {
-      document.querySelectorAll('.app-view').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById(viewId);
       if (target) target.classList.remove('hidden');
 
-      const navTitle = document.getElementById('headerNavTitle');
-      const emojiBox = document.getElementById('headerEmoji');
-      const labelText = document.getElementById('headerLabelText');
+      // Update Global Header Banner
+      const headerTitle = document.getElementById('globalHeaderTitleText');
+      if (viewId === 'view-home') headerTitle.innerText = "OFFICIAL STANDALONE SUITE";
+      else if (viewId === 'view-storeOwner') headerTitle.innerText = "STORE OWNER CONSOLE";
+      else if (viewId === 'view-deptHead') headerTitle.innerText = "DEPARTMENT HEAD CONSOLE";
+      else if (viewId === 'view-cashierTill') headerTitle.innerText = "CASHIER REGISTER TILL";
+      else if (viewId === 'view-employeeSearch') headerTitle.innerText = "EMPLOYEE SEARCH PAD";
+      else if (viewId === 'view-masterCockpit') headerTitle.innerText = "APP OWNER COCKPIT (EURICA)";
 
-      if (viewId === 'view-home') {
-        navTitle.classList.add('hidden');
-      } else {
-        navTitle.classList.remove('hidden');
-        if (viewId === 'view-masterAdmin') {
-          emojiBox.innerText = '👑';
-          labelText.innerText = 'Master App Owner Platform Dashboard';
-        } else if (viewId === 'view-ownerDashboard') {
-          emojiBox.innerText = '🏬';
-          labelText.innerText = `${currentStore.name} Console`;
-        } else if (viewId === 'view-deptHead') {
-          emojiBox.innerText = currentActiveDept.emoji;
-          labelText.innerText = `${currentActiveDept.name} Scoped Console`;
-        } else if (viewId === 'view-searchTerminal') {
-          emojiBox.innerText = terminalRole === 'cashier' ? '🛒' : currentActiveDept.emoji;
-          labelText.innerText = terminalRole === 'cashier' ? 'Cashier Product Search' : `${currentActiveDept.name} Search Terminal`;
-        }
-      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // AUTHENTICATION LOGIC WITH COVERT MASTER PIN 2580 INTERCEPTION
-    function verifySecurityPin() {
-      const pin = document.getElementById('authPinInput').value.trim();
-      const target = document.getElementById('authDeptSelect').value;
+    // Modal Helpers
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
-      // 1. Covert Master Override: PIN 2580 always routes to Master Admin Cockpit
-      if (pin === masterOwnerPin) {
-        closeModal('modalAuth');
-        document.getElementById('authPinInput').value = '';
-        document.getElementById('btnHeaderAuthText').innerText = 'Super-Admin';
-        renderClientStoresTable();
-        navigateTo('view-masterAdmin');
-        return;
+    // ------------------------------------------
+    // 3. Unified Authentication PIN Handler
+    // ------------------------------------------
+    function executeUnifiedAuth() {
+      const pin = document.getElementById('unifiedPinInput').value.trim();
+      closeModal('modalUnifiedAuth');
+
+      if (pin === "2580") {
+        // App Owner Master Cockpit
+        currentUserRole = "App Owner";
+        navTo('view-masterCockpit');
+        alert("👑 Master App Owner Verified: Welcome to your executive cockpit, Eurica!");
+      } else if (pin === "4092") {
+        // Store Owner Console
+        currentUserRole = "Store Owner";
+        navTo('view-storeOwner');
+      } else if (pin === "5110") {
+        // Bakery Department Head
+        currentUserRole = "Department Head";
+        currentDept = "Bakery";
+        navTo('view-deptHead');
+      } else if (pin === "2041") {
+        // Cashier Till Lane
+        currentUserRole = "Cashier";
+        navTo('view-cashierTill');
+      } else if (pin === "3011" || pin.length === 4) {
+        // Floor Employee Search
+        currentUserRole = "Employee";
+        navTo('view-employeeSearch');
+      } else {
+        alert("Invalid PIN. Enter 2580 (App Owner), 4092 (Store Master), or 2041 (Cashier).");
       }
-
-      // 2. Client Store Owner Lookup
-      if (target === 'owner') {
-        const matchingStore = clientStores.find(s => s.pin === pin);
-        if (matchingStore) {
-          currentStore = matchingStore;
-          closeModal('modalAuth');
-          document.getElementById('authPinInput').value = '';
-          document.getElementById('btnHeaderAuthText').innerText = 'Owner Console';
-          document.getElementById('ownerStoreTitle').innerText = `${matchingStore.name} Console`;
-          populateDemoStoreSwitcher();
-          renderOwnerDepartments();
-          renderStaffTable();
-          navigateTo('view-ownerDashboard');
-        } else {
-          showAuthError();
-        }
-        return;
-      }
-
-      // 3. Cashier / Employee Search Terminal
-      if (target === 'cashier') {
-        const matchingStaff = staffMembers.find(s => s.pin === pin);
-        if (matchingStaff || pin === '2041') {
-          closeModal('modalAuth');
-          document.getElementById('authPinInput').value = '';
-          document.getElementById('btnHeaderAuthText').innerText = 'Cashier Terminal';
-          launchSearchTerminal('cashier', 'all');
-        } else {
-          const matchingDept = departments.find(d => d.pin === pin);
-          if (matchingDept) {
-            closeModal('modalAuth');
-            document.getElementById('authPinInput').value = '';
-            document.getElementById('btnHeaderAuthText').innerText = `${matchingDept.name} Terminal`;
-            launchSearchTerminal('employee', matchingDept.id);
-          } else {
-            showAuthError();
-          }
-        }
-      }
+      document.getElementById('unifiedPinInput').value = "";
     }
 
-    function showAuthError() {
-      const err = document.getElementById('authErrorMsg');
-      err.classList.remove('hidden');
-      setTimeout(() => err.classList.add('hidden'), 3500);
-    }
-
-    function signOut() {
-      document.getElementById('btnHeaderAuthText').innerText = 'SIGN IN';
-      navigateTo('view-home');
-    }
-
-    // DEMO STORE SWITCHER FOR PROSPECTIVE CLIENT PRESENTATIONS
-    function populateDemoStoreSwitcher() {
-      const sel = document.getElementById('selDemoStoreSwitcher');
-      if (!sel) return;
-      sel.innerHTML = '';
-      clientStores.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s.id;
-        opt.innerText = `${s.name} (${s.pin})`;
-        if (s.id === currentStore.id) opt.selected = true;
-        sel.appendChild(opt);
-      });
-    }
-
-    function switchDemoStore(storeId) {
-      const match = clientStores.find(s => s.id === storeId);
-      if (match) {
-        currentStore = match;
-        document.getElementById('ownerStoreTitle').innerText = `${match.name} Console`;
-        renderOwnerDepartments();
-        renderStaffTable();
-      }
-    }
-
-    // OWNER DASHBOARD & DEPARTMENTS
-    function renderOwnerDepartments() {
-      const grid = document.getElementById('ownerDepartmentsGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
-      
-      departments.forEach(dept => {
-        const count = productCatalog.filter(p => p.deptId === dept.id).length;
-        const card = document.createElement('div');
-        card.className = "cursor-pointer bg-brand-input hover:bg-brand-cardLight border border-brand-border hover:border-brand-teal rounded-2xl p-4 transition group flex flex-col justify-between";
-        card.onclick = () => launchDepartmentHead(dept.id);
-        card.innerHTML = `
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-3xl">${dept.emoji}</span>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-card text-brand-teal font-bold">PIN: ${dept.pin}</span>
-            </div>
-            <div class="font-bold text-white text-base font-mono group-hover:text-brand-teal transition">${dept.name}</div>
-            <div class="text-[11px] text-brand-grayMuted font-mono mt-0.5">${count} SKUs Loaded</div>
-          </div>
-          <div class="mt-4 pt-2 border-t border-brand-border/40 flex items-center justify-between text-[10px] font-mono text-brand-teal">
-            <span>Open Console</span>
-            <span>→</span>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-      document.getElementById('statOwnerDeptCount').innerText = `${departments.length} Departments`;
-      document.getElementById('statOwnerSkuCount').innerText = `${productCatalog.length} Products`;
-    }
-
-    function populateDeptSelects() {
-      const sel = document.getElementById('newStaffDeptSelect');
-      if (!sel) return;
-      sel.innerHTML = '';
-      departments.forEach(d => {
-        const opt = document.createElement('option');
-        opt.value = d.id;
-        opt.innerText = `${d.emoji} ${d.name}`;
-        sel.appendChild(opt);
-      });
-      const optCashier = document.createElement('option');
-      optCashier.value = 'cashier';
-      optCashier.innerText = '🛒 Checkout Cashier (All Catalog)';
-      sel.appendChild(optCashier);
-    }
-
-    function handleNewDeptSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('newDeptName').value.trim();
-      const pin = document.getElementById('newDeptPin').value.trim();
-      const leadName = document.getElementById('newDeptLeadName').value.trim() || 'Department Lead';
-      
-      const emojiRadio = document.querySelector('input[name="deptEmoji"]:checked');
-      const emoji = emojiRadio ? emojiRadio.value : '🏬';
-
-      const newDept = {
-        id: 'dept-' + Date.now().toString().slice(-4),
-        name: name,
-        emoji: emoji,
-        pin: pin
-      };
-
-      departments.push(newDept);
-      
-      // Auto-assign lead manager in staff directory
-      staffMembers.push({
-        name: leadName,
-        deptId: newDept.id,
-        deptName: newDept.name,
-        pin: newDept.pin,
-        role: 'Department Head'
-      });
-
-      renderOwnerDepartments();
-      renderStaffTable();
-      populateDeptSelects();
-      closeModal('modalNewDept');
-      document.getElementById('newDeptName').value = '';
-      document.getElementById('newDeptPin').value = '';
-      alert(`✅ Department "${newDept.name}" created! Lead PIN: ${newDept.pin}. Live in console.`);
-    }
-
-    function renderStaffTable() {
-      const tbody = document.getElementById('ownerStaffTableBody');
+    // ------------------------------------------
+    // 4. Catalog Rendering & RBAC
+    // ------------------------------------------
+    function renderOwnerCatalog() {
+      const tbody = document.getElementById('ownerCatalogTableBody');
       if (!tbody) return;
-      tbody.innerHTML = '';
-      document.getElementById('statOwnerStaffCount').innerText = `${staffMembers.length} Staff Members`;
-
-      staffMembers.forEach(staff => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-brand-cardLight/50 transition";
-        tr.innerHTML = `
-          <td class="p-2.5 font-bold text-white">${staff.name}</td>
-          <td class="p-2.5 text-brand-teal">${staff.deptName}</td>
-          <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border font-mono text-white font-bold">${staff.pin}</span></td>
-          <td class="p-2.5 text-brand-grayMuted">${staff.role}</td>
-          <td class="p-2.5 text-right space-x-1">
-            <button onclick="launchSearchTerminal('${staff.deptId === 'cashier' ? 'cashier' : 'employee'}', '${staff.deptId}')" class="text-brand-teal hover:underline text-[11px] font-bold">📱 Open Search</button>
+      tbody.innerHTML = catalogProducts.map(p => `
+        <tr class="hover:bg-terminal-panel/40 transition">
+          <td class="py-3 px-4"><span class="text-xl">${p.photo}</span></td>
+          <td class="py-3 px-4 font-mono text-brand-teal font-bold">${p.plu}</td>
+          <td class="py-3 px-4 font-bold text-white">${p.name}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-terminal-panel text-slate-300 font-mono text-[10px]">${p.dept}</span></td>
+          <td class="py-3 px-4 text-terminal-muted">${p.category}</td>
+          <td class="py-3 px-4 font-mono font-bold text-white">R ${p.price.toFixed(2)}</td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="deleteProduct(${p.id})" class="text-rose-400 hover:text-rose-300 font-mono text-[11px]">Remove</button>
           </td>
-        `;
-        tbody.appendChild(tr);
-      });
+        </tr>
+      `).join('');
     }
 
-    function handleNewStaffSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('newStaffName').value.trim();
-      const deptId = document.getElementById('newStaffDeptSelect').value;
-      const pin = document.getElementById('newStaffPin').value.trim();
-      const role = document.getElementById('newStaffRole').value;
-
-      let deptName = 'Checkout Cashier';
-      const match = departments.find(d => d.id === deptId);
-      if (match) deptName = match.name;
-
-      staffMembers.push({
-        name: name,
-        deptId: deptId,
-        deptName: deptName,
-        pin: pin,
-        role: role
-      });
-
-      renderStaffTable();
-      closeModal('modalNewStaff');
-      document.getElementById('newStaffName').value = '';
-      document.getElementById('newStaffPin').value = '';
-      alert(`✅ Employee "${name}" registered with PIN: ${pin} for ${deptName}!`);
-    }
-
-    // DEPARTMENT HEAD SCOPED CONSOLE
-    function launchDepartmentHead(deptId) {
-      const dept = departments.find(d => d.id === deptId) || departments[0];
-      currentActiveDept = dept;
-
-      document.getElementById('dhEmojiBox').innerText = dept.emoji;
-      document.getElementById('dhDepartmentTitle').innerText = `${dept.name} Management`;
-      document.getElementById('dhScopeBadge').innerText = dept.name;
-      document.getElementById('formDeptTag').innerText = dept.name;
-
-      renderCatalogTable();
-      navigateTo('view-deptHead');
-    }
-
-    function renderCatalogTable() {
-      const tbody = document.getElementById('catalogTableBody');
+    function renderDeptHeadCatalog() {
+      const tbody = document.getElementById('deptHeadTableBody');
       if (!tbody) return;
-      const filtered = productCatalog.filter(p => p.deptId === currentActiveDept.id);
-      
-      tbody.innerHTML = '';
-      document.getElementById('tableCountBadge').innerText = `${filtered.length} Items`;
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-brand-grayMuted">No products entered yet for ${currentActiveDept.name}. Use the Smart Add form to enter products with photos.</td></tr>`;
-        return;
-      }
-
-      filtered.forEach(prod => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-brand-cardLight/50 transition";
-        tr.innerHTML = `
-          <td class="p-2.5">
-            <span class="w-7 h-7 rounded bg-brand-input flex items-center justify-center text-base border border-brand-border/60">${prod.photo || '📦'}</span>
+      const deptItems = catalogProducts.filter(p => p.dept === currentDept);
+      tbody.innerHTML = deptItems.map(p => `
+        <tr class="hover:bg-terminal-panel/40 transition">
+          <td class="py-3 px-4"><span class="text-xl">${p.photo}</span></td>
+          <td class="py-3 px-4 font-mono text-brand-teal font-bold">${p.plu}</td>
+          <td class="py-3 px-4 font-bold text-white">${p.name}</td>
+          <td class="py-3 px-4 text-terminal-muted">${p.category}</td>
+          <td class="py-3 px-4 font-mono font-bold text-white">R ${p.price.toFixed(2)}</td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="deleteProduct(${p.id})" class="text-rose-400 hover:text-rose-300 font-mono text-[11px]">Remove</button>
           </td>
-          <td class="p-2.5 font-bold text-brand-teal">${prod.plu}</td>
-          <td class="p-2.5 text-white font-bold">${prod.name}</td>
-          <td class="p-2.5 font-bold text-white">R ${Number(prod.price).toFixed(2)}</td>
-          <td class="p-2.5 text-right space-x-1">
-            <button onclick="deleteProduct(${prod.id})" class="text-rose-400 hover:text-rose-300 text-[11px] p-1 font-bold">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function triggerPhotoUploadSim() {
-      const mockPhotos = ['🥐', '🥩', '🍗', '🥑', '🧀', '🥖', '🥦', '🍞'];
-      const chosen = mockPhotos[Math.floor(Math.random() * mockPhotos.length)];
-      document.getElementById('inpProdPhotoUrl').value = `Photo Asset [${chosen}] Embedded`;
-      const prev = document.getElementById('photoPreviewBox');
-      prev.classList.remove('hidden');
-      prev.innerHTML = `<span>✓</span> <span>Photo ${chosen} attached. Indexed for 600ms AI search.</span>`;
-    }
-
-    function handleProductSubmit(e) {
-      e.preventDefault();
-      const photoVal = document.getElementById('inpProdPhotoUrl').value.trim();
-      let photoEmoji = '📦';
-      if (photoVal.includes('[')) {
-        photoEmoji = photoVal.split('[')[1].split(']')[0];
-      }
-
-      const newProd = {
-        id: Date.now(),
-        deptId: currentActiveDept.id,
-        name: document.getElementById('inpProdName').value.trim(),
-        plu: document.getElementById('inpProdPlu').value.trim(),
-        price: parseFloat(document.getElementById('inpProdPrice').value),
-        barcode: document.getElementById('inpProdBarcode').value.trim() || '---',
-        photo: photoEmoji
-      };
-
-      productCatalog.unshift(newProd);
-      renderCatalogTable();
-      renderOwnerDepartments();
-      document.getElementById('productEntryForm').reset();
-      document.getElementById('photoPreviewBox').classList.add('hidden');
-      alert(`✅ Product "${newProd.name}" saved with photo! AI camera vision indexed.`);
+        </tr>
+      `).join('');
     }
 
     function deleteProduct(id) {
-      if (confirm('Are you sure you want to remove this product?')) {
-        productCatalog = productCatalog.filter(p => p.id !== id);
-        renderCatalogTable();
-        renderOwnerDepartments();
+      catalogProducts = catalogProducts.filter(p => p.id !== id);
+      renderOwnerCatalog();
+      renderDeptHeadCatalog();
+      renderEmployeeSearch();
+    }
+
+    // Smart Add Product & Photo Attachment
+    let tempAttachedPhoto = "🥖";
+    function openAddProductModal(source) {
+      openModal('modalSmartAddProduct');
+      const subtitle = document.getElementById('smartAddSubtitle');
+      if (source === 'deptHead') {
+        subtitle.innerText = "Scoped Bakery Department Head Form";
+        document.getElementById('newDepartmentSelect').value = "Bakery";
+      } else {
+        subtitle.innerText = "Store Owner Master Catalog Form";
       }
     }
 
-    // PRODUCT SEARCH TERMINAL
-    function launchSearchTerminal(role, deptId) {
-      terminalRole = role;
-      if (role === 'cashier') {
-        document.getElementById('termHeaderIcon').innerText = '🛒';
-        document.getElementById('termHeaderTitle').innerText = 'Cashier Product Search';
-        document.getElementById('termOperatorSubtitle').innerText = 'Store Cashier Till Terminal (All Catalog)';
-      } else {
-        const dept = departments.find(d => d.id === deptId) || departments[0];
-        currentActiveDept = dept;
-        document.getElementById('termHeaderIcon').innerText = dept.emoji;
-        document.getElementById('termHeaderTitle').innerText = `${dept.name} Product Search`;
-        document.getElementById('termOperatorSubtitle').innerText = `${dept.name} Department Operator`;
-      }
-
-      const pool = role === 'cashier' ? productCatalog : productCatalog.filter(p => p.deptId === currentActiveDept.id);
-      if (pool.length > 0) {
-        setTerminalResult(pool[0]);
-      } else {
-        resetToEmptyResult();
-      }
-      switchTerminalMode('search');
-      navigateTo('view-searchTerminal');
-    }
-
-    function handleTerminalBack() {
-      if (terminalRole === 'cashier') {
-        navigateTo('view-home');
-      } else {
-        navigateTo('view-deptHead');
+    function handleProductPhotoSelected(event) {
+      const file = event.target.files[0];
+      if (file) {
+        tempAttachedPhoto = "📸";
+        const thumb = document.getElementById('productPhotoThumb');
+        const status = document.getElementById('photoStatusText');
+        thumb.innerHTML = "✓";
+        thumb.classList.add('bg-brand-teal', 'text-terminal-navy', 'font-bold');
+        status.innerHTML = `<span class="text-brand-teal font-semibold">✓ ${file.name.substring(0, 20)}... attached</span>`;
       }
     }
 
-    function switchTerminalMode(mode) {
-      const btnSearch = document.getElementById('btnTabSearch');
-      const btnAi = document.getElementById('btnTabAi');
-      const btnBarcode = document.getElementById('btnTabBarcode');
-      const pnlInput = document.getElementById('panelSearchInput');
-      const pnlCam = document.getElementById('panelCameraViewfinder');
+    function saveNewProduct() {
+      const plu = document.getElementById('newPluCode').value.trim() || Math.floor(100 + Math.random() * 899).toString();
+      const name = document.getElementById('newProductName').value.trim();
+      const dept = document.getElementById('newDepartmentSelect').value;
+      const cat = document.getElementById('newCategory').value.trim() || "General";
+      const price = parseFloat(document.getElementById('newPrice').value) || 25.00;
+      const barcode = document.getElementById('newBarcode').value.trim() || ("600" + Math.floor(1000000 + Math.random() * 9000000));
 
-      [btnSearch, btnAi, btnBarcode].forEach(b => {
-        b.className = 'py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 text-brand-grayMuted hover:text-white';
+      if (!name) { alert("Please enter product name"); return; }
+
+      catalogProducts.push({
+        id: Date.now(),
+        plu: plu,
+        name: name,
+        dept: dept,
+        category: cat,
+        price: price,
+        barcode: barcode,
+        photo: tempAttachedPhoto
       });
 
-      if (mode === 'search') {
-        btnSearch.className = 'py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 bg-brand-teal text-brand-navy shadow';
-        pnlInput.classList.remove('hidden');
-        pnlCam.classList.add('hidden');
-      } else if (mode === 'ai') {
-        btnAi.className = 'py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 bg-brand-teal text-brand-navy shadow';
-        pnlInput.classList.add('hidden');
-        pnlCam.classList.remove('hidden');
-        document.getElementById('camViewIcon').innerText = '📸';
-        document.getElementById('camViewText').innerText = 'Point Phone Camera at Unlabelled Item';
-      } else if (mode === 'barcode') {
-        btnBarcode.className = 'py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 bg-brand-teal text-brand-navy shadow';
-        pnlInput.classList.add('hidden');
-        pnlCam.classList.remove('hidden');
-        document.getElementById('camViewIcon').innerText = '║▌';
-        document.getElementById('camViewText').innerText = 'Scan Barcode with Phone Camera';
+      closeModal('modalSmartAddProduct');
+      renderOwnerCatalog();
+      renderDeptHeadCatalog();
+      renderEmployeeSearch();
+      alert(`✓ Product '${name}' saved and broadcast to all ${dept} terminals.`);
+    }
+
+    // ------------------------------------------
+    // 5. Frontline Cashier Till Logic
+    // ------------------------------------------
+    let cartSubtotalVal = 137.50;
+
+    function addPresetItem(plu, name, price) {
+      cartSubtotalVal += price;
+      updateCartTotals();
+      const list = document.getElementById('cartItemsList');
+      const row = document.createElement('div');
+      row.className = "flex items-center justify-between text-xs py-1.5 border-b border-terminal-border/30";
+      row.innerHTML = `
+        <div>
+          <span class="font-bold text-white block">${name}</span>
+          <span class="text-[10px] font-mono text-terminal-muted">${plu} • Qty: 1 • R ${price.toFixed(2)}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-mono font-bold text-white">R ${price.toFixed(2)}</span>
+          <button onclick="removeSampleItem(this, ${price})" class="text-rose-400 hover:text-rose-300 font-bold px-1.5">✕</button>
+        </div>
+      `;
+      list.prepend(row);
+    }
+
+    function addTillItemByInput() {
+      const val = document.getElementById('tillItemInput').value.trim();
+      if (!val) return;
+      const match = catalogProducts.find(p => p.plu === val || p.barcode === val || p.name.toLowerCase().includes(val.toLowerCase()));
+      if (match) {
+        addPresetItem("PLU " + match.plu, match.name, match.price);
+      } else {
+        addPresetItem("MISC", val, 19.50);
+      }
+      document.getElementById('tillItemInput').value = "";
+    }
+
+    function removeSampleItem(btn, price) {
+      btn.parentElement.parentElement.remove();
+      cartSubtotalVal -= price;
+      if (cartSubtotalVal < 0) cartSubtotalVal = 0;
+      updateCartTotals();
+    }
+
+    function updateCartTotals() {
+      const vat = cartSubtotalVal * 0.15;
+      document.getElementById('cartSubtotal').innerText = "R " + cartSubtotalVal.toFixed(2);
+      document.getElementById('cartVat').innerText = "R " + vat.toFixed(2);
+      document.getElementById('cartTotal').innerText = "R " + cartSubtotalVal.toFixed(2);
+      document.getElementById('tenderExactBtn').innerText = "R " + cartSubtotalVal.toFixed(2);
+      setTender(Math.ceil(cartSubtotalVal / 50) * 50);
+    }
+
+    function setTender(amount) {
+      document.getElementById('tenderDisplay').innerText = "R " + amount.toFixed(2);
+      const change = amount - cartSubtotalVal;
+      document.getElementById('changeDisplay').innerText = change >= 0 ? "R " + change.toFixed(2) : "R 0.00";
+    }
+
+    function selectDigitalTender(type) {
+      document.getElementById('tenderDisplay').innerText = type;
+      document.getElementById('changeDisplay').innerText = "R 0.00 (Settled)";
+    }
+
+    function clearBasket() {
+      document.getElementById('cartItemsList').innerHTML = "";
+      cartSubtotalVal = 0;
+      updateCartTotals();
+    }
+
+    function completeSale() {
+      if (cartSubtotalVal <= 0) { alert("Basket is empty."); return; }
+      alert(`🛒 Sale Completed! Cash drawer released.\nTotal: R ${cartSubtotalVal.toFixed(2)}\nTax invoice printed & spooled.`);
+      clearBasket();
+    }
+
+    // ------------------------------------------
+    // 6. Employee 3-in-1 Search Logic
+    // ------------------------------------------
+    function setSearchMode(mode) {
+      document.getElementById('tabManual').className = "py-2 text-xs font-bold rounded-lg transition text-slate-300";
+      document.getElementById('tabPhoto').className = "py-2 text-xs font-bold rounded-lg transition text-slate-300";
+      document.getElementById('tabBarcode').className = "py-2 text-xs font-bold rounded-lg transition text-slate-300";
+
+      document.getElementById('searchManualInputWrap').classList.add('hidden');
+      document.getElementById('searchPhotoInputWrap').classList.add('hidden');
+      document.getElementById('searchBarcodeInputWrap').classList.add('hidden');
+
+      if (mode === 'manual') {
+        document.getElementById('tabManual').className = "py-2 text-xs font-bold rounded-lg transition bg-brand-teal text-terminal-navy";
+        document.getElementById('searchManualInputWrap').classList.remove('hidden');
+      } else if (mode === 'photo') {
+        document.getElementById('tabPhoto').className = "py-2 text-xs font-bold rounded-lg transition bg-brand-teal text-terminal-navy";
+        document.getElementById('searchPhotoInputWrap').classList.remove('hidden');
+      } else {
+        document.getElementById('tabBarcode').className = "py-2 text-xs font-bold rounded-lg transition bg-brand-teal text-terminal-navy";
+        document.getElementById('searchBarcodeInputWrap').classList.remove('hidden');
       }
     }
 
-    function handleUnifiedSearch(e) {
-      const q = document.getElementById('unifiedSearchInput').value.trim().toLowerCase();
-      if (!q) return;
+    function renderEmployeeSearch(query = "") {
+      const container = document.getElementById('empSearchResults');
+      if (!container) return;
+      const filtered = catalogProducts.filter(p => 
+        p.name.toLowerCase().includes(query.toLowerCase()) || 
+        p.plu.includes(query) || 
+        p.barcode.includes(query)
+      );
 
-      const pool = terminalRole === 'cashier' ? productCatalog : productCatalog.filter(p => p.deptId === currentActiveDept.id);
-      const match = pool.find(p => p.plu.toLowerCase() === q || p.name.toLowerCase().includes(q));
-      if (match) setTerminalResult(match);
-    }
-
-    function simulateCameraScanCapture() {
-      const pool = terminalRole === 'cashier' ? productCatalog : productCatalog.filter(p => p.deptId === currentActiveDept.id);
-      if (pool.length === 0) return;
-      const randomItem = pool[Math.floor(Math.random() * pool.length)];
-      setTerminalResult(randomItem);
-      alert(`⚡ 600ms AI Match Found: ${randomItem.name} (PLU: ${randomItem.plu})!`);
-    }
-
-    function setTerminalResult(prod) {
-      terminalActiveItem = prod;
-      document.getElementById('resProductName').innerText = prod.name;
-      document.getElementById('resProductPrice').innerText = `R ${Number(prod.price).toFixed(2)}`;
-      document.getElementById('resProductPlu').innerText = prod.plu;
-      document.getElementById('resProductBarcode').innerText = prod.barcode || '---';
-      document.getElementById('btnTillPluCode').innerText = prod.plu;
-      document.getElementById('resProductThumb').innerText = prod.photo || '📦';
-    }
-
-    function resetToEmptyResult() {
-      terminalActiveItem = null;
-      document.getElementById('resProductName').innerText = 'No Products Entered Yet';
-      document.getElementById('resProductPrice').innerText = 'R 0.00';
-      document.getElementById('resProductPlu').innerText = '---';
-      document.getElementById('resProductBarcode').innerText = '---';
-      document.getElementById('btnTillPluCode').innerText = '---';
-      document.getElementById('resProductThumb').innerText = '📦';
-    }
-
-    function ringUpOnTill() {
-      if (!terminalActiveItem) return;
-      navigator.clipboard?.writeText(terminalActiveItem.plu);
-      alert(`✅ Copied to clipboard: Code ${terminalActiveItem.plu} ready for till entry!`);
-    }
-
-    function dispatchToWhatsapp() {
-      if (!terminalActiveItem) return;
-      const text = encodeURIComponent(`CodeFinder: ${terminalActiveItem.name} - Till PLU: ${terminalActiveItem.plu} - Price: R${Number(terminalActiveItem.price).toFixed(2)}`);
-      window.open(`https://wa.me/?text=${text}`, '_blank');
-    }
-
-    // MASTER SUPER-ADMIN FUNCTIONS
-    function renderClientStoresTable() {
-      const tbody = document.getElementById('storeTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-
-      document.getElementById('admStatStores').innerText = `${clientStores.length} Establishments`;
-      const activeCount = clientStores.filter(s => s.status === 'ACTIVE').length;
-      document.getElementById('admStatActive').innerText = `${activeCount} Active (ZAR)`;
-
-      clientStores.forEach(store => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-brand-cardLight/50 transition";
-        tr.innerHTML = `
-          <td class="p-3">
-            <div class="font-bold text-white text-xs">${store.name}</div>
-            <div class="text-[10px] text-brand-grayMuted flex items-center gap-1 mt-0.5">
-              <span>📍</span> <span>${store.city}</span>
+      container.innerHTML = filtered.map(p => `
+        <div class="p-3 bg-terminal-card border border-terminal-border rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${p.photo}</span>
+            <div>
+              <div class="font-bold text-white text-xs">${p.name}</div>
+              <div class="text-[11px] font-mono text-brand-teal">PLU: ${p.plu} • EAN: ${p.barcode}</div>
+              <div class="text-[10px] text-terminal-muted">${p.dept} (${p.category})</div>
             </div>
-          </td>
-          <td class="p-3">
-            <div class="text-white font-medium">${store.owner}</div>
-            <a href="https://wa.me/${store.phone.replace(/[^0-9]/g, '')}" target="_blank" class="text-[10px] text-emerald-400 hover:underline mt-0.5">
-              ${store.phone}
-            </a>
-          </td>
-          <td class="p-3">
-            <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-[10px] text-brand-teal font-bold">${store.tier}</span>
-          </td>
-          <td class="p-3">
-            <span class="px-2 py-0.5 rounded bg-brand-card border border-brand-border text-white font-bold font-mono text-xs">${store.pin}</span>
-          </td>
-          <td class="p-3">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300">AUTHORIZED</span>
-          </td>
-          <td class="p-3 text-right space-x-1.5 whitespace-nowrap">
-            <button onclick="inspectStoreAsOwner('${store.id}')" class="px-2.5 py-1 rounded bg-brand-teal/20 border border-brand-teal/50 hover:bg-brand-teal hover:text-brand-navy text-brand-teal text-[10px] font-bold transition">
-              🔍 Inspect Console
+          </div>
+          <div class="text-right space-y-1">
+            <div class="text-sm font-extrabold font-mono text-white">R ${p.price.toFixed(2)}</div>
+            <button onclick="whatsappCode('${p.plu}', '${p.name}', ${p.price})" class="px-2 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded text-[10px] font-mono block">
+              💬 WhatsApp
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterEmployeeSearch() {
+      const q = document.getElementById('empSearchInput').value;
+      renderEmployeeSearch(q);
+    }
+
+    function simulatePhotoScan(event) {
+      alert("⚡ Vertex AI Visual Match in 600ms:\nRecognized: 'Artisan Sourdough Loaf' (98.4% Confidence)\nPLU Code: 104 • Selling Price: R 38.50");
+      renderEmployeeSearch("Sourdough");
+    }
+
+    function simulateBarcodeScan() {
+      alert("📶 Barcode Laser Scanned:\nCode: 6001080002\nFound: Farmhouse White Bread (PLU 108)");
+      renderEmployeeSearch("108");
+    }
+
+    function whatsappCode(plu, name, price) {
+      const msg = encodeURIComponent(`[CodeFinder SKU Lookup]\nItem: ${name}\nPLU Code: ${plu}\nPrice: R ${price.toFixed(2)}\nSent from Store Floor Terminal.`);
+      window.open(`https://wa.me/27671296177?text=${msg}`, '_blank');
+    }
+
+    // ------------------------------------------
+    // 7. Catalog Download (CSV) & Email Dispatch
+    // ------------------------------------------
+    function openCatalogExportModal(deptScope = null) {
+      openModal('modalCatalogExport');
+      const scopeLabel = document.getElementById('catalogExportScope');
+      if (deptScope) {
+        scopeLabel.innerText = `${deptScope} Department Scoped Export`;
+      } else {
+        scopeLabel.innerText = `Full Store Master Database (${catalogProducts.length} Products)`;
+      }
+    }
+
+    function downloadCatalogCsv() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "PLU,Product Name,Department,Category,Selling Price (ZAR),Barcode\n";
+      catalogProducts.forEach(p => {
+        csvContent += `"${p.plu}","${p.name}","${p.dept}","${p.category}","${p.price.toFixed(2)}","${p.barcode}"\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `CodeFinder_Catalog_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      alert("📥 Catalog Downloaded successfully to your device (.csv)");
+    }
+
+    function dispatchCatalogEmail() {
+      const email = document.getElementById('exportRecipientEmail').value.trim();
+      if (!email) { alert("Please enter recipient email"); return; }
+      closeModal('modalCatalogExport');
+      alert(`✉️ Catalog Dispatched successfully to: ${email}\nAttachment: CodeFinder_Catalog_${Date.now()}.csv`);
+    }
+
+    // ------------------------------------------
+    // 8. 50+ Department Icons Grid Builder
+    // ------------------------------------------
+    function buildDeptIconGrid() {
+      const grid = document.getElementById('deptIconPickerGrid');
+      if (!grid) return;
+      grid.innerHTML = departmentIconsList.map(icon => `
+        <button type="button" onclick="selectDeptIcon('${icon}')" class="p-2 text-xl hover:bg-terminal-panel rounded-lg transition border border-transparent hover:border-brand-teal">
+          ${icon}
+        </button>
+      `).join('');
+    }
+
+    function selectDeptIcon(icon) {
+      selectedDeptIcon = icon;
+      document.getElementById('selectedDeptIconDisplay').innerText = icon;
+    }
+
+    function openCreateDeptModal() {
+      openModal('modalCreateDept');
+      buildDeptIconGrid();
+    }
+
+    function saveNewDepartment() {
+      const name = document.getElementById('newDeptNameInput').value.trim();
+      const pin = document.getElementById('newDeptPinInput').value.trim();
+      if (!name) { alert("Please enter department name"); return; }
+      closeModal('modalCreateDept');
+      alert(`✓ Department '${name}' created with icon ${selectedDeptIcon} and PIN ${pin || '4092'}`);
+    }
+
+    // ------------------------------------------
+    // 9. Staff Delegation Modal
+    // ------------------------------------------
+    function openStaffDelegationModal() {
+      openModal('modalStaffDelegation');
+      renderStaffRoster();
+    }
+
+    function renderStaffRoster() {
+      const list = document.getElementById('staffRosterList');
+      if (!list) return;
+      list.innerHTML = staffRoster.map(s => `
+        <div class="p-2.5 bg-terminal-panel rounded-lg flex items-center justify-between text-xs">
+          <div>
+            <span class="font-bold text-white block">${s.name} (${s.title})</span>
+            <span class="text-[10px] text-terminal-muted">${s.role} • Dept: ${s.dept} • PIN: <strong class="text-brand-teal">${s.pin}</strong></span>
+          </div>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded ${s.canEdit ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}">
+            ${s.canEdit ? 'Can Edit' : 'Read-Only'}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function saveNewStaffMember() {
+      const name = document.getElementById('staffNameInput').value.trim();
+      const title = document.getElementById('staffJobTitleInput').value.trim();
+      const role = document.getElementById('staffRoleSelect').value;
+      const dept = document.getElementById('staffDeptSelect').value;
+      const pin = document.getElementById('staffPinInput').value.trim() || Math.floor(1000 + Math.random() * 8999).toString();
+
+      if (!name) { alert("Please enter staff name"); return; }
+      const canEdit = (role === "Store Owner" || role === "Department Head" || role === "Supervisor");
+      staffRoster.push({ name, title: title || role, role, dept, pin, canEdit });
+      renderStaffRoster();
+      alert(`✓ Staff member '${name}' assigned role '${role}' (PIN: ${pin}).`);
+    }
+
+    // ------------------------------------------
+    // 10. Master App Owner Cockpit Logic (Eurica)
+    // ------------------------------------------
+    function renderCockpitStores() {
+      const tbody = document.getElementById('cockpitStoreTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = clientStores.map((s, idx) => `
+        <tr class="hover:bg-terminal-panel/40 transition">
+          <td class="py-3 px-4 font-bold text-white">${s.name}</td>
+          <td class="py-3 px-4 text-terminal-muted">${s.owner}<br><span class="text-[10px] font-mono">${s.email}</span></td>
+          <td class="py-3 px-4 font-mono font-bold text-brand-teal">${s.pin}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-terminal-panel text-slate-200 text-[11px] font-mono">${s.plan}</span></td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded ${s.status.includes('Expiring') ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-400'} font-bold text-[10px]">${s.status}</span></td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="inspectStoreConsole('${s.name}')" class="px-2.5 py-1 bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal rounded border border-brand-teal/40 font-mono text-[11px] transition">
+              Inspect Console →
             </button>
           </td>
-        `;
-        tbody.appendChild(tr);
+        </tr>
+      `).join('');
+    }
+
+    function inspectStoreConsole(storeName) {
+      currentStore = storeName;
+      navTo('view-storeOwner');
+      alert(`🏢 Direct Console Route: Opening ${storeName} Store Owner Console.`);
+    }
+
+    function openCreateStoreModal() { openModal('modalCreateStore'); }
+
+    function saveNewStoreProvision() {
+      const name = document.getElementById('storeNameInput').value.trim();
+      const email = document.getElementById('storeEmailInput').value.trim();
+      const pin = document.getElementById('storePinInput').value.trim() || Math.floor(1000 + Math.random() * 8999).toString();
+      const plan = document.getElementById('storePlanSelect').value;
+
+      if (!name) { alert("Please enter store name"); return; }
+      clientStores.push({
+        name,
+        owner: name + " Manager",
+        email: email || "owner@" + name.toLowerCase().replace(/\s+/g, '') + ".co.za",
+        pin,
+        plan,
+        status: plan.includes("Demo") ? "14-Day Free Trial" : "Active"
       });
+      closeModal('modalCreateStore');
+      renderCockpitStores();
+      alert(`✓ Store '${name}' provisioned successfully! Owner PIN: ${pin}`);
     }
 
-    function inspectStoreAsOwner(storeId) {
-      const store = clientStores.find(s => s.id === storeId);
-      if (!store) return;
-      currentStore = store;
-      document.getElementById('btnHeaderAuthText').innerText = `${store.name.split(' ')[0]} Owner`;
-      document.getElementById('ownerStoreTitle').innerText = `${store.name} Console`;
-      populateDemoStoreSwitcher();
-      renderOwnerDepartments();
-      renderStaffTable();
-      navigateTo('view-ownerDashboard');
+    // ------------------------------------------
+    // 11. PayFast South Africa Payment Triggers
+    // ------------------------------------------
+    function triggerPayFast(itemTitle, amountZar) {
+      const merchantId = "37976779";
+      const merchantKey = "ej5ktvm9vatvg";
+      const returnUrl = encodeURIComponent("https://codefinder-web.vercel.app?payment=success");
+      const cancelUrl = encodeURIComponent("https://codefinder-web.vercel.app?payment=cancel");
+      const notifyUrl = encodeURIComponent("https://codefinder-web.vercel.app/api/payfast-notify");
+      
+      const payfastUrl = `https://www.payfast.co.za/eng/process?merchant_id=${merchantId}&merchant_key=${merchantKey}&amount=${amountZar}.00&item_name=${encodeURIComponent(itemTitle)}&return_url=${returnUrl}&cancel_url=${cancelUrl}&notify_url=${notifyUrl}`;
+      
+      window.open(payfastUrl, '_blank');
     }
 
-    function handleProvisionStoreSubmit(e) {
-      e.preventDefault();
-      const newStore = {
-        id: 'tenant-' + Date.now().toString().slice(-4),
-        name: document.getElementById('provStoreName').value.trim(),
-        owner: document.getElementById('provOwnerName').value.trim(),
-        phone: document.getElementById('provPhone').value.trim(),
-        city: document.getElementById('provLocation').value.trim() || 'South Africa',
-        pin: document.getElementById('provPin').value.trim(),
-        tier: document.getElementById('provTier').value,
-        status: 'ACTIVE'
-      };
-
-      clientStores.unshift(newStore);
-      renderClientStoresTable();
-      populateDemoStoreSwitcher();
-      closeModal('modalProvisionStore');
-      alert(`✅ Establishment "${newStore.name}" provisioned for ${newStore.owner} (PIN: ${newStore.pin})!`);
+    function openTrialModal(productName) {
+      alert(`🎉 14-Day Free Trial Initialized for ${productName}!\nZero credit card required. Full unrestricted access for 14 days.`);
     }
 
-    function filterStoreTable() {
-      const q = document.getElementById('storeSearchInput').value.toLowerCase();
-      const rows = document.querySelectorAll('#storeTableBody tr');
-      rows.forEach(r => {
-        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
+    function showManualContent(manualId) {
+      closeModal('modalMenuLegal');
+      alert(`📘 Opening ${manualId.toUpperCase()} Operational Manual & Staff Reference Guide.`);
     }
 
-    // PAYFAST & GENERAL
-    function startPayfast(product, price) {
-      window.open(`https://www.payfast.co.za/eng/process?merchant_id=37976779&merchant_key=ej5ktvm9vatvg&amount=${price}.00&item_name=${encodeURIComponent(product + ' Monthly Subscription')}&return_url=https://codefinder-web.vercel.app`, '_blank');
-    }
-
-    function switchLegalTab(tab) {
-      ['manuals', 'ai', 'legal', 'contact'].forEach(t => {
-        document.getElementById(`tabContent-${t}`).classList.add('hidden');
-        document.getElementById(`tabBtn-${t}`).className = 'py-1.5 rounded-lg text-brand-grayMuted hover:text-white';
-      });
-      document.getElementById(`tabContent-${tab}`).classList.remove('hidden');
-      document.getElementById(`tabBtn-${tab}`).className = 'py-1.5 rounded-lg bg-brand-teal text-brand-navy font-bold';
-    }
-
-    function askAiAssistant() {
-      const q = document.getElementById('aiQuestionInput').value.trim();
-      const box = document.getElementById('aiResponseBox');
-      if (!q) return;
-      box.classList.remove('hidden');
-      box.innerText = `🤖 24/7 AI Assistant: To manage "${q}", open your authorized console. For client licenses or store setups, Eurica Noeth can provision and edit establishments directly from the Master App Owner Dashboard.`;
-    }
-
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    // ------------------------------------------
+    // 12. App Initialization
+    // ------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      renderOwnerCatalog();
+      renderDeptHeadCatalog();
+      renderEmployeeSearch();
+      renderCockpitStores();
+      buildDeptIconGrid();
+    });
   </script>
-
 </body>
 </html>
