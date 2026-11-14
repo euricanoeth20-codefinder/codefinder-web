@@ -3,15 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CodeFinder™ — AI Camera SKU & Barcode Search Terminal</title>
+  <title>CodeFinder™ — AI Camera SKU & Barcode Search Terminal | Code-SA™</title>
   
-  <meta name="description" content="CodeFinder™ turns any smartphone or desktop into an AI-powered visual camera SKU, barcode, and PLU product lookup terminal with multi-department management.">
+  <meta name="description" content="CodeFinder™ turns any standard smartphone (Android, Apple, Huawei) and desktop into an AI-powered visual camera SKU, barcode, and PLU product lookup terminal with multi-department management.">
+  <meta name="keywords" content="CodeFinder, AI product search, camera SKU search, barcode scanner South Africa, retail product identification, PayFast, CodePOS, Code-SA">
+  <meta name="author" content="Eurica Noeth, Code-SA™">
   <meta name="theme-color" content="#0B1422">
-  
-  <!-- Homescreen App Icons -->
+  <link rel="canonical" href="https://codefinder-web.vercel.app/">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:title" content="CodeFinder™ — AI Camera SKU & Barcode Search Terminal">
+  <meta property="og:description" content="Zero expensive hardware needed. Fast 600ms Vertex AI visual product match, barcode scanner, and strict department catalog isolation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://codefinder-web.vercel.app/">
+  <meta property="og:image" content="CodeFinder.Logo.png">
+
+  <!-- Homescreen App Icons & Favicons -->
   <link rel="icon" type="image/png" href="CodeFinder.Logo.png">
   <link rel="apple-touch-icon" href="CodeFinder.Logo.png">
   
+  <!-- Google SEO Schema Markup (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CodeFinder™",
+    "operatingSystem": "iOS, Android, Windows, macOS, Web",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "305.00",
+      "priceCurrency": "ZAR",
+      "priceValidUntil": "2026-12-31"
+    },
+    "description": "Zero-hardware AI camera SKU search, barcode scanning, and multi-department product lookup terminal.",
+    "author": {
+      "@type": "Person",
+      "name": "Eurica Noeth"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Code-SA™ Enterprise Software",
+      "url": "https://www.codepos.co.za"
+    }
+  }
+  </script>
+
   <!-- Tailwind CSS & Space Grotesk Font -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,12 +138,17 @@
     <!-- --------------------------------------------------------------------- -->
     <div id="view-home" class="app-view space-y-10 animate-fadeIn">
       
-      <!-- Hero Centerpiece -->
+      <!-- Hero Centerpiece (Enlarged to match CodePOS) -->
       <section class="text-center max-w-3xl mx-auto pt-3 pb-2">
-        <div class="inline-block p-4 rounded-3xl bg-brand-card/80 border border-brand-border glow-teal mb-5">
-          <img src="CodeFinder.Logo.png" onerror="this.onerror=null; this.src='odeFinder Logo.png';" alt="CodeFinder Logo" class="h-28 sm:h-36 w-auto mx-auto object-contain">
+        <div class="inline-block p-4 sm:p-5 bg-brand-card/60 rounded-3xl border border-brand-teal/50 shadow-2xl shadow-brand-teal/20 mb-5 max-w-sm sm:max-w-md transform hover:scale-[1.02] transition-transform relative group">
+          <div class="w-full flex flex-col items-center justify-center p-2">
+            <img src="CodeFinder.Logo.png" 
+                 onerror="this.onerror=null; this.src='odeFinder Logo.png';" 
+                 alt="CodeFinder Logo" 
+                 class="w-auto h-44 sm:h-56 object-contain drop-shadow-[0_0_25px_rgba(72,212,208,0.45)] mx-auto rounded-2xl">
+          </div>
         </div>
-        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3 leading-tight">
           Your Affordable All In One CodeFinder Product Search For Any Business That Needs Quick Item Identification.
         </h1>
         <p class="text-brand-teal text-xs sm:text-sm font-mono tracking-wide uppercase mb-5 font-bold">
@@ -122,7 +164,7 @@
       </section>
 
       <!-- 4 OFFICIAL STANDALONE PRODUCTS SECTION -->
-      <section class="space-y-6">
+      <section id="pricing" class="space-y-6">
         <div class="text-center">
           <span class="text-[11px] font-mono uppercase tracking-widest text-brand-teal font-bold px-3 py-1 rounded-full bg-brand-teal/10 border border-brand-teal/20">
             • STANDALONE PRICING &amp; PERPETUAL LICENSES •
@@ -317,6 +359,9 @@
         </div>
         
         <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="openModal('modalDiagnosticScanner')" class="px-3.5 py-1.5 rounded-xl bg-brand-cardLight border border-brand-teal/60 text-brand-teal text-xs font-mono font-bold hover:bg-brand-teal hover:text-brand-navy transition flex items-center gap-1.5">
+            <span>📷</span> Scan &amp; Test Product
+          </button>
           <button onclick="openModal('modalNewDept')" class="px-3.5 py-1.5 rounded-xl bg-brand-teal text-brand-navy text-xs font-mono font-bold hover:bg-brand-tealGlow transition">
             + Create Department
           </button>
@@ -417,7 +462,10 @@
           </div>
         </div>
 
-        <div class="flex items-center gap-2.5">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="openModal('modalDiagnosticScanner')" class="px-3.5 py-2 rounded-xl bg-brand-cardLight border border-brand-teal/60 text-brand-teal font-bold text-xs font-mono shadow hover:bg-brand-teal hover:text-brand-navy transition flex items-center gap-1.5">
+            <span>⚡</span> Quick Product Scan
+          </button>
           <button onclick="launchEmployeeTerminal(currentActiveDept.id)" class="px-4 py-2 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs font-mono shadow hover:bg-brand-tealGlow transition flex items-center gap-1.5">
             <span>📱</span> Open Search Terminal
           </button>
@@ -525,7 +573,7 @@
                   <th class="p-2.5">Product Name</th>
                   <th class="p-2.5">SKU</th>
                   <th class="p-2.5">Price</th>
-                  <th class="p-2.5 text-right">Action</th>
+                  <th class="p-2.5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody id="catalogTableBody" class="divide-y divide-brand-border/40">
@@ -654,7 +702,7 @@
   </main>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: MENU & LEGAL (With 4 Manuals, 24/7 AI, Policies, Contact)          -->
+  <!-- MODAL: MENU & LEGAL (With Comprehensive Operations Manual)                -->
   <!-- ========================================================================= -->
   <div id="modalMenuLegal" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-brand-card border border-brand-teal/50 rounded-3xl max-w-2xl w-full p-6 space-y-4 glow-teal animate-fadeIn max-h-[90vh] flex flex-col font-mono text-xs">
@@ -678,25 +726,70 @@
       <!-- Tab Content Area -->
       <div class="overflow-y-auto flex-grow space-y-3 pr-1 text-brand-grayMuted leading-relaxed">
         
-        <!-- Tab 1: Manuals -->
-        <div id="tabContent-manuals" class="space-y-3">
-          <h4 class="text-white font-bold text-sm">4-Product Client Self-Help Manual Suite</h4>
-          <div class="space-y-2">
-            <details class="bg-brand-input p-3 rounded-xl border border-brand-border/60">
-              <summary class="font-bold text-white cursor-pointer">1. CodePOS™ Quick Start Manual</summary>
-              <p class="mt-2 text-[11px]">How to ring up orders, fire to kitchen, tender cash/card payments, and send instant WhatsApp tax slips with zero hardware.</p>
-            </details>
+        <!-- Tab 1: Comprehensive CodeFinder Operations Manual -->
+        <div id="tabContent-manuals" class="space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-brand-border/60">
+            <div>
+              <h4 class="text-white font-bold text-sm">CodeFinder™ Official Operations Manual</h4>
+              <p class="text-[11px] text-brand-teal">Store Owner, Department Head &amp; Frontline Terminal Guide</p>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal text-[10px] font-mono font-bold">REV 2025.1</span>
+          </div>
+
+          <div class="space-y-2.5">
+            <!-- Chapter 1 -->
             <details class="bg-brand-input p-3 rounded-xl border border-brand-border/60" open>
-              <summary class="font-bold text-brand-teal cursor-pointer">2. CodeFinder™ Search &amp; Department Manual</summary>
-              <p class="mt-2 text-[11px]">How to use 600ms Vertex AI visual scanning, manage isolated department catalogs, assign employee PINs, and spool 58mm shelf labels.</p>
+              <summary class="font-bold text-white cursor-pointer flex items-center justify-between text-xs">
+                <span>1. System Architecture &amp; Department Security</span>
+                <span class="text-brand-teal">▼</span>
+              </summary>
+              <div class="mt-2.5 text-[11px] space-y-1.5 text-brand-grayMuted leading-relaxed pl-1 border-l-2 border-brand-teal/40">
+                <p><strong class="text-white">Zero Hardware Needed:</strong> Runs on standard iOS, Android, Huawei phones and Windows laptops.</p>
+                <p><strong class="text-white">Strict Department Isolation:</strong> Bakery, Butchery, Produce, and Deli operate in independent silos so staff only see their own department's items.</p>
+                <p><strong class="text-white">Master Owner PIN (4092):</strong> Unlocks global store administration, employee registration, and bulk CSV updates.</p>
+              </div>
             </details>
+
+            <!-- Chapter 2 -->
             <details class="bg-brand-input p-3 rounded-xl border border-brand-border/60">
-              <summary class="font-bold text-white cursor-pointer">3. Code SmartRoster™ Scheduling Manual</summary>
-              <p class="mt-2 text-[11px]">How to auto-schedule weekly staff rosters, auto-fill shift stations, and broadcast schedules to employees via WhatsApp.</p>
+              <summary class="font-bold text-white cursor-pointer flex items-center justify-between text-xs">
+                <span>2. Store Owner Setup: Departments &amp; Employee Registry</span>
+                <span class="text-brand-teal">▼</span>
+              </summary>
+              <div class="mt-2.5 text-[11px] space-y-1.5 text-brand-grayMuted leading-relaxed pl-1 border-l-2 border-brand-teal/40">
+                <p><strong>1. Log in:</strong> Tap <em>SIGN IN</em>, select <em>Store Owner</em>, and enter PIN <strong class="text-white">4092</strong>.</p>
+                <p><strong>2. Create Departments:</strong> Click <em>+ Create Department</em> to add single-word departments (e.g. Bakery, Butchery, Fish) with dedicated 4-digit PINs.</p>
+                <p><strong>3. Assign Staff:</strong> Click <em>+ Assign Employee</em> to register staff with their name, role, and department PIN.</p>
+                <p><strong>4. Bulk Import:</strong> Click <em>Bulk CSV Import</em> to paste catalog rows (PLU, Name, SKU, Price, Dept, Barcode).</p>
+              </div>
             </details>
+
+            <!-- Chapter 3 -->
             <details class="bg-brand-input p-3 rounded-xl border border-brand-border/60">
-              <summary class="font-bold text-white cursor-pointer">4. Code Time Management™ Biometrics Manual</summary>
-              <p class="mt-2 text-[11px]">How to set up tablet facial verification, eliminate buddy-punching, and export weekly payroll hours directly to CSV.</p>
+              <summary class="font-bold text-white cursor-pointer flex items-center justify-between text-xs">
+                <span>3. Department Head Console: SKU Creation &amp; Verification</span>
+                <span class="text-brand-teal">▼</span>
+              </summary>
+              <div class="mt-2.5 text-[11px] space-y-1.5 text-brand-grayMuted leading-relaxed pl-1 border-l-2 border-brand-teal/40">
+                <p><strong>Add Product:</strong> Enter description, PLU, price, SKU, and barcode in the Smart Form and click <em>Save &amp; Broadcast</em>.</p>
+                <p><strong>Quick Scan Test:</strong> Click <em>⚡ Quick Product Scan</em> to test visual AI or barcode recognition before shelving items.</p>
+                <p><strong>Export CSV:</strong> Click <em>Export CSV</em> for direct import into retail scales or till databases.</p>
+              </div>
+            </details>
+
+            <!-- Chapter 4 -->
+            <details class="bg-brand-input p-3 rounded-xl border border-brand-border/60">
+              <summary class="font-bold text-white cursor-pointer flex items-center justify-between text-xs">
+                <span>4. Frontline Employee Terminal: 3 Ways to Scan &amp; Search</span>
+                <span class="text-brand-teal">▼</span>
+              </summary>
+              <div class="mt-2.5 text-[11px] space-y-1.5 text-brand-grayMuted leading-relaxed pl-1 border-l-2 border-brand-teal/40">
+                <p><strong>📸 600ms Vertex AI Scan:</strong> Snap any unpackaged bread, pastry, or produce for instant neural visual identification.</p>
+                <p><strong>🏷️ Barcode Scan:</strong> Reads standard EAN-13 barcodes directly via camera.</p>
+                <p><strong>⌨️ Manual PLU / Keypad:</strong> Instant code lookup for pre-set scale codes.</p>
+                <p><strong>WhatsApp Cashier:</strong> 1-tap dispatch sending the identified PLU and price to the checkout cashier.</p>
+                <p><strong>Print Label:</strong> Spools a 58mm shelf-edge barcode label to a mobile Bluetooth belt printer.</p>
+              </div>
             </details>
           </div>
         </div>
@@ -740,6 +833,48 @@
         <button onclick="closeModal('modalMenuLegal')" class="px-6 py-1.5 rounded-xl bg-brand-input border border-brand-border text-white text-xs hover:border-brand-teal">Close</button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: DIAGNOSTIC SCANNER & PRODUCT TEST TOOL                              -->
+  <!-- ========================================================================= -->
+  <div id="modalDiagnosticScanner" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-brand-card border border-brand-teal/50 rounded-3xl max-w-md w-full p-6 space-y-4 glow-teal animate-fadeIn font-mono text-xs">
+      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
+        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>⚡</span> Scan &amp; Verify Product</h3>
+        <button onclick="closeModal('modalDiagnosticScanner')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
+      </div>
+
+      <div class="relative rounded-2xl bg-brand-cardLight border border-brand-border overflow-hidden h-48 flex flex-col items-center justify-center text-center p-4">
+        <div class="scan-laser"></div>
+        <span class="text-3xl animate-bounce">🔍</span>
+        <span class="text-xs text-brand-teal mt-2">Hold product barcode or photo to camera</span>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-brand-grayMuted">Simulate Scan Input (or click below):</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="simulateDiagnosticScan(104)" class="p-2 rounded-xl bg-brand-input border border-brand-border text-left hover:border-brand-teal">
+            <div class="text-white font-bold">104 Sourdough</div>
+            <div class="text-[10px] text-brand-grayMuted">PLU 104 • R38.50</div>
+          </button>
+          <button onclick="simulateDiagnosticScan(201)" class="p-2 rounded-xl bg-brand-input border border-brand-border text-left hover:border-brand-teal">
+            <div class="text-white font-bold">201 Lamb Chops</div>
+            <div class="text-[10px] text-brand-grayMuted">PLU 201 • R185.00</div>
+          </button>
+        </div>
+      </div>
+
+      <div id="diagnosticMatchCard" class="hidden p-3 rounded-xl bg-brand-input border border-emerald-500/50 space-y-1">
+        <div class="text-emerald-400 font-bold text-[11px]">✓ Match Confirmed (582ms)</div>
+        <div id="diagMatchName" class="text-white font-bold text-sm"></div>
+        <div id="diagMatchDetails" class="text-brand-grayMuted text-[10px]"></div>
+      </div>
+
+      <button onclick="closeModal('modalDiagnosticScanner')" class="w-full py-2 rounded-xl bg-brand-input border border-brand-border text-white hover:border-brand-teal">
+        Done / Return
+      </button>
     </div>
   </div>
 
@@ -886,7 +1021,7 @@
   <!-- ========================================================================= -->
   <!-- FOOTER                                                                    -->
   <!-- ========================================================================= -->
-  <footer class="bg-brand-navy border-t border-brand-border px-4 py-5 text-center text-xs font-mono text-brand-grayMuted">
+  <footer id="contact" class="bg-brand-navy border-t border-brand-border px-4 py-5 text-center text-xs font-mono text-brand-grayMuted">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
         <img src="codesa-logo.png" onerror="this.onerror=null; this.src='Code-SA Logo .png';" alt="Code-SA Logo" class="h-6 w-auto object-contain">
@@ -1194,7 +1329,8 @@
           </td>
           <td class="p-2.5 text-brand-grayMuted">${prod.sku}</td>
           <td class="p-2.5 font-bold text-white">R ${Number(prod.price).toFixed(2)}</td>
-          <td class="p-2.5 text-right">
+          <td class="p-2.5 text-right space-x-1">
+            <button onclick="simulateDiagnosticScan(${prod.plu})" class="text-brand-teal hover:underline text-[11px] p-1">Verify</button>
             <button onclick="deleteProduct(${prod.id})" class="text-rose-400 hover:text-rose-300 text-[11px] p-1">Delete</button>
           </td>
         `;
@@ -1351,6 +1487,14 @@
       document.getElementById('resProdPrice').innerText = `R ${Number(prod.price).toFixed(2)}`;
       document.getElementById('resProdPlu').innerText = prod.plu;
       document.getElementById('resProdSku').innerText = prod.sku;
+    }
+
+    function simulateDiagnosticScan(plu) {
+      const item = productCatalog.find(p => p.plu == plu) || productCatalog[0];
+      document.getElementById('diagnosticMatchCard').classList.remove('hidden');
+      document.getElementById('diagMatchName').innerText = item.name;
+      document.getElementById('diagMatchDetails').innerText = `PLU: ${item.plu} • SKU: ${item.sku} • Price: R ${Number(item.price).toFixed(2)} • Barcode: ${item.barcode}`;
+      openModal('modalDiagnosticScanner');
     }
 
     function whatsappCashier() {
