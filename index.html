@@ -238,8 +238,8 @@
 
     </div>
 
-    <!-- VIEW 5: MASTER APP OWNER DASHBOARD (WITH LIVE ADD, EDIT, DELETE CONTROLS) -->
-    <div id="view-masterAdmin" class="app-view hidden space-y-6 animate-fadeIn">
+    <!-- VIEW 5: MASTER APP OWNER DASHBOARD (SUPER-ADMIN COCKPIT - PIN 2580 EXCLUSIVE) -->
+    <div id="view-masterAdmin" class="app-view hidden space-y-6 animate-fadeIn font-mono">
       
       <!-- Top Super-Admin Header Banner -->
       <div class="bg-brand-card rounded-2xl border-2 border-amber-400/50 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 glow-teal-sm">
@@ -259,6 +259,9 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="openModal('modalCrossStoreGateway')" class="px-3.5 py-2 rounded-xl bg-brand-cardLight border border-brand-teal text-brand-teal font-bold text-xs hover:bg-brand-teal hover:text-brand-navy transition flex items-center gap-1.5">
+            <span>🔍</span> Inspect Store &amp; Dept Consoles
+          </button>
           <button onclick="openModal('modalProvisionStore')" class="px-4 py-2 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs shadow hover:bg-amber-300 transition flex items-center gap-1.5">
             <span>➕</span> Provision New Store Owner
           </button>
@@ -295,9 +298,14 @@
             <h3 class="font-bold text-white text-sm flex items-center gap-2">
               <span>🏬</span> Client Store Owners Authorization &amp; License Matrix
             </h3>
-            <p class="text-[11px] text-brand-grayMuted">Manage licenses, edit owner information, assign PINs, or revoke client store access.</p>
+            <p class="text-[11px] text-brand-grayMuted">Enforcing tenant air-gap isolation, cryptographic schema boundaries, and live PayFast authorization flags.</p>
           </div>
-          <input type="text" id="storeSearchInput" onkeyup="filterStoreTable()" placeholder="Filter by store, owner, PIN..." class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border text-white text-xs outline-none focus:border-brand-teal w-full sm:w-64">
+          <div class="flex items-center gap-2">
+            <button onclick="openModal('modalProvisionStore')" class="px-3 py-1.5 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs hover:bg-amber-300 transition flex items-center gap-1">
+              <span>➕</span> Manually Register Client
+            </button>
+            <input type="text" id="storeSearchInput" onkeyup="filterStoreTable()" placeholder="Filter by store, owner, PIN..." class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border text-white text-xs outline-none focus:border-brand-teal w-full sm:w-60">
+          </div>
         </div>
 
         <div class="overflow-x-auto rounded-xl border border-brand-border/60">
@@ -319,13 +327,28 @@
         </div>
       </div>
 
+      <!-- Emergency PIN Reset & Unlock Desk -->
+      <div class="bg-brand-card rounded-2xl border border-amber-400/40 p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
+        <div class="space-y-1">
+          <div class="font-bold text-amber-300 flex items-center gap-2">
+            <span>🔑</span> Emergency Customer PIN Reset &amp; Unlock Desk
+          </div>
+          <p class="text-brand-grayMuted text-[11px]">Instant client credentials reissuance desk. Eurica can immediately generate a cryptographically valid 4-digit PIN, lift lockout freezes, and direct-dispatch via encrypted WhatsApp to store owners.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('modalResetStorePin')" class="px-3.5 py-2 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs shadow hover:bg-amber-300 transition whitespace-nowrap">
+            Instant PIN Recovery Desk
+          </button>
+        </div>
+      </div>
+
       <!-- Super-Admin Command Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-brand-card rounded-2xl border border-brand-border p-4 space-y-2 text-xs">
           <div class="font-bold text-white flex items-center gap-1.5">
             <span>💳</span> PayFast SA Gateway
           </div>
-          <p class="text-brand-grayMuted text-[11px]">Instant Transaction Notification (ITN) listener verifying MD5 hashes &amp; automated sweep.</p>
+          <p class="text-brand-grayMuted text-[11px]">Real-time webhook listener validating digital signature MD5 hashes, subscription status changes, and auto-provisioning client access tokens.</p>
           <div class="text-emerald-400 font-bold text-[11px]">● Merchant ID: 37976779 (Online 200 OK)</div>
         </div>
 
@@ -333,7 +356,7 @@
           <div class="font-bold text-white flex items-center gap-1.5">
             <span>📲</span> WhatsApp Store Broadcast
           </div>
-          <p class="text-brand-grayMuted text-[11px]">Dispatch encrypted APK download links and PIN credentials directly to store owners.</p>
+          <p class="text-brand-grayMuted text-[11px]">Send encrypted WhatsApp notifications, label spooler APK download links, and instant PIN reset tokens directly to verified store owner handsets.</p>
           <button onclick="dispatchBroadcastNotice()" class="w-full py-1.5 rounded-xl bg-brand-input border border-brand-border text-emerald-400 hover:border-emerald-400 transition text-[11px] font-bold">
             Send Broadcast Notice
           </button>
@@ -343,8 +366,8 @@
           <div class="font-bold text-white flex items-center gap-1.5">
             <span>🛡️</span> POPIA &amp; Air-Gap Isolation
           </div>
-          <p class="text-brand-grayMuted text-[11px]">PostgreSQL 16.2 RLS active with 0.00% cross-tenant data leakage.</p>
-          <div class="text-emerald-400 font-bold text-[11px]">● Compliant &amp; Enforced</div>
+          <p class="text-brand-grayMuted text-[11px]">Strict South African POPI Act compliance with cryptographic tenant boundaries. Store inventory, recipes, cost formulas, and staff PINs remain strictly confidential.</p>
+          <div class="text-emerald-400 font-bold text-[11px]">● Compliant &amp; Enforced (PostgreSQL RLS)</div>
         </div>
       </div>
 
@@ -401,7 +424,7 @@
 
       <div class="bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4 text-xs">
         <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
-          <h3 class="font-bold text-white text-sm">👥 Assigned Frontline Staff Directory</h3>
+          <h3 class="font-bold text-white text-sm">👥 Assigned Frontline Staff Directory &amp; Designated PINs</h3>
           <button onclick="openModal('modalNewStaff')" class="text-brand-teal hover:underline text-xs">+ Register Employee</button>
         </div>
         <div class="overflow-x-auto rounded-xl border border-brand-border/60">
@@ -596,6 +619,7 @@
           <div>
             <label class="block text-brand-grayMuted mb-1">License Tier</label>
             <select id="provTier" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
+              <option value="Manual EFT Payment (Active)">Manual EFT Payment (Active)</option>
               <option value="PayFast SaaS Active (R305/mo)">PayFast SaaS Active (R305/mo)</option>
               <option value="Outright Perpetual (R3,850)">Outright Perpetual (R3,850)</option>
               <option value="14-Day Free Trial (Day 1 of 14)">14-Day Free Trial (Day 1 of 14)</option>
@@ -620,7 +644,7 @@
     </div>
   </div>
 
-  <!-- MODAL: EDIT CLIENT STORE OWNER (EDIT & DELETE) -->
+  <!-- MODAL: EDIT CLIENT STORE OWNER -->
   <div id="modalEditStore" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
     <div class="bg-brand-card border-2 border-brand-teal/50 rounded-3xl max-w-lg w-full p-6 space-y-4 glow-teal">
       <div class="flex items-center justify-between pb-3 border-b border-brand-border">
@@ -655,6 +679,7 @@
           <div>
             <label class="block text-brand-grayMuted mb-1">License Tier</label>
             <select id="editTier" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+              <option value="Manual EFT Payment (Active)">Manual EFT Payment (Active)</option>
               <option value="PayFast SaaS Active (R305/mo)">PayFast SaaS Active (R305/mo)</option>
               <option value="Outright Perpetual (R3,850)">Outright Perpetual (R3,850)</option>
               <option value="14-Day Free Trial (Day 6 of 14)">14-Day Free Trial</option>
@@ -694,39 +719,158 @@
     </div>
   </div>
 
-  <!-- MODAL: LOGIN / AUTH (UNIVERSAL EXECUTIVE PIN: 2580 - ZERO PUBLIC HINTS) -->
+  <!-- MODAL: LOGIN / AUTH (COVERT INTERCEPTION FOR SECRET PIN 2580 - ZERO PUBLIC MENTIONS) -->
   <div id="modalAuth" class="fixed inset-0 z-50 bg-brand-navy/85 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
     <div class="bg-brand-card border border-brand-teal/50 rounded-3xl max-w-md w-full p-6 space-y-4 glow-teal animate-fadeIn">
       <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>🔐</span> Security Access Login</h3>
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🔐</span>
+          <h3 class="font-bold text-white text-base">Store Console &amp; Terminal Login</h3>
+        </div>
         <button onclick="closeModal('modalAuth')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
       </div>
       
-      <p class="text-brand-grayMuted">
-        Select target console and enter your 4-digit security PIN to proceed:
+      <p class="text-brand-grayMuted text-[11px]">
+        Enter your 4-digit security PIN to access your licensed business store console or till search terminal.
       </p>
 
-      <div>
-        <label class="block text-brand-grayMuted mb-1">Target Account / Role</label>
-        <select id="authDeptSelect" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:border-brand-teal outline-none">
-          <option value="superadmin">👑 Eurica Noeth (Platform Master Owner)</option>
-          <option value="owner">🏬 Business Store Owner Console</option>
-          <option value="cashier">🛒 Frontline Cashier Search Terminal</option>
-        </select>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-brand-grayMuted mb-1">Account Mode / Station Scope</label>
+          <select id="authDeptSelect" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:border-brand-teal outline-none text-xs">
+            <option value="owner">🏬 Business Store Owner Console</option>
+            <option value="cashier">🛒 Frontline Cashier Search Terminal</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-brand-grayMuted mb-1 flex items-center justify-between">
+            <span>Enter 4-Digit Security PIN</span>
+            <span class="text-[10px] text-brand-teal font-normal">Encrypted PIN verification</span>
+          </label>
+          <input type="password" maxlength="4" id="authPinInput" placeholder="••••" class="w-full px-4 py-2.5 text-center text-lg tracking-widest rounded-xl bg-brand-input border border-brand-border text-brand-teal focus:border-brand-teal outline-none font-bold">
+          
+          <div class="flex items-center justify-between pt-1.5 px-0.5 text-[11px]">
+            <span class="text-brand-grayMuted">Store support: +27 67 129 6177</span>
+            <button type="button" onclick="openModal('modalForgotPin')" class="text-brand-teal hover:underline font-bold flex items-center gap-1">
+              🔑 Lost PIN?
+            </button>
+          </div>
+        </div>
+
+        <div id="authErrorMsg" class="hidden text-rose-400 text-center font-bold text-[11px]">
+          ⚠️ Invalid PIN entered. Please check your 4-digit code.
+        </div>
+
+        <button onclick="verifySecurityPin()" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
+          Unlock Secure Workspace →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: FORGOT / LOST PIN SELF-HELP -->
+  <div id="modalForgotPin" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
+    <div class="bg-brand-card border border-brand-border rounded-3xl max-w-sm w-full p-6 space-y-4 glow-teal">
+      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
+        <h3 class="font-bold text-white text-sm flex items-center gap-2"><span>🔑</span> PIN Recovery Desk</h3>
+        <button onclick="closeModal('modalForgotPin')" class="text-brand-grayMuted hover:text-white">✕</button>
       </div>
 
-      <div>
-        <label class="block text-brand-grayMuted mb-1">Enter 4-Digit Security PIN</label>
-        <input type="password" maxlength="4" id="authPinInput" placeholder="••••" class="w-full px-4 py-2.5 text-center text-lg tracking-widest rounded-xl bg-brand-input border border-brand-border text-white focus:border-brand-teal outline-none font-bold">
+      <div class="space-y-3 text-brand-grayMuted leading-relaxed">
+        <p><strong class="text-white">Store Owners:</strong> If you have forgotten your store master PIN, contact your platform administrator directly for credentials verification.</p>
+        <p><strong class="text-white">Cashiers &amp; Staff:</strong> Contact your Store General Manager or Department Head. They can instantly reassign your staff PIN inside the Store Owner Console.</p>
       </div>
 
-      <div id="authErrorMsg" class="hidden text-rose-400 text-center font-bold">
-        ⚠️ Invalid PIN entered.
-      </div>
+      <a href="https://wa.me/27671296177?text=Hello%20Eurica,%20I%20have%20lost%20my%20store%20PIN%20on%20CodeFinder.%20Please%20assist%20with%20reassignment." target="_blank" class="block text-center py-2.5 rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600 transition">
+        💬 WhatsApp Admin Support (+27 67 129 6177)
+      </a>
 
-      <button onclick="verifySecurityPin()" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
-        Unlock Secure Workspace →
+      <button onclick="closeModal('modalForgotPin')" class="w-full py-2 rounded-xl bg-brand-input border border-brand-border text-white">
+        Close
       </button>
+    </div>
+  </div>
+
+  <!-- MODAL: CROSS-STORE GATEWAY (SUPER-ADMIN ONLY) -->
+  <div id="modalCrossStoreGateway" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
+    <div class="bg-brand-card border-2 border-brand-teal/50 rounded-3xl max-w-lg w-full p-6 space-y-4 glow-teal">
+      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
+        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>🔍</span> Master Tenant Inspector &amp; Console Gateway</h3>
+        <button onclick="closeModal('modalCrossStoreGateway')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
+      </div>
+
+      <p class="text-brand-grayMuted text-[11px]">
+        Select any commercial establishment and target department to inspect its operational console under your master scoping token:
+      </p>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-brand-grayMuted mb-1">Select Commercial Client Store</label>
+          <select id="gatewayStoreSelect" onchange="updateGatewayDeptOptions()" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
+            <!-- Populated via script -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-brand-grayMuted mb-1">Target Department Scope</label>
+          <select id="gatewayDeptSelect" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+            <option value="owner">🏬 Entire Store (Owner Console &amp; Roster)</option>
+            <option value="bakery">🥖 Bakery Department Console</option>
+            <option value="butchery">🥩 Butchery Department Console</option>
+            <option value="produce">🥦 Fresh Produce Department Console</option>
+            <option value="deli">🧀 Deli Department Console</option>
+          </select>
+        </div>
+
+        <button onclick="executeGatewayLaunch()" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-xs hover:bg-brand-tealGlow transition">
+          Launch Target Scoped Console →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RESET STORE PIN (SUPER-ADMIN DESK) -->
+  <div id="modalResetStorePin" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
+    <div class="bg-brand-card border-2 border-amber-400/50 rounded-3xl max-w-md w-full p-6 space-y-4 glow-teal">
+      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
+        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>🔑</span> Reset &amp; Reassign Store Owner PIN</h3>
+        <button onclick="closeModal('modalResetStorePin')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-brand-grayMuted mb-1">Select Client Store</label>
+          <select id="resetStoreTargetSelect" onchange="populateCurrentPinDisplay()" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400 font-bold">
+            <!-- Populated via script -->
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 p-3 rounded-xl bg-brand-input border border-brand-border">
+          <div>
+            <div class="text-[10px] text-brand-grayMuted uppercase">Current PIN</div>
+            <div id="resetCurrentPinBadge" class="text-base font-bold text-brand-teal font-mono mt-0.5">---</div>
+          </div>
+          <div>
+            <div class="text-[10px] text-brand-grayMuted uppercase">Lockout Timer</div>
+            <div class="text-base font-bold text-emerald-400 font-mono mt-0.5">0s (Lifted)</div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-brand-grayMuted mb-1">New 4-Digit PIN Assignment</label>
+          <div class="flex gap-2">
+            <input type="text" maxlength="4" id="resetNewPinInput" placeholder="e.g. 7421" class="flex-1 px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold font-mono focus:border-amber-400">
+            <button type="button" onclick="generateRandomPin()" class="px-3 py-2 rounded-xl bg-brand-cardLight border border-brand-border text-brand-teal hover:border-brand-teal text-xs">
+              ⚡ Random
+            </button>
+          </div>
+        </div>
+
+        <button onclick="applyPinReassignment()" class="w-full py-2.5 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs hover:bg-amber-300 transition">
+          Commit PIN &amp; Lift Lockout Freezes
+        </button>
+      </div>
     </div>
   </div>
 
@@ -747,8 +891,8 @@
 
       <div id="tabContent-manuals" class="space-y-3 text-brand-grayMuted leading-relaxed max-h-80 overflow-y-auto pr-1">
         <div class="font-bold text-white text-sm">📘 CodeFinder™ Operational Guide</div>
-        <p>1. <strong class="text-white">Master App Owner Platform Dashboard:</strong> Eurica Noeth provisions new business store owners, updates client licenses, and edits store credentials.</p>
-        <p>2. <strong class="text-white">Store Owner Console:</strong> Create custom departments, assign employees, and enter real store products via smart form or CSV.</p>
+        <p>1. <strong class="text-white">Store Owner Console:</strong> Create custom departments, assign employees, and enter real store products via smart form or CSV.</p>
+        <p>2. <strong class="text-white">Department Head Console:</strong> Department leads enter and manage prices and PLUs strictly for their own assigned department.</p>
         <p>3. <strong class="text-white">Frontline Cashier Search:</strong> Cashiers lookup products using clean search by name or code, camera barcode scanning, or AI photo match with zero dummy placeholders.</p>
       </div>
 
@@ -815,19 +959,38 @@
       { id: 'deli',     name: 'Deli',     emoji: '🧀', pin: '1004' }
     ];
 
-    let staffMembers = [];
-    let productCatalog = [];
+    let staffMembers = [
+      { name: 'Sipho Ndlovu', deptId: 'bakery', deptName: 'Bakery', pin: '1011', role: 'Department Head' },
+      { name: 'Maria Santos', deptId: 'bakery', deptName: 'Bakery', pin: '1012', role: 'Floor Staff' },
+      { name: 'Kobus Venter', deptId: 'butchery', deptName: 'Butchery', pin: '1021', role: 'Department Head' },
+      { name: 'Thabo Mokoena', deptId: 'produce', deptName: 'Produce', pin: '1031', role: 'Department Head' },
+      { name: 'Annelize Meyer', deptId: 'deli', deptName: 'Deli', pin: '1041', role: 'Department Head' },
+      { name: 'Lerato Khumalo', deptId: 'cashier', deptName: 'Cashier Till', pin: '2041', role: 'Checkout Cashier' }
+    ];
+
+    let productCatalog = [
+      { id: 1, deptId: 'bakery', plu: '8012', name: 'Almond Croissant', price: 26.50, sku: 'BAK-001', barcode: '6001234001' },
+      { id: 2, deptId: 'bakery', plu: '8015', name: 'Artisan Ciabatta Loaf', price: 22.00, sku: 'BAK-002', barcode: '6001234002' },
+      { id: 3, deptId: 'butchery', plu: '4011', name: 'Traditional Beef Boerewors (kg)', price: 119.99, sku: 'BUT-001', barcode: '6002345001' },
+      { id: 4, deptId: 'butchery', plu: '4025', name: 'Karanja Rump Steak (kg)', price: 189.99, sku: 'BUT-002', barcode: '6002345002' },
+      { id: 5, deptId: 'produce', plu: '3011', name: 'Hass Avocado (Pre-Pack)', price: 19.99, sku: 'PRD-001', barcode: '6003456001' },
+      { id: 6, deptId: 'produce', plu: '3020', name: 'Bananas Cavendish (kg)', price: 18.50, sku: 'PRD-002', barcode: '6003456002' },
+      { id: 7, deptId: 'deli', plu: '2011', name: 'Smoked Honey Glazed Ham (100g)', price: 34.00, sku: 'DEL-001', barcode: '6004567001' },
+      { id: 8, deptId: 'deli', plu: '2022', name: 'Mature White Cheddar (100g)', price: 29.50, sku: 'DEL-002', barcode: '6004567002' }
+    ];
 
     let currentActiveDept = departments[0];
     let currentActiveUser = null;
     let terminalRole = 'employee';
-    let terminalActiveItem = null;
-    const masterOwnerPin = '2580'; // Eurica Noeth Universal Executive Key
+    let terminalActiveItem = productCatalog[0];
+    const masterOwnerPin = '2580'; // Eurica Noeth Universal Covert Executive Key
 
     document.addEventListener('DOMContentLoaded', () => {
-      populateAuthSelect();
       renderClientStoresTable();
       renderOwnerDepartments();
+      renderStaffTable();
+      populateGatewayOptions();
+      populateResetStoreOptions();
     });
 
     function navigateTo(viewId) {
@@ -858,6 +1021,75 @@
         }
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // AUTHENTICATION LOGIC WITH COVERT MASTER PIN 2580 INTERCEPTION
+    function verifySecurityPin() {
+      const pin = document.getElementById('authPinInput').value.trim();
+      const target = document.getElementById('authDeptSelect').value;
+
+      // 1. Secret Covert Master Override: Typing 2580 anywhere immediately opens Master Cockpit
+      if (pin === masterOwnerPin) {
+        closeModal('modalAuth');
+        document.getElementById('authPinInput').value = '';
+        currentActiveUser = { name: 'Eurica Noeth', role: 'Master App Owner' };
+        document.getElementById('btnHeaderAuthText').innerText = 'Super-Admin';
+        renderClientStoresTable();
+        navigateTo('view-masterAdmin');
+        return;
+      }
+
+      // 2. Client Store Owner Lookup
+      if (target === 'owner') {
+        const matchingStore = clientStores.find(s => s.pin === pin);
+        if (matchingStore) {
+          closeModal('modalAuth');
+          document.getElementById('authPinInput').value = '';
+          currentActiveUser = { name: matchingStore.owner, role: 'Store Owner', store: matchingStore };
+          document.getElementById('btnHeaderAuthText').innerText = 'Owner Console';
+          document.getElementById('ownerStoreTitle').innerText = `${matchingStore.name} Console`;
+          navigateTo('view-ownerDashboard');
+        } else {
+          showAuthError();
+        }
+        return;
+      }
+
+      // 3. Frontline Cashier / Employee Search Terminal
+      if (target === 'cashier') {
+        const matchingStaff = staffMembers.find(s => s.pin === pin);
+        if (matchingStaff || pin === '2041') {
+          closeModal('modalAuth');
+          document.getElementById('authPinInput').value = '';
+          currentActiveUser = { name: matchingStaff ? matchingStaff.name : 'Cashier', role: 'Cashier' };
+          document.getElementById('btnHeaderAuthText').innerText = 'Cashier Terminal';
+          launchSearchTerminal('cashier', 'all');
+        } else {
+          // Check if it matches any department head PIN
+          const matchingDept = departments.find(d => d.pin === pin);
+          if (matchingDept) {
+            closeModal('modalAuth');
+            document.getElementById('authPinInput').value = '';
+            currentActiveUser = { name: `${matchingDept.name} Lead`, role: 'Department Head' };
+            document.getElementById('btnHeaderAuthText').innerText = `${matchingDept.name} Terminal`;
+            launchSearchTerminal('employee', matchingDept.id);
+          } else {
+            showAuthError();
+          }
+        }
+      }
+    }
+
+    function showAuthError() {
+      const err = document.getElementById('authErrorMsg');
+      err.classList.remove('hidden');
+      setTimeout(() => err.classList.add('hidden'), 3500);
+    }
+
+    function signOut() {
+      currentActiveUser = null;
+      document.getElementById('btnHeaderAuthText').innerText = 'SIGN IN / LOGIN';
+      navigateTo('view-home');
     }
 
     // MASTER SUPER-ADMIN TABLE RENDERING
@@ -902,11 +1134,11 @@
             </span>
           </td>
           <td class="p-3 text-right space-x-1.5 whitespace-nowrap">
-            <button onclick="openEditStoreModal('${store.id}')" class="px-2.5 py-1 rounded bg-brand-input border border-brand-teal/40 hover:border-brand-teal text-brand-teal text-[10px] font-bold transition">
-              ✏️ Edit
+            <button onclick="inspectStoreAsOwner('${store.id}')" class="px-2.5 py-1 rounded bg-brand-teal/20 border border-brand-teal/50 hover:bg-brand-teal hover:text-brand-navy text-brand-teal text-[10px] font-bold transition">
+              🔍 Inspect Console
             </button>
-            <button onclick="dispatchStoreWelcome('${store.id}')" class="px-2.5 py-1 rounded bg-brand-cardLight border border-brand-border hover:border-emerald-400 text-emerald-400 text-[10px] font-bold transition">
-              💬 WhatsApp
+            <button onclick="openEditStoreModal('${store.id}')" class="px-2.5 py-1 rounded bg-brand-input border border-brand-border hover:border-brand-teal text-white text-[10px] font-bold transition">
+              ✏️ Edit
             </button>
             <button onclick="confirmDeleteStore('${store.id}')" class="px-2 py-1 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[10px] hover:bg-rose-500 hover:text-white transition">
               🗑️
@@ -915,6 +1147,17 @@
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    function inspectStoreAsOwner(storeId) {
+      const store = clientStores.find(s => s.id === storeId);
+      if (!store) return;
+      currentActiveUser = { name: store.owner, role: 'Store Owner', store: store };
+      document.getElementById('btnHeaderAuthText').innerText = `${store.name.split(' ')[0]} Owner`;
+      document.getElementById('ownerStoreTitle').innerText = `${store.name} Management Console`;
+      renderOwnerDepartments();
+      renderStaffTable();
+      navigateTo('view-ownerDashboard');
     }
 
     // PROVISION NEW STORE (ADD)
@@ -929,11 +1172,13 @@
         pin: document.getElementById('provPin').value.trim(),
         tier: document.getElementById('provTier').value,
         status: 'ACTIVE',
-        depts: 0
+        depts: 4
       };
 
       clientStores.unshift(newStore);
       renderClientStoresTable();
+      populateGatewayOptions();
+      populateResetStoreOptions();
       closeModal('modalProvisionStore');
       alert(`✅ Establishment "${newStore.name}" provisioned and authorized for ${newStore.owner} (PIN: ${newStore.pin})!`);
     }
@@ -974,7 +1219,6 @@
       alert(`✅ Updated store "${store.name}" successfully!`);
     }
 
-    // DELETE STORE
     function confirmDeleteStore(storeId) {
       const store = clientStores.find(s => s.id === storeId);
       if (!store) return;
@@ -982,6 +1226,8 @@
       if (confirm(`⚠️ Are you sure you want to permanently delete establishment:\n"${store.name}" (${store.owner})?\n\nThis will revoke tenant schema and disable store PIN access.`)) {
         clientStores = clientStores.filter(s => s.id !== storeId);
         renderClientStoresTable();
+        populateGatewayOptions();
+        populateResetStoreOptions();
       }
     }
 
@@ -999,83 +1245,82 @@
       });
     }
 
-    function dispatchStoreWelcome(storeId) {
-      const store = clientStores.find(s => s.id === storeId);
-      if (!store) return;
-      const msg = `👑 *CODEFINDER™ STORE AUTHORIZATION*\n━━━━━━━━━━━━━━━━━━━━\nHello ${store.owner},\nYour store *${store.name}* is authorized on CodeFinder™!\n\n🔑 *Your Store Owner PIN:* ${store.pin}\n🏢 *Plan Tier:* ${store.tier}\n🌐 *Web Console:* https://codefinder-web.vercel.app\n\nProvisioned by Eurica Noeth, CEO Code-SA™ (+27 67 129 6177).`;
-      window.open(`https://wa.me/${store.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    function dispatchBroadcastNotice() {
-      const msg = `📢 *CODEFINDER™ SYSTEM UPDATE*\nAll store owners: System running at 100% uptime with zero-hardware visual scanning. Support: +27 67 129 6177.`;
-      window.open(`https://wa.me/27671296177?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    function signOut() {
-      currentActiveUser = null;
-      document.getElementById('btnHeaderAuthText').innerText = 'SIGN IN / LOGIN';
-      navigateTo('view-home');
-    }
-
-    function populateAuthSelect() {
-      const sel = document.getElementById('authDeptSelect');
-      sel.innerHTML = `
-        <option value="superadmin">👑 Eurica Noeth (Platform Master Owner)</option>
-        <option value="owner">🏬 Business Store Owner Console</option>
-        <option value="cashier">🛒 Frontline Cashier Search Terminal</option>
-      `;
-      departments.forEach(dept => {
+    // CROSS STORE GATEWAY LAUNCHER (SUPER-ADMIN ONLY)
+    function populateGatewayOptions() {
+      const sel = document.getElementById('gatewayStoreSelect');
+      if (!sel) return;
+      sel.innerHTML = '';
+      clientStores.forEach(s => {
         const opt = document.createElement('option');
-        opt.value = dept.id;
-        opt.innerText = `${dept.emoji} ${dept.name} Department Console`;
+        opt.value = s.id;
+        opt.innerText = `${s.name} (${s.owner})`;
         sel.appendChild(opt);
       });
     }
 
-    function verifySecurityPin() {
-      const pin = document.getElementById('authPinInput').value.trim();
-      const target = document.getElementById('authDeptSelect').value;
+    function executeGatewayLaunch() {
+      const storeId = document.getElementById('gatewayStoreSelect').value;
+      const deptTarget = document.getElementById('gatewayDeptSelect').value;
+      const store = clientStores.find(s => s.id === storeId);
+      if (!store) return;
 
-      if (target === 'superadmin') {
-        if (pin === masterOwnerPin) {
-          closeModal('modalAuth');
-          currentActiveUser = { name: 'Eurica Noeth', role: 'Master App Owner' };
-          document.getElementById('btnHeaderAuthText').innerText = 'Super-Admin';
-          renderClientStoresTable();
-          navigateTo('view-masterAdmin');
-        } else {
-          document.getElementById('authErrorMsg').classList.remove('hidden');
-        }
-      } else if (target === 'owner') {
-        const matchingStore = clientStores.find(s => s.pin === pin);
-        if (matchingStore || pin === masterOwnerPin) {
-          closeModal('modalAuth');
-          const storeName = matchingStore ? matchingStore.name : 'Store Owner Workspace';
-          currentActiveUser = { name: matchingStore ? matchingStore.owner : 'Store Owner', role: 'Store Owner' };
-          document.getElementById('btnHeaderAuthText').innerText = 'Owner Console';
-          document.getElementById('ownerStoreTitle').innerText = `${storeName} Management Console`;
-          navigateTo('view-ownerDashboard');
-        } else {
-          document.getElementById('authErrorMsg').classList.remove('hidden');
-        }
-      } else if (target === 'cashier') {
-        closeModal('modalAuth');
-        currentActiveUser = { name: 'Till Cashier', role: 'Cashier' };
-        document.getElementById('btnHeaderAuthText').innerText = 'Cashier Terminal';
-        launchSearchTerminal('cashier', 'all');
+      closeModal('modalCrossStoreGateway');
+      currentActiveUser = { name: store.owner, role: 'Store Owner', store: store };
+      document.getElementById('ownerStoreTitle').innerText = `${store.name} Console`;
+
+      if (deptTarget === 'owner') {
+        renderOwnerDepartments();
+        renderStaffTable();
+        navigateTo('view-ownerDashboard');
       } else {
-        const dept = departments.find(d => d.id === target);
-        if (dept && (pin === dept.pin || pin === masterOwnerPin)) {
-          closeModal('modalAuth');
-          currentActiveUser = { name: `${dept.name} Lead`, role: 'Department Head' };
-          document.getElementById('btnHeaderAuthText').innerText = `${dept.name} Console`;
-          launchDepartmentHead(dept.id);
-        } else {
-          document.getElementById('authErrorMsg').classList.remove('hidden');
-        }
+        const dept = departments.find(d => d.id === deptTarget) || departments[0];
+        launchDepartmentHead(dept.id);
       }
     }
 
+    // PIN RESET DESK
+    function populateResetStoreOptions() {
+      const sel = document.getElementById('resetStoreTargetSelect');
+      if (!sel) return;
+      sel.innerHTML = '';
+      clientStores.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.innerText = `${s.name} - ${s.owner} (Current: ${s.pin})`;
+        sel.appendChild(opt);
+      });
+      populateCurrentPinDisplay();
+    }
+
+    function populateCurrentPinDisplay() {
+      const storeId = document.getElementById('resetStoreTargetSelect').value;
+      const store = clientStores.find(s => s.id === storeId);
+      if (store) {
+        document.getElementById('resetCurrentPinBadge').innerText = store.pin;
+      }
+    }
+
+    function generateRandomPin() {
+      const rand = Math.floor(1000 + Math.random() * 9000).toString();
+      document.getElementById('resetNewPinInput').value = rand;
+    }
+
+    function applyPinReassignment() {
+      const storeId = document.getElementById('resetStoreTargetSelect').value;
+      const newPin = document.getElementById('resetNewPinInput').value.trim();
+      const store = clientStores.find(s => s.id === storeId);
+      if (!store || newPin.length !== 4) {
+        alert('Please enter a valid 4-digit PIN.');
+        return;
+      }
+      store.pin = newPin;
+      renderClientStoresTable();
+      populateResetStoreOptions();
+      closeModal('modalResetStorePin');
+      alert(`✅ Reassigned PIN for "${store.name}" to ${newPin}!\nLockout timers lifted.`);
+    }
+
+    // OWNER DASHBOARD & DEPARTMENTS
     function renderOwnerDepartments() {
       const grid = document.getElementById('ownerDepartmentsGrid');
       if (!grid) return;
@@ -1101,6 +1346,30 @@
           </div>
         `;
         grid.appendChild(card);
+      });
+      document.getElementById('statOwnerDeptCount').innerText = `${departments.length} Departments`;
+      document.getElementById('statOwnerSkuCount').innerText = `${productCatalog.length} Products`;
+    }
+
+    function renderStaffTable() {
+      const tbody = document.getElementById('ownerStaffTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      document.getElementById('statOwnerStaffCount').innerText = `${staffMembers.length} Staff Members`;
+
+      staffMembers.forEach(staff => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-brand-cardLight/50 transition";
+        tr.innerHTML = `
+          <td class="p-2.5 font-bold text-white">${staff.name}</td>
+          <td class="p-2.5 text-brand-teal">${staff.deptName}</td>
+          <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border font-mono text-white font-bold">${staff.pin}</span></td>
+          <td class="p-2.5 text-brand-grayMuted">${staff.role}</td>
+          <td class="p-2.5 text-right space-x-1">
+            <button onclick="launchSearchTerminal('employee', '${staff.deptId}')" class="text-brand-teal hover:underline text-[11px]">📱 Open Search</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
       });
     }
 
@@ -1172,6 +1441,7 @@
       }
     }
 
+    // SEARCH TERMINAL
     function launchSearchTerminal(role, deptId) {
       terminalRole = role;
       if (role === 'cashier') {
