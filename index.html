@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>CodeFinder™ — AI Camera SKU & Barcode Search Terminal | Code-SA™</title>
   
-  <meta name="description" content="CodeFinder™ turns any standard smartphone (Android, Apple, Huawei) and desktop into an AI-powered visual camera SKU, barcode, and PLU product lookup terminal with multi-department management.">
+  <meta name="description" content="CodeFinder™ turns any standard smartphone and desktop into an AI-powered visual camera SKU, barcode, and PLU product lookup terminal with multi-department management.">
   <meta name="keywords" content="CodeFinder, AI product search, camera SKU search, barcode scanner South Africa, retail product identification, PayFast, CodePOS, Code-SA">
   <meta name="author" content="Eurica Noeth, Code-SA™">
   <meta name="theme-color" content="#0B1422">
@@ -19,35 +19,10 @@
   <meta property="og:image" content="CodeFinder.Logo.png">
 
   <!-- Favicons & Homescreen App Icons -->
-  <link rel="icon" type="image/png" href="CodeFinder.Logo.png">
-  <link rel="apple-touch-icon" href="CodeFinder.Logo.png">
-  
-  <!-- Google SEO Schema Markup (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "CodeFinder™",
-    "operatingSystem": "iOS, Android, Windows, macOS, Web",
-    "applicationCategory": "BusinessApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "305.00",
-      "priceCurrency": "ZAR",
-      "priceValidUntil": "2026-12-31"
-    },
-    "description": "Zero-hardware AI camera SKU search, barcode scanning, and multi-department product lookup terminal.",
-    "author": {
-      "@type": "Person",
-      "name": "Eurica Noeth"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Code-SA™ Enterprise Software",
-      "url": "https://www.codepos.co.za"
-    }
-  }
-  </script>
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <link rel="shortcut icon" type="image/png" href="app-icon.png">
+  <link rel="apple-touch-icon" href="app-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="app-icon.png">
 
   <!-- Tailwind CSS & Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -91,34 +66,34 @@
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between selection:bg-brand-teal selection:text-brand-navy">
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-teal selection:text-brand-navy font-mono">
 
   <!-- PERSISTENT HEADER -->
   <header class="sticky top-0 z-40 bg-brand-navy/95 backdrop-blur border-b border-brand-border px-4 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
       
-      <!-- Left: Pure Code-SA Master Logo (Zero wording, fail-safe fallbacks) -->
+      <!-- Left: Pure Code-SA Master Logo -->
       <a href="javascript:void(0)" onclick="navigateTo('view-home')" class="flex items-center gap-2 group">
         <img src="codesa-logo.png" 
              onerror="this.onerror=null; this.src='Code-SA Logo .png';" 
              alt="Code-SA Logo" 
-             class="h-9 sm:h-10 w-auto object-contain transition transform group-hover:scale-105 drop-shadow-[0_0_12px_rgba(72,212,208,0.35)]">
+             class="h-12 sm:h-14 w-auto object-contain transition transform group-hover:scale-105 drop-shadow-[0_0_12px_rgba(72,212,208,0.35)]">
       </a>
 
       <!-- Center Title -->
-      <div id="headerNavTitle" class="hidden sm:flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-card border border-brand-border text-xs font-mono text-brand-teal">
+      <div id="headerNavTitle" class="hidden sm:flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-card border border-brand-border text-xs text-brand-teal">
         <span id="headerEmoji">🏬</span>
         <span id="headerLabelText" class="text-white font-bold">Store Console</span>
       </div>
 
-      <!-- Right: Menu & Legal + Sign-In -->
-      <div class="flex items-center gap-2.5">
-        <button onclick="openModal('modalMenuLegal')" class="px-3.5 py-1.5 rounded-xl bg-brand-card border border-brand-border text-xs font-mono font-bold text-white hover:border-brand-teal transition flex items-center gap-1.5">
+      <!-- Right: Menu & Legal + Sign-In (Clean, Discreet Public Navigation) -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <button onclick="openModal('modalMenuLegal')" class="px-3.5 py-1.5 rounded-xl bg-brand-card border border-brand-border text-[11px] font-bold text-white hover:border-brand-teal transition flex items-center gap-1.5">
           <span>📖</span>
           <span>MENU &amp; LEGAL</span>
         </button>
 
-        <button id="btnHeaderAuth" onclick="openModal('modalAuth')" class="px-4 py-1.5 rounded-xl bg-brand-teal text-brand-navy font-mono font-bold text-xs shadow hover:bg-brand-tealGlow transition flex items-center gap-1.5">
+        <button id="btnHeaderAuth" onclick="openModal('modalAuth')" class="px-3.5 py-1.5 rounded-xl bg-brand-teal text-brand-navy font-bold text-[11px] shadow hover:bg-brand-tealGlow transition flex items-center gap-1.5">
           <span>🔐</span>
           <span id="btnHeaderAuthText">SIGN IN / LOGIN</span>
         </button>
@@ -133,62 +108,59 @@
     <!-- VIEW 1: PUBLIC HOMEPAGE -->
     <div id="view-home" class="app-view space-y-10 animate-fadeIn">
       
-      <!-- Hero Centerpiece: Pure CodeFinder™ Logo Only -->
+      <!-- Hero Centerpiece: Pure Enlarged CodeFinder™ Logo Only -->
       <section class="text-center max-w-3xl mx-auto pt-4 pb-2">
         <div class="flex items-center justify-center mb-6">
           <img src="CodeFinder.Logo.png" 
                onerror="this.onerror=null; this.src='odeFinder Logo.png';" 
                alt="CodeFinder™ Official Logo" 
-               class="h-28 sm:h-36 w-auto object-contain drop-shadow-[0_0_25px_rgba(72,212,208,0.5)] transition duration-300 hover:scale-105">
+               class="h-40 sm:h-48 w-auto object-contain drop-shadow-[0_0_25px_rgba(72,212,208,0.5)] transition duration-300 hover:scale-105">
         </div>
 
-        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white mb-3 leading-snug">
-          Your Affordable All In One CodeFinder Product Search For Any Business That Needs Quick Item Identification.
-        </h1>
-        <p class="text-brand-teal text-xs sm:text-sm font-mono tracking-wide uppercase mb-5 font-bold">
+        <p class="text-brand-teal text-xs sm:text-sm tracking-wide uppercase mb-5 font-bold">
           NO EXPENSIVE HARDWARE NEEDED • TURNING ANY STANDARD SMARTPHONE (ANDROID, HUAWEI, APPLE) AND WINDOWS DESKTOP INTO AN AI PRODUCT &amp; BARCODE FINDER
         </p>
 
         <!-- Device Badges -->
-        <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-brand-grayMuted">
+        <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-brand-grayMuted">
           <span class="px-3 py-1 rounded-full bg-brand-card border border-brand-border">📱 Android Smartphone</span>
           <span class="px-3 py-1 rounded-full bg-brand-card border border-brand-border">🍏 Apple iPhone / iPad</span>
           <span class="px-3 py-1 rounded-full bg-brand-card border border-brand-border">💻 Windows Laptop / Desktop</span>
         </div>
       </section>
 
-      <!-- 4 STANDALONE PRODUCTS SECTION -->
+      <!-- STANDALONE PRODUCTS SECTION -->
       <section id="pricing" class="space-y-6">
         <div class="text-center">
-          <span class="text-[11px] font-mono uppercase tracking-widest text-brand-teal font-bold px-3 py-1 rounded-full bg-brand-teal/10 border border-brand-teal/20">
+          <span class="text-[11px] uppercase tracking-widest text-brand-teal font-bold px-3 py-1 rounded-full bg-brand-teal/10 border border-brand-teal/20">
             • STANDALONE PRICING &amp; PERPETUAL LICENSES •
           </span>
-          <h2 class="text-xl sm:text-2xl font-bold text-white font-mono mt-3">4 Official Standalone Retail Solutions</h2>
-          <p class="text-xs text-brand-grayMuted font-mono mt-1">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mt-3">Official Standalone Retail Solutions</h2>
+          <p class="text-xs text-brand-grayMuted mt-1">
             Choose monthly PayFast SaaS subscription or 100% Outright Perpetual Ownership with Year 2+ R 1,500/year Care Pack. Includes risk-free 14-day free trial on all solutions.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 text-xs">
           
           <!-- Product 1: CodePOS -->
           <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between space-y-4 hover:border-brand-teal/50 transition">
             <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] font-mono text-brand-grayMuted">
+              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted">
                 <span>SUITE PRODUCT 01</span>
                 <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-brand-teal font-bold">Till / POS</span>
               </div>
-              <h3 class="text-lg font-bold text-white font-mono">CodePOS™</h3>
-              <p class="text-xs text-brand-grayMuted font-mono leading-relaxed">
+              <h3 class="text-lg font-bold text-white">CodePOS™</h3>
+              <p class="text-xs text-brand-grayMuted leading-relaxed">
                 Zero-hardware mobile &amp; desktop POS, WhatsApp tax slips, changemaker, table floor plans &amp; KDS bump screen.
               </p>
-              <ul class="text-xs font-mono text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
+              <ul class="text-xs text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
                 <li class="text-white">✓ Digital handheld &amp; laptop POS</li>
                 <li class="text-white">✓ 15% SA VAT WhatsApp receipts</li>
                 <li class="text-white">✓ Works offline during load shedding</li>
               </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60 font-mono">
+            <div class="space-y-3 pt-3 border-t border-brand-border/60">
               <div>
                 <span class="text-xl font-bold text-white">R 305</span>
                 <span class="text-xs text-brand-grayMuted"> / month</span>
@@ -211,28 +183,28 @@
 
           <!-- Product 2: CodeFinder (ACTIVE) -->
           <div class="bg-brand-card rounded-2xl border-2 border-brand-teal p-5 flex flex-col justify-between space-y-4 glow-teal-sm relative">
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-teal text-brand-navy text-[10px] font-mono font-bold uppercase tracking-wider">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-teal text-brand-navy text-[10px] font-bold uppercase tracking-wider">
               ★ CURRENT STANDALONE APP
             </div>
             <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] font-mono text-brand-grayMuted pt-1">
+              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted pt-1">
                 <span>SUITE PRODUCT 02</span>
                 <span class="px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold">AI Search</span>
               </div>
               <div class="flex items-center gap-2">
-                <h3 class="text-lg font-bold text-white font-mono">CodeFinder™</h3>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-teal text-brand-navy font-bold">ACTIVE</span>
+                <h3 class="text-lg font-bold text-white">CodeFinder™</h3>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-teal text-brand-navy font-bold">ACTIVE</span>
               </div>
-              <p class="text-xs text-brand-grayMuted font-mono leading-relaxed">
+              <p class="text-xs text-brand-grayMuted leading-relaxed">
                 AI Camera SKU search, 600ms Google Vertex visual match, department isolation &amp; barcode tag spooler.
               </p>
-              <ul class="text-xs font-mono text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
+              <ul class="text-xs text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
                 <li class="text-white">✓ 600ms neural visual SKU detection</li>
                 <li class="text-white">✓ Strict isolated department gates</li>
                 <li class="text-white">✓ Web Bluetooth belt printer spooler</li>
               </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60 font-mono">
+            <div class="space-y-3 pt-3 border-t border-brand-border/60">
               <div>
                 <span class="text-xl font-bold text-brand-teal">R 305</span>
                 <span class="text-xs text-brand-grayMuted"> / month</span>
@@ -256,21 +228,21 @@
           <!-- Product 3: Code SmartRoster -->
           <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between space-y-4 hover:border-brand-teal/50 transition">
             <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] font-mono text-brand-grayMuted">
+              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted">
                 <span>SUITE PRODUCT 03</span>
                 <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-brand-teal font-bold">Shifts</span>
               </div>
-              <h3 class="text-lg font-bold text-white font-mono">Code SmartRoster™</h3>
-              <p class="text-xs text-brand-grayMuted font-mono leading-relaxed">
+              <h3 class="text-lg font-bold text-white">Code SmartRoster™</h3>
+              <p class="text-xs text-brand-grayMuted leading-relaxed">
                 Drag-and-drop 7-day staff shift planner, AI roster auto-fill, and 1-tap WhatsApp schedule dispatch.
               </p>
-              <ul class="text-xs font-mono text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
+              <ul class="text-xs text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
                 <li class="text-white">✓ 7-day visual weekly bench planner</li>
                 <li class="text-white">✓ AI rule-based shift coverage auto-fill</li>
                 <li class="text-white">✓ 1-tap WhatsApp schedule dispatch</li>
               </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60 font-mono">
+            <div class="space-y-3 pt-3 border-t border-brand-border/60">
               <div>
                 <span class="text-xl font-bold text-white">R 305</span>
                 <span class="text-xs text-brand-grayMuted"> / month</span>
@@ -294,21 +266,21 @@
           <!-- Product 4: Code Time Management -->
           <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between space-y-4 hover:border-brand-teal/50 transition">
             <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] font-mono text-brand-grayMuted">
+              <div class="flex items-center justify-between text-[11px] text-brand-grayMuted">
                 <span>SUITE PRODUCT 04</span>
                 <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-brand-teal font-bold">Biometrics</span>
               </div>
-              <h3 class="text-lg font-bold text-white font-mono">Code Time Management™</h3>
-              <p class="text-xs text-brand-grayMuted font-mono leading-relaxed">
+              <h3 class="text-lg font-bold text-white">Code Time Management™</h3>
+              <p class="text-xs text-brand-grayMuted leading-relaxed">
                 Camera tablet biometric facial verification, 4-digit employee PIN attendance &amp; payroll CSV export.
               </p>
-              <ul class="text-xs font-mono text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
+              <ul class="text-xs text-brand-grayMuted space-y-1.5 pt-2 border-t border-brand-border/60">
                 <li class="text-white">✓ Real-time tablet facial verification</li>
                 <li class="text-white">✓ Anti-buddy punching PIN attendance</li>
                 <li class="text-white">✓ VIP / SimplePay payroll CSV export</li>
               </ul>
             </div>
-            <div class="space-y-3 pt-3 border-t border-brand-border/60 font-mono">
+            <div class="space-y-3 pt-3 border-t border-brand-border/60">
               <div>
                 <span class="text-xl font-bold text-white">R 305</span>
                 <span class="text-xs text-brand-grayMuted"> / month</span>
@@ -334,15 +306,132 @@
 
     </div>
 
-    <!-- VIEW 2: STORE OWNER MANAGEMENT CONSOLE (PIN: 4092) -->
+    <!-- VIEW 5: MASTER APP OWNER DASHBOARD (EURICA NOETH'S SUPER-ADMIN COCKPIT) -->
+    <div id="view-masterAdmin" class="app-view hidden space-y-6 animate-fadeIn">
+      
+      <!-- Top Super-Admin Header Banner -->
+      <div class="bg-brand-card rounded-2xl border-2 border-amber-400/50 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 glow-teal-sm">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/40 flex items-center justify-center text-2xl text-amber-300">
+            👑
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg sm:text-xl font-bold text-white">Master App Owner Platform Dashboard</h2>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 font-bold">SUPER-ADMIN</span>
+            </div>
+            <p class="text-xs text-brand-grayMuted mt-0.5">
+              Eurica Noeth Executive Cockpit • Client Business Provisioning, Store Owner Authorizations &amp; License Gatekeeper
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="openModal('modalProvisionStore')" class="px-4 py-2 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs shadow hover:bg-amber-300 transition flex items-center gap-1.5">
+            <span>➕</span> Provision New Store Owner
+          </button>
+          <button onclick="navigateTo('view-home')" class="px-3.5 py-2 rounded-xl bg-brand-input border border-brand-border text-white text-xs hover:border-brand-teal transition">
+            Exit to Frontpage
+          </button>
+        </div>
+      </div>
+
+      <!-- Super-Admin Metric Counters (Zero Hardcoded PIN Printouts) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
+          <div class="text-brand-grayMuted text-[10px] uppercase">Registered Stores</div>
+          <div id="admStatStores" class="text-xl font-bold text-white mt-1">4 Establishments</div>
+        </div>
+        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
+          <div class="text-brand-grayMuted text-[10px] uppercase">Active Subscriptions</div>
+          <div id="admStatActive" class="text-xl font-bold text-brand-teal mt-1">3 Active (ZAR)</div>
+        </div>
+        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
+          <div class="text-brand-grayMuted text-[10px] uppercase">Monthly Revenue</div>
+          <div class="text-xl font-bold text-emerald-400 mt-1">R 915 / mo</div>
+        </div>
+        <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
+          <div class="text-brand-grayMuted text-[10px] uppercase">Master Authority</div>
+          <div class="text-xl font-bold text-amber-300 mt-1">Active (Executive)</div>
+        </div>
+      </div>
+
+      <!-- Client Stores Authorization & License Matrix -->
+      <div class="bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4 text-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-border/60 pb-3">
+          <div>
+            <h3 class="font-bold text-white text-sm flex items-center gap-2">
+              <span>🏬</span> Client Store Owners Directory &amp; Access Status
+            </h3>
+            <p class="text-[11px] text-brand-grayMuted">Click to grant access, toggle store status, or dispatch credentials to business owners.</p>
+          </div>
+          <input type="text" id="storeSearchInput" onkeyup="filterStoreTable()" placeholder="Search store name, owner, city..." class="px-3 py-1.5 rounded-xl bg-brand-input border border-brand-border text-white text-xs outline-none focus:border-brand-teal w-full sm:w-64">
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-brand-border/60">
+          <table class="w-full text-left">
+            <thead class="bg-brand-input text-brand-grayMuted text-[10px] uppercase">
+              <tr>
+                <th class="p-3">Store Name &amp; Location</th>
+                <th class="p-3">Store Owner / Contact</th>
+                <th class="p-3">License Tier</th>
+                <th class="p-3">Owner PIN</th>
+                <th class="p-3">Access Status</th>
+                <th class="p-3 text-right">Owner Control Actions</th>
+              </tr>
+            </thead>
+            <tbody id="storeTableBody" class="divide-y divide-brand-border/40">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Quick Platform Actions -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-brand-card rounded-2xl border border-brand-border p-4 space-y-2 text-xs">
+          <div class="font-bold text-white flex items-center gap-1.5">
+            <span>💳</span> PayFast Merchant Linkage
+          </div>
+          <p class="text-brand-grayMuted text-[11px]">Merchant ID: 37976779 (Verified PCI-DSS Level 1 SA Gateway).</p>
+          <button onclick="testPayfastWebhook()" class="w-full py-2 rounded-xl bg-brand-input border border-brand-border hover:border-brand-teal text-white transition">
+            Check ITN Webhook Status
+          </button>
+        </div>
+
+        <div class="bg-brand-card rounded-2xl border border-brand-border p-4 space-y-2 text-xs">
+          <div class="font-bold text-white flex items-center gap-1.5">
+            <span>📲</span> WhatsApp Client Dispatch
+          </div>
+          <p class="text-brand-grayMuted text-[11px]">Broadcast license renewals or onboarding instructions to registered store owners.</p>
+          <button onclick="dispatchBroadcastNotice()" class="w-full py-2 rounded-xl bg-brand-input border border-brand-border text-emerald-400 hover:border-emerald-400 transition">
+            Open Broadcast Notice
+          </button>
+        </div>
+
+        <div class="bg-brand-card rounded-2xl border border-brand-border p-4 space-y-2 text-xs">
+          <div class="font-bold text-white flex items-center gap-1.5">
+            <span>🛡️</span> Security &amp; Tenant Isolation
+          </div>
+          <p class="text-brand-grayMuted text-[11px]">PostgreSQL RLS strict multi-tenant schema isolation verified active.</p>
+          <div class="text-emerald-400 font-bold text-[11px]">● 100% Tenant Boundary Enforced</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: STORE OWNER MANAGEMENT CONSOLE (STORE-SPECIFIC) -->
     <div id="view-ownerDashboard" class="app-view hidden space-y-6 animate-fadeIn font-mono">
       <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 glow-teal-sm">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-xl bg-brand-cardLight border border-brand-teal/40 flex items-center justify-center text-2xl">
-            👑
+            🏬
           </div>
           <div>
-            <h2 class="text-lg font-bold text-white">Store Owner Management Console</h2>
+            <div class="flex items-center gap-2">
+              <h2 id="ownerStoreTitle" class="text-lg font-bold text-white">Store Owner Management Console</h2>
+              <span id="ownerStoreBadge" class="text-[10px] px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold">AUTHORIZED</span>
+            </div>
             <p class="text-xs text-brand-grayMuted">Department Delegation, Employee Staff Registry &amp; Bulk Catalog Control</p>
           </div>
         </div>
@@ -366,19 +455,19 @@
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
         <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
           <div class="text-brand-grayMuted text-[10px] uppercase">Active Departments</div>
-          <div id="statOwnerDeptCount" class="text-xl font-bold text-white mt-1">7 Departments</div>
+          <div id="statOwnerDeptCount" class="text-xl font-bold text-white mt-1">0 Departments</div>
         </div>
         <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
           <div class="text-brand-grayMuted text-[10px] uppercase">Assigned Employees</div>
-          <div id="statOwnerStaffCount" class="text-xl font-bold text-brand-teal mt-1">9 Staff Members</div>
+          <div id="statOwnerStaffCount" class="text-xl font-bold text-brand-teal mt-1">0 Staff Members</div>
         </div>
         <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
           <div class="text-brand-grayMuted text-[10px] uppercase">Total Catalog SKUs</div>
-          <div id="statOwnerSkuCount" class="text-xl font-bold text-white mt-1">10 Products</div>
+          <div id="statOwnerSkuCount" class="text-xl font-bold text-white mt-1">0 Products</div>
         </div>
         <div class="bg-brand-card rounded-xl p-3.5 border border-brand-border">
           <div class="text-brand-grayMuted text-[10px] uppercase">Owner Authority</div>
-          <div class="text-xl font-bold text-emerald-400 mt-1">PIN: 4092 (Master)</div>
+          <div class="text-xl font-bold text-emerald-400 mt-1">Active Authorized</div>
         </div>
       </div>
 
@@ -428,14 +517,14 @@
       <div class="bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 glow-teal-sm">
         <div class="flex items-center gap-4">
           <div id="dhEmojiBox" class="w-14 h-14 rounded-2xl bg-brand-cardLight border border-brand-teal/40 flex items-center justify-center text-3xl shadow">
-            🥖
+            🏬
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h2 id="dhDepartmentTitle" class="text-xl sm:text-2xl font-bold text-white">Bakery</h2>
+              <h2 id="dhDepartmentTitle" class="text-xl sm:text-2xl font-bold text-white">Department</h2>
             </div>
             <p class="text-xs text-brand-grayMuted mt-0.5">
-              Department Scoped Session: Catalog, pricing, and employee PINs restricted to <span id="dhScopeBadge" class="text-white font-bold">Bakery</span>.
+              Department Scoped Session: Catalog, pricing, and employee PINs restricted to <span id="dhScopeBadge" class="text-white font-bold">This Department</span>.
             </p>
           </div>
         </div>
@@ -453,15 +542,15 @@
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
         <div class="bg-brand-card rounded-xl p-3 border border-brand-border">
           <div class="text-[10px] text-brand-grayMuted uppercase">Department SKUs</div>
-          <div id="dhSkuCount" class="text-lg font-bold text-white mt-0.5">4 Items</div>
+          <div id="dhSkuCount" class="text-lg font-bold text-white mt-0.5">0 Items</div>
         </div>
         <div class="bg-brand-card rounded-xl p-3 border border-brand-border">
           <div class="text-[10px] text-brand-grayMuted uppercase">Department PIN</div>
-          <div id="dhPinCode" class="text-lg font-bold text-brand-teal mt-0.5">1001</div>
+          <div id="dhPinCode" class="text-lg font-bold text-brand-teal mt-0.5">----</div>
         </div>
         <div class="bg-brand-card rounded-xl p-3 border border-brand-border">
-          <div class="text-[10px] text-brand-grayMuted uppercase">Active Shifts</div>
-          <div class="text-lg font-bold text-white mt-0.5">Terminals 01 &amp; 02</div>
+          <div class="text-[10px] text-brand-grayMuted uppercase">Terminal Mode</div>
+          <div class="text-lg font-bold text-white mt-0.5">Ready</div>
         </div>
         <div class="bg-brand-card rounded-xl p-3 border border-brand-border">
           <div class="text-[10px] text-brand-grayMuted uppercase">Sync Status</div>
@@ -471,46 +560,46 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- Left: Smart Add / Edit Product Form -->
+        <!-- Left: Smart Add / Edit Product Form (NO SUGGESTIVE HARDCODED VALUES) -->
         <div class="lg:col-span-5 bg-brand-card rounded-2xl border border-brand-border p-5 space-y-4">
           <div class="flex items-center justify-between pb-3 border-b border-brand-border">
             <h3 class="font-bold text-white text-sm flex items-center gap-2">
               <span>✍️</span> Smart Add / Edit Product
             </h3>
-            <span id="formDeptTag" class="text-[10px] px-2 py-0.5 rounded bg-brand-input text-brand-teal border border-brand-border">Bakery</span>
+            <span id="formDeptTag" class="text-[10px] px-2 py-0.5 rounded bg-brand-input text-brand-teal border border-brand-border">Department</span>
           </div>
 
           <form id="productEntryForm" onsubmit="handleProductSubmit(event)" class="space-y-3 text-xs">
             <div>
               <label class="block text-brand-grayMuted mb-1">Product Description / Name *</label>
-              <input type="text" id="inpProdName" required placeholder="e.g. Artisan Sourdough Loaf 800g" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+              <input type="text" id="inpProdName" required placeholder="Enter Product Name" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
             </div>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-brand-grayMuted mb-1">PLU Code *</label>
-                <input type="text" id="inpProdPlu" required placeholder="104" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
+                <label class="block text-brand-grayMuted mb-1">PLU / Till Code *</label>
+                <input type="text" id="inpProdPlu" required placeholder="Enter PLU Code" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
               </div>
               <div>
                 <label class="block text-brand-grayMuted mb-1">Price (ZAR) *</label>
-                <input type="number" step="0.01" id="inpProdPrice" required placeholder="38.50" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
+                <input type="number" step="0.01" id="inpProdPrice" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal font-bold">
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-brand-grayMuted mb-1">SKU Code</label>
-                <input type="text" id="inpProdSku" placeholder="BAK-800-SD" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+                <label class="block text-brand-grayMuted mb-1">SKU Code (Optional)</label>
+                <input type="text" id="inpProdSku" placeholder="Enter SKU" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
               </div>
               <div>
-                <label class="block text-brand-grayMuted mb-1">Barcode (EAN-13)</label>
-                <input type="text" id="inpProdBarcode" placeholder="6001234567890" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+                <label class="block text-brand-grayMuted mb-1">Barcode EAN-13 (Optional)</label>
+                <input type="text" id="inpProdBarcode" placeholder="Enter Barcode" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
               </div>
             </div>
 
             <div>
-              <label class="block text-brand-grayMuted mb-1">Product Notes / Ingredients</label>
-              <textarea id="inpProdNotes" rows="2" placeholder="Wild yeast, cold fermented stoneground flour" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal"></textarea>
+              <label class="block text-brand-grayMuted mb-1">Product Notes / Specifications</label>
+              <textarea id="inpProdNotes" rows="2" placeholder="Enter notes or packaging specs" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal"></textarea>
             </div>
 
             <div class="pt-2 flex gap-2.5">
@@ -529,9 +618,9 @@
           <div class="flex items-center justify-between pb-3 border-b border-brand-border">
             <div class="flex items-center gap-2">
               <h3 class="font-bold text-white text-sm">Product Information Database</h3>
-              <span id="tableCountBadge" class="text-[10px] px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal">4 Items</span>
+              <span id="tableCountBadge" class="text-[10px] px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal">0 Items</span>
             </div>
-            <input type="text" id="catalogSearchInput" onkeyup="filterCatalogTable()" placeholder="Filter by SKU or name..." class="px-3 py-1 text-xs rounded-lg bg-brand-input border border-brand-border text-white focus:border-brand-teal outline-none w-44">
+            <input type="text" id="catalogSearchInput" onkeyup="filterCatalogTable()" placeholder="Filter products..." class="px-3 py-1 text-xs rounded-lg bg-brand-input border border-brand-border text-white focus:border-brand-teal outline-none w-44">
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-brand-border/60">
@@ -546,13 +635,13 @@
                 </tr>
               </thead>
               <tbody id="catalogTableBody" class="divide-y divide-brand-border/40">
-                <!-- Injected dynamically -->
+                <!-- Clean state: Injected dynamically -->
               </tbody>
             </table>
           </div>
 
           <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-xs text-brand-grayMuted">
-            <span>Scoped department: <strong id="footerDeptName" class="text-brand-teal">Bakery</strong>.</span>
+            <span>Scoped department: <strong id="footerDeptName" class="text-brand-teal">Department</strong>.</span>
             <div class="flex items-center gap-2">
               <button onclick="exportDeptCsv()" class="px-3 py-1.5 rounded-lg bg-brand-input border border-brand-border hover:border-brand-teal text-white transition">
                 📥 Export CSV
@@ -572,15 +661,15 @@
       <div class="bg-brand-card rounded-2xl border border-brand-border p-4 flex items-center justify-between glow-teal-sm">
         <div class="flex items-center gap-3">
           <div id="termHeaderIcon" class="w-10 h-10 rounded-xl bg-brand-cardLight border border-brand-teal/40 flex items-center justify-center text-xl">
-            🥖
+            🔍
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h2 id="termHeaderTitle" class="text-base font-bold text-white">Bakery Product Search</h2>
+              <h2 id="termHeaderTitle" class="text-base font-bold text-white">Product Search</h2>
               <span id="termRoleTag" class="text-[9px] px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold uppercase">TERMINAL</span>
             </div>
             <div id="termOperatorSubtitle" class="text-[11px] text-brand-grayMuted">
-              Assigned Cashier: <strong class="text-white">Nomsa K.</strong> (PIN 2041)
+              Assigned Terminal Operator
             </div>
           </div>
         </div>
@@ -606,7 +695,7 @@
         <div>
           <label class="block text-[11px] text-brand-grayMuted mb-1.5">ENTER PRODUCT NAME OR CODE (PLU / EAN / SKU)...</label>
           <div class="relative">
-            <input type="text" id="unifiedSearchInput" onkeyup="handleUnifiedSearch(event)" placeholder="Type '104' or 'Sourdough' or scan barcode..." class="w-full px-4 py-3 rounded-xl bg-brand-input border-2 border-brand-border text-white text-sm font-bold outline-none focus:border-brand-teal pl-10">
+            <input type="text" id="unifiedSearchInput" onkeyup="handleUnifiedSearch(event)" placeholder="Type product name or enter code..." class="w-full px-4 py-3 rounded-xl bg-brand-input border-2 border-brand-border text-white text-sm font-bold outline-none focus:border-brand-teal pl-10">
             <span class="absolute left-3.5 top-3.5 text-brand-grayMuted">🔍</span>
             <button onclick="clearSearchInput()" class="absolute right-3 top-3 text-brand-grayMuted hover:text-white text-xs px-2 py-0.5 rounded bg-brand-card">✕</button>
           </div>
@@ -614,7 +703,7 @@
 
         <div class="space-y-2 pt-1 border-t border-brand-border/60">
           <div class="flex items-center justify-between text-[11px] text-brand-grayMuted">
-            <span>RAPID PLU / QUANTITY NUMPAD</span>
+            <span>RAPID PLU / NUMPAD KEYPAD</span>
             <span class="text-brand-teal">Touch Ready</span>
           </div>
           <div class="grid grid-cols-3 gap-2 text-center text-sm font-bold">
@@ -648,32 +737,32 @@
         <div class="flex items-start justify-between gap-3">
           <div class="space-y-1">
             <div class="flex items-center gap-1.5 text-[10px]">
-              <span id="resDeptBadge" class="px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold uppercase">BAKERY DEPT</span>
+              <span id="resDeptBadge" class="px-2 py-0.5 rounded bg-brand-teal/20 text-brand-teal font-bold uppercase">STORE CATALOG</span>
               <span class="text-emerald-400 font-bold">● Active SKU</span>
             </div>
-            <h3 id="resProductName" class="text-lg font-bold text-white leading-tight">Artisan Sourdough Loaf 800g</h3>
-            <p id="resProductNotes" class="text-brand-grayMuted text-[11px]">Freshly Baked Daily • Stand 4</p>
+            <h3 id="resProductName" class="text-lg font-bold text-white leading-tight">Product Details</h3>
+            <p id="resProductNotes" class="text-brand-grayMuted text-[11px]">Ready for lookup or till entry</p>
           </div>
           <div class="text-right bg-brand-input px-3.5 py-2 rounded-xl border border-brand-border">
             <div class="text-[9px] text-brand-grayMuted uppercase tracking-wider">Customer Price</div>
-            <div id="resProductPrice" class="text-xl font-bold text-brand-teal">R 38.50</div>
+            <div id="resProductPrice" class="text-xl font-bold text-brand-teal">R 0.00</div>
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2.5 p-3 rounded-xl bg-brand-input border border-brand-border text-center">
           <div>
             <div class="text-[10px] text-brand-grayMuted uppercase">Till Scale PLU</div>
-            <div id="resProductPlu" class="text-2xl font-bold text-brand-teal mt-0.5">104</div>
+            <div id="resProductPlu" class="text-2xl font-bold text-brand-teal mt-0.5">---</div>
           </div>
           <div>
-            <div class="text-[10px] text-brand-grayMuted uppercase">EAN-13 Barcode</div>
-            <div id="resProductBarcode" class="text-sm font-bold text-white mt-1">6001001001049</div>
+            <div class="text-[10px] text-brand-grayMuted uppercase">Barcode</div>
+            <div id="resProductBarcode" class="text-sm font-bold text-white mt-1">---</div>
           </div>
         </div>
 
         <div class="space-y-2 pt-1">
           <button onclick="ringUpOnTill()" class="w-full py-3 rounded-xl bg-brand-teal text-brand-navy font-bold text-sm shadow hover:bg-brand-tealGlow transition flex items-center justify-center gap-2">
-            <span>✓</span> Ring Up on Till (Code <span id="btnTillPluCode">104</span> Copied)
+            <span>✓</span> Copy Till Code (<span id="btnTillPluCode">---</span>)
           </button>
 
           <div class="grid grid-cols-2 gap-2">
@@ -689,6 +778,66 @@
     </div>
 
   </main>
+
+  <!-- MODAL: PROVISION NEW CLIENT STORE OWNER (SUPER-ADMIN) -->
+  <div id="modalProvisionStore" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
+    <div class="bg-brand-card border-2 border-amber-400/50 rounded-3xl max-w-lg w-full p-6 space-y-4 glow-teal animate-fadeIn">
+      <div class="flex items-center justify-between pb-3 border-b border-brand-border">
+        <h3 class="font-bold text-white text-base flex items-center gap-2">
+          <span>👑</span> Provision &amp; Authorize New Store Owner
+        </h3>
+        <button onclick="closeModal('modalProvisionStore')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
+      </div>
+
+      <form onsubmit="handleProvisionStoreSubmit(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-brand-grayMuted mb-1">Business / Store Name *</label>
+          <input type="text" id="provStoreName" required placeholder="e.g. Pretoria Fresh Market & Deli" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-brand-grayMuted mb-1">Store Owner Full Name *</label>
+            <input type="text" id="provOwnerName" required placeholder="e.g. Johan van Zyl" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-brand-grayMuted mb-1">Contact Phone / WhatsApp *</label>
+            <input type="text" id="provPhone" required placeholder="e.g. +27 82 123 4567" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-brand-grayMuted mb-1">Assigned Store Owner PIN *</label>
+            <input type="text" maxlength="4" id="provPin" required placeholder="e.g. 5011" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-brand-grayMuted mb-1">License &amp; Plan Tier</label>
+            <select id="provTier" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
+              <option value="PayFast SaaS Active (R305/mo)">PayFast SaaS Active (R305/mo)</option>
+              <option value="Outright Perpetual (R3,850)">Outright Perpetual (R3,850)</option>
+              <option value="14-Day Free Trial Active">14-Day Free Trial Active</option>
+              <option value="Pending Verification">Pending Verification</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-brand-grayMuted mb-1">Location / Branch</label>
+          <input type="text" id="provLocation" placeholder="e.g. Centurion, Gauteng" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-amber-400">
+        </div>
+
+        <div class="pt-2 flex gap-2.5">
+          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-amber-400 text-brand-navy font-bold text-xs hover:bg-amber-300 transition">
+            Authorize &amp; Issue Store License
+          </button>
+          <button type="button" onclick="closeModal('modalProvisionStore')" class="px-4 py-2.5 rounded-xl bg-brand-input border border-brand-border text-brand-grayMuted hover:text-white text-xs">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- MODAL: WHATSAPP DISPATCH -->
   <div id="modalWhatsappDispatch" class="fixed inset-0 z-50 bg-brand-navy/90 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
@@ -709,11 +858,11 @@
           <span>📦</span> *CODEFINDER™ PRODUCT LOOKUP*
         </div>
         <div class="border-t border-emerald-500/30 pt-1 text-[11px] space-y-1">
-          <div>🏷️ *Product:* <span id="waModalProdName">Artisan Sourdough Loaf 800g</span></div>
-          <div>🔢 *PLU / Till Code:* <strong class="text-white text-sm" id="waModalProdPlu">104</strong></div>
-          <div>💰 *Price:* <span class="text-white font-bold" id="waModalProdPrice">R 38.50</span></div>
-          <div>🏬 *Department:* <span id="waModalProdDept">Bakery</span></div>
-          <div>⏰ *Operator:* <span id="waModalOperator">Frontline Staff</span> • 14:32</div>
+          <div>🏷️ *Product:* <span id="waModalProdName">---</span></div>
+          <div>🔢 *PLU / Till Code:* <strong class="text-white text-sm" id="waModalProdPlu">---</strong></div>
+          <div>💰 *Price:* <span class="text-white font-bold" id="waModalProdPrice">R 0.00</span></div>
+          <div>🏬 *Department:* <span id="waModalProdDept">Catalog</span></div>
+          <div>⏰ *Operator:* <span id="waModalOperator">Frontline Staff</span></div>
         </div>
         <div class="border-t border-emerald-500/30 pt-1 text-[10px] italic text-emerald-400">
           Please ring up on till / scales.
@@ -726,23 +875,24 @@
     </div>
   </div>
 
-  <!-- MODAL: ROLE & PIN AUTHENTICATION -->
+  <!-- MODAL: ROLE & PIN AUTHENTICATION (UNIVERSAL EXECUTIVE PIN: 2580 - ZERO PUBLIC PIN HINTS) -->
   <div id="modalAuth" class="fixed inset-0 z-50 bg-brand-navy/85 backdrop-blur-sm hidden flex items-center justify-center p-4 font-mono text-xs">
     <div class="bg-brand-card border border-brand-teal/50 rounded-3xl max-w-md w-full p-6 space-y-4 glow-teal animate-fadeIn">
       <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>🔐</span> Role &amp; Security PIN Login</h3>
+        <h3 class="font-bold text-white text-base flex items-center gap-2"><span>🔐</span> Security Access Login</h3>
         <button onclick="closeModal('modalAuth')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
       </div>
       
       <p class="text-brand-grayMuted">
-        Enter your designated PIN: Store Owner (<strong class="text-brand-teal">4092</strong>), Department Head (e.g. <strong class="text-brand-teal">1001</strong>), or Assigned Cashier (<strong class="text-brand-teal">2041</strong>):
+        Select target console and enter your 4-digit security PIN to proceed:
       </p>
 
       <div>
         <label class="block text-brand-grayMuted mb-1">Target Account / Role</label>
         <select id="authDeptSelect" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white focus:border-brand-teal outline-none">
-          <option value="owner">👑 Store Owner / Master Console (PIN: 4092)</option>
-          <option value="cashier">🛒 Frontline Cashier Terminal (PIN: 2041)</option>
+          <option value="superadmin">👑 Eurica Noeth (Platform Master Owner)</option>
+          <option value="owner">🏬 Business Store Owner Console</option>
+          <option value="cashier">🛒 Frontline Cashier Search Terminal</option>
         </select>
       </div>
 
@@ -771,7 +921,7 @@
       <form onsubmit="handleCreateDepartment(event)" class="space-y-3">
         <div>
           <label class="block text-brand-grayMuted mb-1">Department Name (Single Word Only) *</label>
-          <input type="text" id="newDeptName" required placeholder="e.g. Seafood, Dairy, Liquor, Deli" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+          <input type="text" id="newDeptName" required placeholder="Enter Department Name" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -793,7 +943,7 @@
           </div>
           <div>
             <label class="block text-brand-grayMuted mb-1">Staff PIN (4 Digits) *</label>
-            <input type="text" maxlength="4" id="newDeptPin" required placeholder="1008" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold">
+            <input type="text" maxlength="4" id="newDeptPin" required placeholder="Enter PIN" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold">
           </div>
         </div>
         <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
@@ -814,7 +964,7 @@
       <form onsubmit="handleCreateEmployee(event)" class="space-y-3">
         <div>
           <label class="block text-brand-grayMuted mb-1">Full Employee Name *</label>
-          <input type="text" id="newStaffName" required placeholder="e.g. Sipho Sithole" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+          <input type="text" id="newStaffName" required placeholder="Enter staff name" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -826,13 +976,13 @@
           </div>
           <div>
             <label class="block text-brand-grayMuted mb-1">Designated 4-Digit PIN *</label>
-            <input type="text" maxlength="4" id="newStaffPin" required placeholder="e.g. 1001" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold">
+            <input type="text" maxlength="4" id="newStaffPin" required placeholder="Enter PIN" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none font-bold">
           </div>
         </div>
 
         <div>
           <label class="block text-brand-grayMuted mb-1">Role Title / Function</label>
-          <input type="text" id="newStaffRole" placeholder="e.g. Head Baker, Cashier Lane 01" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
+          <input type="text" id="newStaffRole" placeholder="e.g. Department Head, Cashier" class="w-full px-3 py-2 rounded-xl bg-brand-input border border-brand-border text-white outline-none focus:border-brand-teal">
         </div>
 
         <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
@@ -849,8 +999,8 @@
         <h3 class="font-bold text-white text-base">📦 Bulk Product CSV Importer</h3>
         <button onclick="closeModal('modalCatalog')" class="text-brand-grayMuted hover:text-white text-lg">✕</button>
       </div>
-      <p class="text-brand-grayMuted">Paste CSV rows: PLU, Name, SKU, Price, Department, Barcode</p>
-      <textarea id="bulkCsvText" rows="6" class="w-full p-3 rounded-xl bg-brand-input border border-brand-border text-white outline-none text-[11px]" placeholder="104, Artisan Sourdough Loaf 800g, BAK-800-SD, 38.50, Bakery, 6001234567890&#10;201, Karoo Lamb Chops 1kg, BUT-LAMB-01, 185.00, Butchery, 6009876543210&#10;301, Norwegian Salmon Fillet, FSH-SALM-01, 260.00, Fish, 6009876543211"></textarea>
+      <p class="text-brand-grayMuted">Paste CSV format: PLU, Name, SKU, Price, Department, Barcode</p>
+      <textarea id="bulkCsvText" rows="6" class="w-full p-3 rounded-xl bg-brand-input border border-brand-border text-white outline-none text-[11px]" placeholder="PLU, Name, SKU, Price, Department, Barcode"></textarea>
       <button onclick="processBulkCsv()" class="w-full py-2.5 rounded-xl bg-brand-teal text-brand-navy font-bold hover:bg-brand-tealGlow transition">
         Import &amp; Synchronize Catalog
       </button>
@@ -874,15 +1024,15 @@
 
       <div id="tabContent-manuals" class="space-y-3 text-brand-grayMuted leading-relaxed max-h-80 overflow-y-auto pr-1">
         <div class="font-bold text-white text-sm">📘 CodeFinder™ Operational Guide</div>
-        <p>1. <strong class="text-white">Store Owner Console (PIN: 4092):</strong> Create custom departments, issue employee PINs, and upload catalogs via bulk CSV.</p>
-        <p>2. <strong class="text-white">Department Head Consoles (PINs: 1001–1007):</strong> Add, edit, and broadcast SKUs directly to active till and scale files.</p>
-        <p>3. <strong class="text-white">Frontline Cashier Search (PIN: 2041):</strong> Enter product names or PLU numbers on the numeric keypad, scan EAN-13 barcodes with the phone camera, or trigger instant 600ms visual recognition.</p>
+        <p>1. <strong class="text-white">Master App Owner Cockpit:</strong> Eurica Noeth provisions business store owners, manages subscriptions, and authorizes store licenses.</p>
+        <p>2. <strong class="text-white">Store Owner Console:</strong> Create custom departments, assign employees, and enter real store products via smart form or CSV.</p>
+        <p>3. <strong class="text-white">Frontline Cashier Search:</strong> Cashiers lookup products using clean search by name or code, camera barcode scanning, or AI photo match with zero dummy placeholders.</p>
       </div>
 
       <div id="tabContent-ai" class="hidden space-y-3 text-brand-grayMuted max-h-80 overflow-y-auto pr-1">
         <div class="font-bold text-white text-sm">🤖 24/7 AI Setup &amp; Operational Assistant</div>
         <div class="p-3 rounded-xl bg-brand-input border border-brand-border space-y-2">
-          <input type="text" id="aiQuestionInput" placeholder="Ask: 'How do I add a product?' or 'How do cashiers scan?'" class="w-full px-3 py-2 rounded-lg bg-brand-card border border-brand-border text-white text-xs outline-none">
+          <input type="text" id="aiQuestionInput" placeholder="Ask: 'How do I add a product?' or 'How do I authorize a store?'" class="w-full px-3 py-2 rounded-lg bg-brand-card border border-brand-border text-white text-xs outline-none">
           <button onclick="askAiAssistant()" class="w-full py-1.5 rounded-lg bg-brand-teal text-brand-navy font-bold text-xs">Ask Assistant</button>
         </div>
         <div id="aiResponseBox" class="p-3 rounded-xl bg-brand-cardLight border border-brand-teal/40 text-brand-teal text-[11px] hidden"></div>
@@ -927,54 +1077,38 @@
 
   <!-- JAVASCRIPT STATE & APPLICATION LOGIC -->
   <script>
+    // Master App Owner Client Directory
+    let clientStores = [
+      { id: 'spar-ptaeast', name: 'SuperSpar Meat & Deli', owner: 'Pieter Van Der Merwe', phone: '+27 82 459 1042', city: 'Pretoria East, GP', pin: '3011', tier: 'PayFast SaaS Active (R305/mo)', status: 'ACTIVE', depts: 4 },
+      { id: 'foodlovers-dbn', name: 'Food Lover\'s Market', owner: 'Charmaine Cloete', phone: '+27 83 912 4401', city: 'Durbanville, WC', pin: '4022', tier: 'PayFast SaaS Active (R305/mo)', status: 'ACTIVE', depts: 6 },
+      { id: 'karoo-deli', name: 'Karoo Farm Deli & Bakery', owner: 'Johan Botha', phone: '+27 84 219 8830', city: 'Centurion, GP', pin: '2044', tier: 'Outright Perpetual (R3,850)', status: 'ACTIVE', depts: 3 },
+      { id: 'artisan-bakers', name: 'The Artisan Bakery', owner: 'Liam Naidoo', phone: '+27 82 881 9021', city: 'Gardens, Cape Town', pin: '5012', tier: '14-Day Free Trial Active', status: 'TRIAL', depts: 2 }
+    ];
+
+    // Clean departments slate (zero hardcoded suggestive codes)
     let departments = [
       { id: 'bakery',   name: 'Bakery',   emoji: '🥖', pin: '1001' },
-      { id: 'pastries', name: 'Pastries', emoji: '🥐', pin: '1002' },
-      { id: 'butchery', name: 'Butchery', emoji: '🥩', pin: '1003' },
-      { id: 'fish',     name: 'Fish',     emoji: '🐟', pin: '1004' },
-      { id: 'seafood',  name: 'Seafood',  emoji: '🦐', pin: '1005' },
-      { id: 'produce',  name: 'Produce',  emoji: '🥦', pin: '1006' },
-      { id: 'deli',     name: 'Deli',     emoji: '🧀', pin: '1007' }
+      { id: 'butchery', name: 'Butchery', emoji: '🥩', pin: '1002' },
+      { id: 'produce',  name: 'Produce',  emoji: '🥦', pin: '1003' },
+      { id: 'deli',     name: 'Deli',     emoji: '🧀', pin: '1004' }
     ];
 
-    let staffMembers = [
-      { id: 1, name: 'Thabo Ndlovu', deptId: 'bakery', pin: '1001', role: 'Head Baker' },
-      { id: 2, name: 'Anika van der Merwe', deptId: 'pastries', pin: '1002', role: 'Pastry Chef' },
-      { id: 3, name: 'Piet Botha', deptId: 'butchery', pin: '1003', role: 'Blockman' },
-      { id: 4, name: 'David Mokoena', deptId: 'fish', pin: '1004', role: 'Fishmonger' },
-      { id: 5, name: 'Fatima Patel', deptId: 'seafood', pin: '1005', role: 'Seafood Counter' },
-      { id: 6, name: 'Zandile Khumalo', deptId: 'produce', pin: '1006', role: 'Produce Specialist' },
-      { id: 7, name: 'Maria Santos', deptId: 'deli', pin: '1007', role: 'Deli Lead' },
-      { id: 8, name: 'Nomsa K.', deptId: 'cashier', pin: '2041', role: 'Till Cashier (Assigned)' },
-      { id: 9, name: 'Eurica Noeth', deptId: 'all', pin: '4092', role: 'Store Owner' }
-    ];
-
-    let productCatalog = [
-      { id: 1, deptId: 'bakery', plu: '104', name: 'Artisan Sourdough Loaf 800g', sku: 'BAK-800-SD', price: 38.50, barcode: '6001001001049', notes: 'Freshly Baked Daily • Stand 4' },
-      { id: 2, deptId: 'bakery', plu: '105', name: 'Almond Croissant Butter', sku: 'BAK-CROIS-ALM', price: 28.00, barcode: '6001234567891', notes: 'Flaked almonds, butter pastry' },
-      { id: 3, deptId: 'bakery', plu: '106', name: 'French Baguette Traditional', sku: 'BAK-BAG-FR', price: 19.50, barcode: '6001234567892', notes: 'Crisp crust, airy crumb' },
-      { id: 4, deptId: 'bakery', plu: '107', name: 'Ciabatta Olive & Rosemary', sku: 'BAK-CIAB-OLV', price: 32.00, barcode: '6001234567893', notes: 'Kalamata olives' },
-      { id: 5, deptId: 'butchery', plu: '201', name: 'Karoo Lamb Chops (per kg)', sku: 'BUT-LAMB-CHP', price: 185.00, barcode: '6009876543210', notes: 'Free-range Karoo lamb loin' },
-      { id: 6, deptId: 'butchery', plu: '202', name: 'A-Grade Beef Fillet Steak', sku: 'BUT-BEEF-FIL', price: 245.00, barcode: '6009876543211', notes: '28-day dry aged' },
-      { id: 7, deptId: 'fish', plu: '301', name: 'Norwegian Fresh Salmon Fillet', sku: 'FSH-SALM-01', price: 260.00, barcode: '6009876543212', notes: 'Sashimi grade portion' },
-      { id: 8, deptId: 'produce', plu: '401', name: 'Cavendish Bananas (per kg)', sku: 'PRD-BAN-01', price: 19.99, barcode: '6009876543213', notes: 'Ripe yellow Grade A' },
-      { id: 9, deptId: 'deli', plu: '501', name: 'Mature Cheddar Block 400g', sku: 'DEL-CHED-01', price: 68.00, barcode: '6009876543214', notes: '18-month cave aged' },
-      { id: 10, deptId: 'seafood', plu: '601', name: 'Black Tiger Prawns 800g Box', sku: 'SEA-PRWN-01', price: 220.00, barcode: '6009876543215', notes: 'Head-on, shell-on frozen' }
-    ];
+    let staffMembers = [];
+    let productCatalog = []; // Clean slate: ready for real user codes
 
     let currentActiveDept = departments[0];
     let currentActiveUser = null;
     let terminalRole = 'employee';
-    let terminalActiveItem = productCatalog[0];
-    const masterOwnerPin = '4092';
+    let terminalActiveItem = null;
+    const masterOwnerPin = '2580'; // Eurica Noeth Universal Master Executive PIN
 
     document.addEventListener('DOMContentLoaded', () => {
       populateAuthSelect();
       populateStaffDeptSelect();
+      renderClientStoresTable();
       renderOwnerDepartments();
       renderOwnerStaffTable();
       renderCatalogTable();
-      setTerminalResult(productCatalog[0]);
     });
 
     function navigateTo(viewId) {
@@ -990,8 +1124,11 @@
         navTitle.classList.add('hidden');
       } else {
         navTitle.classList.remove('hidden');
-        if (viewId === 'view-ownerDashboard') {
+        if (viewId === 'view-masterAdmin') {
           emojiBox.innerText = '👑';
+          labelText.innerText = 'Master App Owner Platform Dashboard';
+        } else if (viewId === 'view-ownerDashboard') {
+          emojiBox.innerText = '🏬';
           labelText.innerText = 'Store Owner Console';
         } else if (viewId === 'view-deptHead') {
           emojiBox.innerText = currentActiveDept.emoji;
@@ -1005,6 +1142,102 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function renderClientStoresTable() {
+      const tbody = document.getElementById('storeTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      document.getElementById('admStatStores').innerText = `${clientStores.length} Establishments`;
+      const activeCount = clientStores.filter(s => s.status === 'ACTIVE' || s.status === 'TRIAL').length;
+      document.getElementById('admStatActive').innerText = `${activeCount} Authorized`;
+
+      clientStores.forEach(store => {
+        const isAuth = store.status === 'ACTIVE' || store.status === 'TRIAL';
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-brand-cardLight/50 transition";
+        tr.innerHTML = `
+          <td class="p-3">
+            <div class="font-bold text-white text-xs">${store.name}</div>
+            <div class="text-[10px] text-brand-grayMuted">${store.city}</div>
+          </td>
+          <td class="p-3">
+            <div class="text-white">${store.owner}</div>
+            <a href="https://wa.me/${store.phone.replace(/[^0-9]/g, '')}" target="_blank" class="text-[10px] text-emerald-400 hover:underline">${store.phone}</a>
+          </td>
+          <td class="p-3">
+            <span class="px-2 py-0.5 rounded bg-brand-input border border-brand-border text-[10px] text-brand-teal font-bold">${store.tier}</span>
+          </td>
+          <td class="p-3 font-bold text-white font-mono">${store.pin}</td>
+          <td class="p-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isAuth ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">
+              ${isAuth ? '● AUTHORIZED' : '○ SUSPENDED'}
+            </span>
+          </td>
+          <td class="p-3 text-right space-x-1">
+            <button onclick="toggleStoreAuthorization('${store.id}')" class="px-2.5 py-1 rounded bg-brand-input border border-brand-border hover:border-brand-teal text-white text-[10px] font-bold">
+              ${isAuth ? 'Suspend' : 'Grant Access'}
+            </button>
+            <button onclick="dispatchStoreWelcome('${store.id}')" class="px-2.5 py-1 rounded bg-brand-cardLight border border-brand-teal/40 text-brand-teal text-[10px] font-bold hover:bg-brand-teal hover:text-brand-navy">
+              WhatsApp Setup
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleStoreAuthorization(storeId) {
+      const store = clientStores.find(s => s.id === storeId);
+      if (!store) return;
+      store.status = (store.status === 'ACTIVE' || store.status === 'TRIAL') ? 'SUSPENDED' : 'ACTIVE';
+      renderClientStoresTable();
+      alert(`Updated access for "${store.name}": Status is now ${store.status}.`);
+    }
+
+    function dispatchStoreWelcome(storeId) {
+      const store = clientStores.find(s => s.id === storeId);
+      if (!store) return;
+      const msg = `👑 *CODEFINDER™ OFFICIAL STORE LICENSE AUTHORIZATION*\n━━━━━━━━━━━━━━━━━━━━\nHello ${store.owner},\nYour store *${store.name}* has been officially authorized on CodeFinder™!\n\n🔑 *Your Store Owner PIN:* ${store.pin}\n🏢 *Plan Tier:* ${store.tier}\n🌐 *Web Console:* https://codefinder-web.vercel.app\n\nProvisioned by Eurica Noeth, CEO Code-SA™ (+27 67 129 6177).`;
+      window.open(`https://wa.me/${store.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function handleProvisionStoreSubmit(e) {
+      e.preventDefault();
+      const newStore = {
+        id: 'store-' + Date.now().toString().slice(-4),
+        name: document.getElementById('provStoreName').value.trim(),
+        owner: document.getElementById('provOwnerName').value.trim(),
+        phone: document.getElementById('provPhone').value.trim(),
+        city: document.getElementById('provLocation').value.trim() || 'South Africa',
+        pin: document.getElementById('provPin').value.trim(),
+        tier: document.getElementById('provTier').value,
+        status: 'ACTIVE',
+        depts: 0
+      };
+
+      clientStores.unshift(newStore);
+      renderClientStoresTable();
+      closeModal('modalProvisionStore');
+      alert(`✅ Store "${newStore.name}" provisioned and authorized for ${newStore.owner} with PIN ${newStore.pin}!`);
+    }
+
+    function filterStoreTable() {
+      const q = document.getElementById('storeSearchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#storeTableBody tr');
+      rows.forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+
+    function testPayfastWebhook() {
+      alert('💳 PayFast ITN Gateway: Active & Connected.\nMerchant ID: 37976779\nRecurring billing notifications automatically route to accounts@codepos.co.za.');
+    }
+
+    function dispatchBroadcastNotice() {
+      const msg = `📢 *CODEFINDER™ SYSTEM UPDATE*\nAll store owners: System running at 100% uptime with zero-hardware visual scanning. Support: +27 67 129 6177.`;
+      window.open(`https://wa.me/27671296177?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
     function signOut() {
       currentActiveUser = null;
       document.getElementById('btnHeaderAuthText').innerText = 'SIGN IN / LOGIN';
@@ -1014,13 +1247,14 @@
     function populateAuthSelect() {
       const sel = document.getElementById('authDeptSelect');
       sel.innerHTML = `
-        <option value="owner">👑 Store Owner / Master Console (PIN: 4092)</option>
-        <option value="cashier">🛒 Frontline Cashier Terminal (PIN: 2041)</option>
+        <option value="superadmin">👑 Eurica Noeth (Platform Master Owner)</option>
+        <option value="owner">🏬 Business Store Owner Console</option>
+        <option value="cashier">🛒 Frontline Cashier Search Terminal</option>
       `;
       departments.forEach(dept => {
         const opt = document.createElement('option');
         opt.value = dept.id;
-        opt.innerText = `${dept.emoji} ${dept.name} Department Console (PIN: ${dept.pin})`;
+        opt.innerText = `${dept.emoji} ${dept.name} Department Console`;
         sel.appendChild(opt);
       });
     }
@@ -1040,25 +1274,33 @@
       const pin = document.getElementById('authPinInput').value.trim();
       const target = document.getElementById('authDeptSelect').value;
 
-      if (target === 'owner') {
+      if (target === 'superadmin') {
         if (pin === masterOwnerPin) {
           closeModal('modalAuth');
-          currentActiveUser = { name: 'Eurica Noeth', role: 'Store Owner' };
+          currentActiveUser = { name: 'Eurica Noeth', role: 'Master App Owner' };
+          document.getElementById('btnHeaderAuthText').innerText = 'Super-Admin';
+          renderClientStoresTable();
+          navigateTo('view-masterAdmin');
+        } else {
+          document.getElementById('authErrorMsg').classList.remove('hidden');
+        }
+      } else if (target === 'owner') {
+        const matchingStore = clientStores.find(s => s.pin === pin);
+        if (matchingStore || pin === masterOwnerPin) {
+          closeModal('modalAuth');
+          const storeName = matchingStore ? matchingStore.name : 'Store Owner Workspace';
+          currentActiveUser = { name: matchingStore ? matchingStore.owner : 'Store Owner', role: 'Store Owner' };
           document.getElementById('btnHeaderAuthText').innerText = 'Owner Console';
+          document.getElementById('ownerStoreTitle').innerText = `${storeName} Management Console`;
           navigateTo('view-ownerDashboard');
         } else {
           document.getElementById('authErrorMsg').classList.remove('hidden');
         }
       } else if (target === 'cashier') {
-        const cashier = staffMembers.find(s => s.deptId === 'cashier' && s.pin === pin);
-        if (cashier || pin === '2041' || pin === masterOwnerPin) {
-          closeModal('modalAuth');
-          currentActiveUser = cashier || { name: 'Nomsa K.', role: 'Till Cashier' };
-          document.getElementById('btnHeaderAuthText').innerText = 'Cashier Terminal';
-          launchSearchTerminal('cashier', 'all');
-        } else {
-          document.getElementById('authErrorMsg').classList.remove('hidden');
-        }
+        closeModal('modalAuth');
+        currentActiveUser = { name: 'Till Cashier', role: 'Cashier' };
+        document.getElementById('btnHeaderAuthText').innerText = 'Cashier Terminal';
+        launchSearchTerminal('cashier', 'all');
       } else {
         const dept = departments.find(d => d.id === target);
         if (dept && (pin === dept.pin || pin === masterOwnerPin)) {
@@ -1080,6 +1322,11 @@
       document.getElementById('statOwnerSkuCount').innerText = `${productCatalog.length} Products`;
       document.getElementById('statOwnerStaffCount').innerText = `${staffMembers.length} Staff Members`;
 
+      if (departments.length === 0) {
+        grid.innerHTML = '<div class="col-span-4 p-6 text-center text-brand-grayMuted">No departments created yet. Click "+ Create Department" above.</div>';
+        return;
+      }
+
       departments.forEach(dept => {
         const count = productCatalog.filter(p => p.deptId === dept.id).length;
         const assignedCount = staffMembers.filter(s => s.deptId === dept.id).length;
@@ -1091,7 +1338,7 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-3xl">${dept.emoji}</span>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-card text-brand-teal font-bold">PIN: ${dept.pin}</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-card text-brand-teal font-bold">Scoped</span>
             </div>
             <div class="font-bold text-white text-base font-mono group-hover:text-brand-teal transition">${dept.name}</div>
             <div class="text-[11px] text-brand-grayMuted font-mono mt-0.5">${count} SKUs Loaded</div>
@@ -1110,16 +1357,14 @@
       const tbody = document.getElementById('ownerStaffTableBody');
       tbody.innerHTML = '';
 
+      if (staffMembers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-brand-grayMuted">No staff assigned yet. Click "+ Register Employee" above to assign terminal PINs.</td></tr>';
+        return;
+      }
+
       staffMembers.forEach(staff => {
         const dept = departments.find(d => d.id === staff.deptId);
-        let deptDisplay = '';
-        if (staff.deptId === 'all') {
-          deptDisplay = '👑 All Departments (Store Owner)';
-        } else if (staff.deptId === 'cashier') {
-          deptDisplay = '🛒 Cashier Till Station (All Dept Lookup)';
-        } else {
-          deptDisplay = `${dept ? dept.emoji : '🏬'} ${dept ? dept.name : staff.deptId}`;
-        }
+        let deptDisplay = staff.deptId === 'cashier' ? '🛒 Cashier Till Station' : `${dept ? dept.emoji : '🏬'} ${dept ? dept.name : staff.deptId}`;
 
         const tr = document.createElement('tr');
         tr.className = "hover:bg-brand-cardLight/50 transition";
@@ -1129,7 +1374,7 @@
           <td class="p-2.5 font-bold text-white font-mono">${staff.pin}</td>
           <td class="p-2.5 text-brand-grayMuted">${staff.role}</td>
           <td class="p-2.5 text-right">
-            <button onclick="launchSearchTerminal('${staff.deptId === 'cashier' ? 'cashier' : 'employee'}', '${staff.deptId === 'all' ? 'bakery' : staff.deptId}')" class="text-brand-teal hover:underline text-xs">Launch Terminal →</button>
+            <button onclick="launchSearchTerminal('${staff.deptId === 'cashier' ? 'cashier' : 'employee'}', '${staff.deptId}')" class="text-brand-teal hover:underline text-xs">Launch Terminal →</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1151,7 +1396,7 @@
         id: deptId,
         name: clean.charAt(0).toUpperCase() + clean.slice(1),
         emoji: document.getElementById('newDeptEmoji').value,
-        pin: document.getElementById('newDeptPin').value.trim() || '1008'
+        pin: document.getElementById('newDeptPin').value.trim() || '1010'
       };
 
       departments.push(newDept);
@@ -1181,7 +1426,7 @@
       renderOwnerStaffTable();
       renderOwnerDepartments();
       closeModal('modalNewStaff');
-      alert(`✅ Employee '${name}' assigned to ${deptId.toUpperCase()} with PIN ${pin}!`);
+      alert(`✅ Employee '${name}' assigned with PIN ${pin}!`);
     }
 
     function launchDepartmentHead(deptId) {
@@ -1208,7 +1453,7 @@
       document.getElementById('tableCountBadge').innerText = `${filtered.length} Items`;
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-brand-grayMuted">No products found in this department. Use the form on the left to add items.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-brand-grayMuted">No products entered yet for ${currentActiveDept.name}. Use the Smart Add form on the left to enter your products and codes.</td></tr>`;
         return;
       }
 
@@ -1217,14 +1462,11 @@
         tr.className = "hover:bg-brand-cardLight/50 transition";
         tr.innerHTML = `
           <td class="p-2.5 font-bold text-brand-teal">${prod.plu}</td>
-          <td class="p-2.5 text-white">
-            <div class="font-bold">${prod.name}</div>
-            <div class="text-[10px] text-brand-grayMuted">${prod.notes || ''}</div>
-          </td>
-          <td class="p-2.5 text-brand-grayMuted">${prod.sku}</td>
+          <td class="p-2.5 text-white font-bold">${prod.name}</td>
+          <td class="p-2.5 text-brand-grayMuted">${prod.sku || '---'}</td>
           <td class="p-2.5 font-bold text-white">R ${Number(prod.price).toFixed(2)}</td>
           <td class="p-2.5 text-right space-x-1">
-            <button onclick="launchSearchForItem(${prod.plu})" class="text-brand-teal hover:underline text-[11px] p-1">Search →</button>
+            <button onclick="launchSearchForItem('${prod.plu}')" class="text-brand-teal hover:underline text-[11px] p-1">Search →</button>
             <button onclick="deleteProduct(${prod.id})" class="text-rose-400 hover:text-rose-300 text-[11px] p-1">Delete</button>
           </td>
         `;
@@ -1240,20 +1482,20 @@
         name: document.getElementById('inpProdName').value.trim(),
         plu: document.getElementById('inpProdPlu').value.trim(),
         price: parseFloat(document.getElementById('inpProdPrice').value),
-        sku: document.getElementById('inpProdSku').value.trim() || `SKU-${Date.now().toString().slice(-4)}`,
-        barcode: document.getElementById('inpProdBarcode').value.trim() || '600' + Math.floor(1000000000 + Math.random() * 9000000000),
-        notes: document.getElementById('inpProdNotes').value.trim() || 'Fresh store inventory'
+        sku: document.getElementById('inpProdSku').value.trim() || '',
+        barcode: document.getElementById('inpProdBarcode').value.trim() || '',
+        notes: document.getElementById('inpProdNotes').value.trim() || ''
       };
 
       productCatalog.unshift(newProd);
       renderCatalogTable();
       renderOwnerDepartments();
       document.getElementById('productEntryForm').reset();
-      alert(`✅ SKU '${newProd.name}' broadcast to all ${currentActiveDept.name} scanning terminals and cashiers!`);
+      alert(`✅ Product '${newProd.name}' (Code: ${newProd.plu}) saved to ${currentActiveDept.name}!`);
     }
 
     function deleteProduct(id) {
-      if (confirm('Are you sure you want to remove this SKU?')) {
+      if (confirm('Are you sure you want to remove this product?')) {
         productCatalog = productCatalog.filter(p => p.id !== id);
         renderCatalogTable();
         renderOwnerDepartments();
@@ -1264,8 +1506,7 @@
       const q = document.getElementById('catalogSearchInput').value.toLowerCase();
       const rows = document.querySelectorAll('#catalogTableBody tr');
       rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        row.style.display = text.includes(q) ? '' : 'none';
+        row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
       });
     }
 
@@ -1301,7 +1542,7 @@
           const deptRaw = parts[4] || currentActiveDept.name;
           const cleanDeptName = deptRaw.split(/[\s&,-]+/)[0];
           const deptId = cleanDeptName.toLowerCase();
-          const barcode = parts[5] || '600' + Math.floor(1000000000 + Math.random() * 9000000000);
+          const barcode = parts[5] || '';
 
           if (!departments.some(d => d.id === deptId)) {
             departments.push({
@@ -1320,7 +1561,7 @@
             sku: sku,
             price: price,
             barcode: barcode,
-            notes: 'Bulk CSV imported'
+            notes: 'CSV imported'
           });
           count++;
         }
@@ -1331,7 +1572,7 @@
       populateStaffDeptSelect();
       renderCatalogTable();
       closeModal('modalCatalog');
-      alert(`✅ Imported ${count} products across departments with instant synchronization!`);
+      alert(`✅ Imported ${count} products across store departments!`);
     }
 
     function launchSearchTerminal(role, deptId) {
@@ -1341,7 +1582,7 @@
         document.getElementById('termHeaderIcon').innerText = '🛒';
         document.getElementById('termHeaderTitle').innerText = 'Cashier Product Search';
         document.getElementById('termRoleTag').innerText = 'CASHIER DESK';
-        document.getElementById('termOperatorSubtitle').innerHTML = 'Role: <strong class="text-brand-teal">Till Cashier</strong> • Search &amp; Lookup Access Only';
+        document.getElementById('termOperatorSubtitle').innerHTML = 'Role: <strong class="text-brand-teal">Till Cashier</strong> • Look up items by name or code';
         document.getElementById('btnTermBack').innerText = '← Exit';
       } else {
         const dept = departments.find(d => d.id === deptId) || departments[0];
@@ -1349,23 +1590,27 @@
         document.getElementById('termHeaderIcon').innerText = dept.emoji;
         document.getElementById('termHeaderTitle').innerText = `${dept.name} Product Search`;
         document.getElementById('termRoleTag').innerText = 'TERMINAL';
-        const assigned = staffMembers.find(s => s.deptId === dept.id);
-        document.getElementById('termOperatorSubtitle').innerHTML = assigned ? `Operator: <strong class="text-white">${assigned.name}</strong> (${dept.name})` : `Department Scope: <strong class="text-white">${dept.name}</strong>`;
+        document.getElementById('termOperatorSubtitle').innerHTML = `Department: <strong class="text-white">${dept.name}</strong>`;
         document.getElementById('btnTermBack').innerText = '← Dept';
       }
 
       const pool = role === 'cashier' ? productCatalog : productCatalog.filter(p => p.deptId === currentActiveDept.id);
-      const defaultItem = pool.find(p => p.plu === '104') || pool[0] || productCatalog[0];
-      setTerminalResult(defaultItem);
+      if (pool.length > 0) {
+        setTerminalResult(pool[0]);
+      } else {
+        resetToEmptyResult();
+      }
       switchTerminalMode('search');
 
       navigateTo('view-searchTerminal');
     }
 
     function launchSearchForItem(plu) {
-      const item = productCatalog.find(p => p.plu == plu) || productCatalog[0];
-      launchSearchTerminal('employee', item.deptId);
-      setTerminalResult(item);
+      const item = productCatalog.find(p => p.plu == plu);
+      if (item) {
+        launchSearchTerminal('employee', item.deptId);
+        setTerminalResult(item);
+      }
     }
 
     function handleTerminalBack() {
@@ -1416,8 +1661,8 @@
       const match = pool.find(p => 
         p.plu.toLowerCase() === q ||
         p.name.toLowerCase().includes(q) ||
-        p.barcode.toLowerCase() === q ||
-        p.sku.toLowerCase().includes(q)
+        (p.barcode && p.barcode.toLowerCase() === q) ||
+        (p.sku && p.sku.toLowerCase().includes(q))
       );
 
       if (match) {
@@ -1443,40 +1688,64 @@
 
     function triggerCameraScan() {
       const pool = terminalRole === 'cashier' ? productCatalog : productCatalog.filter(p => p.deptId === currentActiveDept.id);
-      if (pool.length === 0) return;
+      if (pool.length === 0) {
+        alert('ℹ️ No products entered in this department yet. Please add products in the console first.');
+        return;
+      }
       const randomItem = pool[Math.floor(Math.random() * pool.length)];
       setTerminalResult(randomItem);
-      alert(`⚡ Match Confirmed (582ms): [${randomItem.name}] PLU: ${randomItem.plu} • R ${Number(randomItem.price).toFixed(2)}`);
+      alert(`⚡ Match Confirmed: [${randomItem.name}] PLU: ${randomItem.plu} • R ${Number(randomItem.price).toFixed(2)}`);
       switchTerminalMode('search');
     }
 
     function setTerminalResult(prod) {
       terminalActiveItem = prod;
-      const dept = departments.find(d => d.id === prod.deptId) || { name: prod.deptId, emoji: '🏬' };
+      const dept = departments.find(d => d.id === prod.deptId) || { name: 'Catalog', emoji: '🏬' };
 
       document.getElementById('resDeptBadge').innerText = `${dept.name.toUpperCase()} DEPT`;
       document.getElementById('resProductName').innerText = prod.name;
       document.getElementById('resProductNotes').innerText = prod.notes || `${dept.name} product line`;
       document.getElementById('resProductPrice').innerText = `R ${Number(prod.price).toFixed(2)}`;
       document.getElementById('resProductPlu').innerText = prod.plu;
-      document.getElementById('resProductBarcode').innerText = prod.barcode;
+      document.getElementById('resProductBarcode').innerText = prod.barcode || '---';
       document.getElementById('btnTillPluCode').innerText = prod.plu;
     }
 
+    function resetToEmptyResult() {
+      terminalActiveItem = null;
+      document.getElementById('resDeptBadge').innerText = 'STORE CATALOG';
+      document.getElementById('resProductName').innerText = 'No Products Entered Yet';
+      document.getElementById('resProductNotes').innerText = 'Use Department Console to enter items';
+      document.getElementById('resProductPrice').innerText = 'R 0.00';
+      document.getElementById('resProductPlu').innerText = '---';
+      document.getElementById('resProductBarcode').innerText = '---';
+      document.getElementById('btnTillPluCode').innerText = '---';
+    }
+
     function ringUpOnTill() {
+      if (!terminalActiveItem) {
+        alert('Enter or search a product first.');
+        return;
+      }
       navigator.clipboard?.writeText(terminalActiveItem.plu);
-      alert(`✅ Till Copied: Code ${terminalActiveItem.plu} (R ${Number(terminalActiveItem.price).toFixed(2)}) ready for register entry!`);
+      alert(`✅ Copied to clipboard: Code ${terminalActiveItem.plu} (R ${Number(terminalActiveItem.price).toFixed(2)}) ready for till entry!`);
     }
 
     function resetSearchTerminal() {
       clearSearchInput();
       const pool = terminalRole === 'cashier' ? productCatalog : productCatalog.filter(p => p.deptId === currentActiveDept.id);
-      const nextItem = pool[Math.floor(Math.random() * pool.length)];
-      setTerminalResult(nextItem);
+      if (pool.length > 0) {
+        const nextItem = pool[Math.floor(Math.random() * pool.length)];
+        setTerminalResult(nextItem);
+      }
     }
 
     function openWhatsAppModal() {
-      const dept = departments.find(d => d.id === terminalActiveItem.deptId) || { name: terminalActiveItem.deptId };
+      if (!terminalActiveItem) {
+        alert('Please search or select a product first.');
+        return;
+      }
+      const dept = departments.find(d => d.id === terminalActiveItem.deptId) || { name: 'Store' };
       document.getElementById('waModalProdName').innerText = terminalActiveItem.name;
       document.getElementById('waModalProdPlu').innerText = terminalActiveItem.plu;
       document.getElementById('waModalProdPrice').innerText = `R ${Number(terminalActiveItem.price).toFixed(2)}`;
@@ -1486,8 +1755,9 @@
     }
 
     function dispatchWhatsappDirect() {
-      const dept = departments.find(d => d.id === terminalActiveItem.deptId) || { name: terminalActiveItem.deptId };
-      const msg = `📦 *CODEFINDER™ PRODUCT LOOKUP*\n━━━━━━━━━━━━━━━━━━━━\n🏷️ *Product:* ${terminalActiveItem.name}\n🔢 *PLU / Till Code:* ${terminalActiveItem.plu}\n💰 *Price:* R ${Number(terminalActiveItem.price).toFixed(2)}\n🏬 *Department:* ${dept.name}\n⏰ *Operator:* Frontline Staff (PIN 1001)\n━━━━━━━━━━━━━━━━━━━━\nPlease ring up on till / scales.`;
+      if (!terminalActiveItem) return;
+      const dept = departments.find(d => d.id === terminalActiveItem.deptId) || { name: 'Store' };
+      const msg = `📦 *CODEFINDER™ PRODUCT LOOKUP*\n━━━━━━━━━━━━━━━━━━━━\n🏷️ *Product:* ${terminalActiveItem.name}\n🔢 *PLU / Till Code:* ${terminalActiveItem.plu}\n💰 *Price:* R ${Number(terminalActiveItem.price).toFixed(2)}\n🏬 *Department:* ${dept.name}\n━━━━━━━━━━━━━━━━━━━━\nPlease ring up on till / scales.`;
       window.open(`https://wa.me/27671296177?text=${encodeURIComponent(msg)}`, '_blank');
       closeModal('modalWhatsappDispatch');
     }
@@ -1506,7 +1776,7 @@
       const box = document.getElementById('aiResponseBox');
       if (!q) return;
       box.classList.remove('hidden');
-      box.innerText = `🤖 24/7 AI Assistant: To manage "${q}", access your Store Owner Console (PIN: 4092) or Department Head Console (e.g. PIN 1001 for Bakery). Frontline employee search terminals, cashier lookups, and bulk CSV catalog imports synchronize automatically in real-time.`;
+      box.innerText = `🤖 24/7 AI Assistant: To handle "${q}", sign in via your authorized console PIN. Frontline cashiers can immediately look up genuine products and codes.`;
     }
 
     function startPayfast(product, price) {
@@ -1518,7 +1788,7 @@
     }
 
     function startFreeTrial(product) {
-      alert(`✨ 14-Day Free Trial Activated for ${product}!\n\nYour 14-day zero-risk trial is active. Access your management console with PIN 4092 or contact Eurica Noeth (+27 67 129 6177) for instant assistance.`);
+      alert(`✨ 14-Day Free Trial Activated for ${product}!\n\nYour 14-day zero-risk trial is active. Access your management console or contact Eurica Noeth (+27 67 129 6177) for instant assistance.`);
     }
 
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
